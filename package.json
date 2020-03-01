@@ -6,12 +6,16 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "link": "react-native link",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "react": "16.9.0",
-    "react-native": "0.61.5"
+    "react-native": "0.61.5",
+    "react-native-camera": "^3.19.0",
+    "react-native-easy-toast": "^1.2.0",
+    "react-native-svg": "^11.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
