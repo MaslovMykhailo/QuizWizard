@@ -1,4 +1,4 @@
-version=4.2.0
+version=3.4.9
 base_url=https://razaoinfo.dl.sourceforge.net/project/opencvlibrary/${version}/
 
 # ios

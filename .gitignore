@@ -31,6 +31,8 @@ build/
 local.properties
 *.iml
 android/app/src/main/jniLibs/
+android/openCVLibrary349
+*.hprof
 
 # Visual Studio Code
 #
