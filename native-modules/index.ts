@@ -1,4 +1,3 @@
-//@ts-ignore
-import {NativeModules} from 'native-modules'
+import {NativeModules} from 'react-native'
 
 export const OpenCV = NativeModules.RNOpenCvLibrary

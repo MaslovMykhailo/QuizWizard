@@ -67,11 +67,13 @@ export default class CameraScreen extends Component {
     this.checkForBlurryImage(content)
       .then(blurryPhoto => {
         if (blurryPhoto) {
-          (this.refs.toast as any).show('Photo is blurred!', 10e10)
+          // @ts-ignore
+          this.refs.toast.show('Photo is blurred!', 10e10)
 
           return this.repeatPhoto()
         }
-        (this.refs.toast as any).show('Photo is clear!', 10e10)
+        // @ts-ignore
+        this.refs.toast.show('Photo is clear!', 10e10)
 
         this.setState({
           photoAsBase64: {
@@ -121,8 +123,7 @@ export default class CameraScreen extends Component {
     if (this.state.photoAsBase64.isPhotoPreview) {
       return (
         <View style={styles.container}>
-          //@ts-ignore
-          <Toast ref="toast" position="center" />
+          <Toast ref="toast" />
           <Image
             source={{
               uri: `data:image/png;base64,${this.state.photoAsBase64.content}`
@@ -164,8 +165,7 @@ export default class CameraScreen extends Component {
             </TouchableOpacity>
           </View>
         </Camera>
-        //@ts-ignore
-        <Toast ref="toast" position="center" />
+        <Toast ref="toast" />
       </View>
     )
   }

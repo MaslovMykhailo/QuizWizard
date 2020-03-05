@@ -8,12 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* QuizWizardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* QuizWizardTests.m */; };
-		0A6704C8240C306B00C7615E /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A8A9C80240C286B00A537B4 /* opencv2.framework */; };
-		0A6704C9240C306B00C7615E /* opencv2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A8A9C80240C286B00A537B4 /* opencv2.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0A26A094240DBDBC00182907 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A26A093240DBDBC00182907 /* opencv2.framework */; };
 		0A8A9C8D240C2A0500A537B4 /* RNOpenCvLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8A9C8C240C2A0500A537B4 /* RNOpenCvLibrary.m */; };
-		0A8A9C8E240C2A0500A537B4 /* RNOpenCvLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8A9C8C240C2A0500A537B4 /* RNOpenCvLibrary.m */; };
-		0A8A9C8F240C2A0500A537B4 /* RNOpenCvLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8A9C8C240C2A0500A537B4 /* RNOpenCvLibrary.m */; };
-		0A8A9C90240C2A0500A537B4 /* RNOpenCvLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8A9C8C240C2A0500A537B4 /* RNOpenCvLibrary.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -45,26 +41,12 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		0A6704CA240C306B00C7615E /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				0A6704C9240C306B00C7615E /* opencv2.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* QuizWizardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuizWizardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* QuizWizardTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuizWizardTests.m; sourceTree = "<group>"; };
-		0A8A9C80240C286B00A537B4 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../../OpenCV/opencv2.framework; sourceTree = "<group>"; };
+		0A26A093240DBDBC00182907 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		0A8A9C85240C28F700A537B4 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		0A8A9C86240C295000A537B4 /* RNOpenCvLibrary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNOpenCvLibrary.h; sourceTree = "<group>"; };
 		0A8A9C8C240C2A0500A537B4 /* RNOpenCvLibrary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNOpenCvLibrary.m; sourceTree = "<group>"; };
@@ -106,7 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A6704C8240C306B00C7615E /* opencv2.framework in Frameworks */,
+				0A26A094240DBDBC00182907 /* opencv2.framework in Frameworks */,
 				CFF082B776E23B11C1BB8820 /* libPods-QuizWizard.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -174,7 +156,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0A8A9C80240C286B00A537B4 /* opencv2.framework */,
+				0A26A093240DBDBC00182907 /* opencv2.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				E0D40E91BDFD0554B7F77CFA /* libPods-QuizWizard.a */,
@@ -266,7 +248,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				0A6704CA240C306B00C7615E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -561,7 +542,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A8A9C8E240C2A0500A537B4 /* RNOpenCvLibrary.m in Sources */,
 				00E356F31AD99517003FC87E /* QuizWizardTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -582,7 +562,6 @@
 			files = (
 				2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */,
 				2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */,
-				0A8A9C8F240C2A0500A537B4 /* RNOpenCvLibrary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,7 +569,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A8A9C90240C2A0500A537B4 /* RNOpenCvLibrary.m in Sources */,
 				2DCD954D1E0B4F2C00145EB5 /* QuizWizardTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -676,7 +654,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = N99Y3F77J6;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/OpenCV/PrefixHeader.pch";
 				INFOPLIST_FILE = QuizWizard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -701,7 +683,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = N99Y3F77J6;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/OpenCV/PrefixHeader.pch";
 				INFOPLIST_FILE = QuizWizard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -830,7 +816,7 @@
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -884,7 +870,7 @@
 		83CBBA211A601CBA00E9B192 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
