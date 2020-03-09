@@ -6,9 +6,9 @@ Quiz Wizard is an application which allow people check paper quiz using the came
 
 ### Examples 
 
-![Answers blank](https://github.com/maslovmichail20/QuizWizard/images/answers-blank.jpg "Answers blank")
+![Answers blank](https://github.com/maslovmichail20/QuizWizard/tree/master/images/answers-blank.jpg "Answers blank")
 
-![Usage demo](https://github.com/maslovmichail20/QuizWizard/images/quiz-wizard-demo.jpg "Usage demo")
+![Usage demo](https://github.com/maslovmichail20/QuizWizard/tree/master/images/quiz-wizard-demo.jpg "Usage demo")
 
 
 ## Technologies
