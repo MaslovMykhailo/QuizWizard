@@ -10,68 +10,24 @@
  * @format
  */
 
-import React from 'react';
-import {
-  ImageProps,
-  ImageStyle,
-  StyleSheet,
-} from 'react-native';
-import {
-  ApplicationProvider,
-  Button,
-  Icon,
-  IconRegistry,
-  Layout,
-  Text,
-} from '@ui-kitten/components';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import {
-  mapping,
-  light as theme,
-} from '@eva-design/eva';
+import React, { useState, useCallback } from 'react';
+import Home from './src/Home';
+import Camera from './src/Camera';
 
-/**
- * Use any valid `name` property from eva icons (e.g `github`, or `heart-outline`)
- * https://akveo.github.io/eva-icons
- */
-const HeartIcon = (style: ImageStyle): React.ReactElement<ImageProps> => (
-  <Icon {...style} name='heart'/>
-);
+type Screen = 'home' | 'camera';
 
-const App = (): React.ReactFragment => (
-  <>
-    <IconRegistry icons={EvaIconsPack}/>
-    <ApplicationProvider mapping={mapping} theme={theme}>
-      <Layout style={styles.container}>
-        <Text style={styles.text} category='h1'>
-          Welcome to UI Kitten 😻
-        </Text>
-        <Text style={styles.text} category='s1'>
-          Start with editing App.js to configure your App
-        </Text>
-        <Text style={styles.text} appearance='hint'>
-          For example, try changing theme to Dark by simply changing an import
-        </Text>
-        <Button style={styles.likeButton} icon={HeartIcon}>
-          LIKE
-        </Button>
-      </Layout>
-    </ApplicationProvider>
-  </>
-);
+const App: React.FC = () => {
+  const [screen, setScreen] = useState<Screen>('home');
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    textAlign: 'center',
-  },
-  likeButton: {
-    marginVertical: 16,
-  },
-});
+  const navigateToHome = useCallback(() => setScreen('home'), []);
+  const navigateToCamera = useCallback(() => setScreen('camera'), []);
+
+  switch (screen) {
+    case 'camera': 
+      return <Camera navigateToHome={navigateToHome} />;
+    case 'home':
+      return <Home navigateToCamera={navigateToCamera} />;    
+  }
+}
 
 export default App;
