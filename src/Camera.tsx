@@ -41,7 +41,7 @@ class Camera extends PureComponent<CameraProps> {
                         <Text style={{ fontSize: 14 }}> SNAP </Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={this.props.navigateToHome} style={styles.capture}>
-                        <Text style={{ fontSize: 14 }}> GO TO HOME </Text>
+                        <Text style={{ fontSize: 14 }}> GO HOME </Text>
                     </TouchableOpacity>
                 </View>
             </View>
