@@ -1,12 +1,21 @@
 package com.quizwizard;
 
+import com.quizwizard.RNOpenCvLibraryPackage;
+
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
+
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
+
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.OpenCVLoader;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -25,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
+          packages.add(new RNOpenCvLibraryPackage());
           return packages;
         }
 
@@ -39,11 +49,49 @@ public class MainApplication extends Application implements ReactApplication {
     return mReactNativeHost;
   }
 
+  private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
+    @Override
+    public void onManagerConnected(int status) {
+      switch (status) {
+        case LoaderCallbackInterface.SUCCESS:
+        {
+          Log.i("OpenCV", "OpenCV loaded successfully");
+        } break;
+        default:
+        {
+          super.onManagerConnected(status);
+        } break;
+      }
+    }
+  };
+
+//  @Override
+//  public void onCreate() {
+//    super.onCreate();
+//    SoLoader.init(this, /* native exopackage */ false);
+//    initializeFlipper(this); // Remove this line if you don't want Flipper enabled
+//  }
+
   @Override
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this); // Remove this line if you don't want Flipper enabled
+
+    if (!OpenCVLoader.initDebug()) {
+      Log.d("OpenCv", "Error while init");
+    }
+  }
+
+  public void onResume()
+  {
+    if (!OpenCVLoader.initDebug()) {
+      Log.d("OpenCV", "Internal OpenCV library not found. Using OpenCV Manager for initialization");
+      OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_4_0, this, mLoaderCallback);
+    } else {
+      Log.d("OpenCV", "OpenCV library found inside package. Using it!");
+      mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+    }
   }
 
   /**

@@ -5,9 +5,12 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
+  Platform,
 } from 'react-native';
 import { RNCamera as Camera, RNCamera } from 'react-native-camera';
-import Toast from 'react-native-easy-toast'
+import Toast from 'react-native-easy-toast';
+import { NativeModules } from 'react-native';
+const OpenCV = NativeModules.RNOpenCvLibrary;
 
 interface BlurRecognitionCameraProps {
     navigateToHome(): void;
@@ -37,20 +40,30 @@ interface BlurRecognitionCameraProps {
     },
   };
 
+  componentDidMount() {
+    this.toast?.show('I works');
+  }
+
+
   checkForBlurryImage(imageAsBase64: any) {
     return new Promise((resolve, reject) => {
+      if (Platform.OS === 'android') {
+        OpenCV.checkForBlurryImage(imageAsBase64,
+          (error: any) => {
+            // error handling
+            console.log('CheckForBlurryImageError', error);
+          },
+          (msg: any) => {
+            console.log('CheckForBlurryImageSuccess', msg)
+            resolve(msg);
+          }
+        );
+      } else {
         resolve(Math.random() > 0.5);
-    //   if (Platform.OS === 'android') {
-    //     OpenCV.checkForBlurryImage(imageAsBase64, error => {
-    //       // error handling
-    //     }, msg => {
-    //       resolve(msg);
-    //     });
-    //   } else {
-    //     OpenCV.checkForBlurryImage(imageAsBase64, (error, dataArray) => {
-    //       resolve(dataArray[0]);
-    //     });
-    //   }
+        // OpenCV.checkForBlurryImage(imageAsBase64, (error, dataArray) => {
+        //   resolve(dataArray[0]);
+        // });
+      }
     });
   }
 
@@ -59,9 +72,11 @@ interface BlurRecognitionCameraProps {
 
     this.checkForBlurryImage(content).then(blurryPhoto => {
       if (blurryPhoto) {
+        console.log('Photo is blurred!');
         this.toast?.show('Photo is blurred!');
         return this.repeatPhoto();
       }
+      console.log('Photo is clear!');
       this.toast?.show('Photo is clear!');
       this.setState({ photoAsBase64: { ...this.state.photoAsBase64, isPhotoPreview: true, photoPath } });
     }).catch(err => {
@@ -73,12 +88,13 @@ interface BlurRecognitionCameraProps {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
       const data = await this.camera.takePictureAsync(options);
-      console.log('picture taken', data);
+      console.log('picture taken', data.uri);
       this.setState({
         ...this.state,
         photoAsBase64: { content: data.base64, isPhotoPreview: false, photoPath: data.uri },
+      }, () => {
+        this.proceedWithCheckingBlurryImage();
       });
-      this.proceedWithCheckingBlurryImage();
     }
   }
 
