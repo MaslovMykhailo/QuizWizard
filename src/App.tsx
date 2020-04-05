@@ -1,12 +1,9 @@
 import React, {useState, useCallback} from 'react'
-
-import Home from './src/Home'
-import Camera from './src/Camera'
-import BlurRecognitionCamera from './src/BlurRecognitionCamera'
+import {Home, Camera, BlurRecognitionCamera} from '@components'
 
 type Screen = 'home' | 'camera' | 'blur-recognition-camera'
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   const [screen, setScreen] = useState<Screen>('home')
 
   const navigateToHome = useCallback(() => setScreen('home'), [])
@@ -30,5 +27,3 @@ const App: React.FC = () => {
       )
   }
 }
-
-export default App

@@ -19,12 +19,12 @@ const HeartIcon = (style: ImageStyle): React.ReactElement<ImageProps> => (
   <Icon {...style} name="heart" />
 )
 
-interface HomeProps {
+export interface HomeProps {
   navigateToCamera(): void
   navigateToBlurRecognitionCamera(): void
 }
 
-const Home: React.FC<HomeProps> = ({
+export const Home: React.FC<HomeProps> = ({
   navigateToCamera,
   navigateToBlurRecognitionCamera
 }) => (

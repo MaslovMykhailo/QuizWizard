@@ -9,14 +9,15 @@ import {
 } from 'react-native'
 import {RNCamera as Camera, RNCamera} from 'react-native-camera'
 import Toast from 'react-native-easy-toast'
-import {NativeModules} from 'react-native'
-const OpenCV = NativeModules.RNOpenCvLibrary
+import {OpenCV} from '@native-components'
 
-interface BlurRecognitionCameraProps {
+export interface BlurRecognitionCameraProps {
   navigateToHome(): void
 }
 
-class BlurRecognitionCamera extends Component<BlurRecognitionCameraProps> {
+export class BlurRecognitionCamera extends Component<
+  BlurRecognitionCameraProps
+> {
   constructor(props: BlurRecognitionCameraProps) {
     super(props)
 
@@ -263,5 +264,3 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   }
 })
-
-export default BlurRecognitionCamera

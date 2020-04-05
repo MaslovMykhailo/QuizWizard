@@ -2,11 +2,11 @@ import React, {PureComponent} from 'react'
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import {RNCamera} from 'react-native-camera'
 
-interface CameraProps {
+export interface CameraProps {
   navigateToHome(): void
 }
 
-class Camera extends PureComponent<CameraProps> {
+export class Camera extends PureComponent<CameraProps> {
   private camera: RNCamera | null = null
 
   render() {
@@ -83,5 +83,3 @@ const styles = StyleSheet.create({
     margin: 20
   }
 })
-
-export default Camera
