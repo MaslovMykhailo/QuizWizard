@@ -22,11 +22,13 @@ const HeartIcon = (style: ImageStyle): React.ReactElement<ImageProps> => (
 export interface HomeProps {
   navigateToCamera(): void
   navigateToBlurRecognitionCamera(): void
+  navigateToCircleRecognitionCamera(): void
 }
 
 export const Home: React.FC<HomeProps> = ({
   navigateToCamera,
-  navigateToBlurRecognitionCamera
+  navigateToBlurRecognitionCamera,
+  navigateToCircleRecognitionCamera
 }) => (
   <>
     <IconRegistry icons={EvaIconsPack} />
@@ -49,6 +51,11 @@ export const Home: React.FC<HomeProps> = ({
         </Button>
         <Button style={styles.button} onPress={navigateToBlurRecognitionCamera}>
           Go to blur recognition Camera
+        </Button>
+        <Button
+          style={styles.button}
+          onPress={navigateToCircleRecognitionCamera}>
+          Go to circle recognition Camera
         </Button>
       </Layout>
     </ApplicationProvider>

@@ -11,14 +11,14 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@eva-design/eva": "^1.4.0",
-    "@ui-kitten/components": "4.4.1",
+    "@eva-design/eva": "^2.0.0-alpha.1",
+    "@ui-kitten/components": "^5.0.0-alpha.1",
     "@ui-kitten/eva-icons": "4.4.1",
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-camera": "^3.21.0",
     "react-native-easy-toast": "^1.2.0",
-    "react-native-svg": "^9.13.3"
+    "react-native-svg": "^12.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
