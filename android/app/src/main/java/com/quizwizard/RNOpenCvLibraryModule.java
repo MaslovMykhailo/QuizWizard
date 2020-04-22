@@ -4,6 +4,11 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
+import com.google.gson.Gson;
+import com.quizwizard.decoder.Base64Converter;
+import com.quizwizard.decoder.DecodedSheet;
+import com.quizwizard.decoder.Decoder;
+import com.quizwizard.decoder.OpenCvUtils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,10 +20,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
-import org.opencv.core.MatOfPoint3;
-import org.opencv.core.MatOfPoint3f;
 import org.opencv.core.Point;
-import org.opencv.core.Point3;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -32,8 +34,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.OptionalInt;
-import java.util.stream.Collectors;
 
 public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
 
@@ -226,7 +226,7 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
       } else if (p1.x <= p2.x || (p1.x >= p2.x && p1.y <= p2.y)) {
         return -1;
       } else {
-        return 0;
+        return 1;
       }
     }
   }
@@ -418,14 +418,16 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
 
       int maxCircleGrade = Arrays.stream(circleGrades).max().getAsInt();
 
-      for (int i = 0; i < circleGrades.length; i++) {
-        int grade = circleGrades[i];
-        if (grade > maxCircleGrade / 2) {
-          int letterIndex = i % 5;
-          int resultIndex  = Math.floorDiv(i, 5);
-          result[resultIndex][letterIndex] = String.valueOf((char)(letterIndex + 65));
-        }
-      }
+//      for (int i = 0; i < circleGrades.length; i++) {
+//        int grade = circleGrades[i];
+//        if (grade > maxCircleGrade / 2) {
+//          int letterIndex = i % 5;
+//          int resultIndex  = Math.floorDiv(i, 5);
+//          result[resultIndex][letterIndex] = String.valueOf((char)(letterIndex + 65));
+//
+//          Imgproc.drawContours(leftAnswersImage, circles, i, new Scalar(220, 20, 60), 3);
+//        }
+//      }
 
       String resultBase64 = matToBase64(leftAnswersImage, "jpeg");
       successCallback.invoke(resultBase64, Arrays.deepToString(result));
@@ -434,16 +436,20 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
     }
   }
 
-  private static void drawContour(Mat image, MatOfPoint2f cnt) {
-      List<Point> blankCntPoint = cnt.toList();
-      for (int pIndex = 0; pIndex < blankCntPoint.size(); pIndex++) {
-          Imgproc.line(
-                  image,
-                  blankCntPoint.get(pIndex),
-                  blankCntPoint.get(pIndex == blankCntPoint.size() - 1 ? 0 : pIndex + 1),
-                  new Scalar(220, 20, 60),
-                  10
-          );
-      }
+  @ReactMethod
+  public void decodeImage(String imageBase64, Callback errorCallback, Callback successCallback) {
+    try {
+      Decoder decoder = new Decoder();
+      DecodedSheet decoded = decoder.decode(imageBase64);
+
+      Gson gson = new Gson();
+      System.out.println(gson.toJson(decoded));
+
+      Mat result = decoder.answersSection;
+
+      successCallback.invoke(Base64Converter.matToBase64(result), 1);
+    } catch (Exception e) {
+      errorCallback.invoke(e.getMessage());
+    }
   }
 }
