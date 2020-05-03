@@ -9,8 +9,8 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.imgcodecs.Imgcodecs;
 
-public class Base64Converter {
-  public static Mat base64ToMat(String imageBase64) {
+class Base64Converter {
+  static Mat base64ToMat(String imageBase64) {
     byte[] imageDecoded = Base64.decode(imageBase64, Base64.DEFAULT);
     Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageDecoded, 0, imageDecoded.length);
 
@@ -20,7 +20,7 @@ public class Base64Converter {
     return imageMat;
   }
 
-  public static String matToBase64(Mat imageMat) {
+  static String matToBase64(Mat imageMat) {
     MatOfByte matOfByte = new MatOfByte();
     Imgcodecs.imencode(".jpeg", imageMat, matOfByte);
 

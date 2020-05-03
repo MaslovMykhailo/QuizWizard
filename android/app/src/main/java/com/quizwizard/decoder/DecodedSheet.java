@@ -1,7 +1,6 @@
 package com.quizwizard.decoder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,29 +9,24 @@ public class DecodedSheet {
   private static final int LETTER_CHAR_OFFSET = 65;
 
   DecodedSheet(int responderIdLength, int answersCount) {
-    responderId  = new int[responderIdLength];
-    Arrays.fill(responderId, -1);
+    responderId  = new ArrayList<>(responderIdLength);
+    for (int index = 0; index < responderIdLength; index++) {
+      responderId.add(new HashSet<>());
+    }
 
     answers = new ArrayList<>(answersCount);
     for (int index = 0; index < answersCount; index++) {
       answers.add(new HashSet<>());
     }
   }
+  private List<Set<Integer>> responderId;
 
-  /**
-   * Identifier of Responder
-   * Can contain [0-9] or -1
-   * [0-9] means that part of `responderId` was detected successfully
-   * -1 means that part of `responderId` was not detected
-  **/
-  private int[] responderId;
-
-  public int[] getResponderId() {
+  public List<Set<Integer>> getResponderId() {
     return responderId;
   }
 
-  public void setResponderIdPart(int index, int responderIdPart) {
-    responderId[index] = responderIdPart;
+  void setResponderIdPart(int index, int responderIdPart) {
+    responderId.get(index).add(responderIdPart);
   }
 
   private List<Set<String>> answers;

@@ -1,7 +1,13 @@
 import React, {FC, useRef, useCallback, useState} from 'react'
-import {Image, StyleSheet, TouchableOpacity} from 'react-native'
+import {Image, StyleSheet} from 'react-native'
 import {RNCamera, RNCameraProps, TakePictureResponse} from 'react-native-camera'
-import {IconRegistry, ApplicationProvider, Layout} from '@ui-kitten/components'
+import {
+  IconRegistry,
+  ApplicationProvider,
+  Layout,
+  Text,
+  Spinner
+} from '@ui-kitten/components'
 import {EvaIconsPack} from '@ui-kitten/eva-icons'
 import {mapping, light} from '@eva-design/eva'
 import {OpenCV} from '@native-components'
@@ -10,9 +16,13 @@ import {CaptureButton} from './CaptureButton'
 
 interface CameraViewProps {
   onTakePicture(picture: TakePictureResponse): void
+  onTakePictureStart(): void
 }
 
-const CameraView: FC<CameraViewProps> = ({onTakePicture}) => {
+const CameraView: FC<CameraViewProps> = ({
+  onTakePicture,
+  onTakePictureStart
+}) => {
   const cameraRef = useRef<RNCamera>(null)
 
   const [barCodeDetected, setBarCodeDetected] = useState(false)
@@ -28,6 +38,7 @@ const CameraView: FC<CameraViewProps> = ({onTakePicture}) => {
   const onSnap = useCallback(() => {
     const camera = cameraRef.current
     if (camera) {
+      onTakePictureStart()
       camera
         .takePictureAsync({
           base64: true,
@@ -37,7 +48,7 @@ const CameraView: FC<CameraViewProps> = ({onTakePicture}) => {
         .then(onTakePicture)
         .catch(console.log)
     }
-  }, [onTakePicture])
+  }, [onTakePicture, onTakePictureStart])
 
   return (
     <RNCamera
@@ -52,40 +63,82 @@ const CameraView: FC<CameraViewProps> = ({onTakePicture}) => {
   )
 }
 
-export const AnswersDetector: FC = () => {
-  const [answersImage, setAnswersImage] = useState<string | undefined>(
-    undefined
+interface Result {
+  answers: string[][]
+  responderId: number[][]
+  sheetBase64: string
+}
+
+interface ResultViewProps {
+  result: Result
+}
+
+const ResultView: React.FC<ResultViewProps> = ({result}) => {
+  return (
+    <Layout style={styles.result}>
+      <Text category="h2" status="primary">
+        Decoded image
+      </Text>
+      <Image
+        style={styles.imagePreview}
+        source={{
+          uri: `data:image/jpeg;base64,${result.sheetBase64}`
+        }}
+      />
+      <Text category="h3" status="primary">
+        Responder ID
+      </Text>
+      <Text>{result.responderId.map((sub) => sub.join('')).join(' ')}</Text>
+      <Text category="h3" status="primary">
+        Answers
+      </Text>
+      <Layout style={styles.answers}>
+        {result.answers.map((item, index) => (
+          <Text style={styles.item} key={index}>
+            {index + 1 + ': ' + item.join(', ')}
+          </Text>
+        ))}
+      </Layout>
+    </Layout>
   )
+}
 
-  const [aspectRatio, setAspectRation] = useState(1)
+export const AnswersDetector: FC = () => {
+  const [result, setResult] = useState<Result | undefined>(undefined)
+  const [loading, setLoading] = useState(false)
 
-  const onTakePicture = (picture: TakePictureResponse) => {
+  const onTakePicture = useCallback((picture: TakePictureResponse) => {
+    setLoading(true)
     OpenCV.decodeImage(
       picture.base64,
-      (error: any) => console.log({error}),
-      (result: any, ratio: any) => {
-        setAnswersImage(result)
-        setAspectRation(ratio)
+      (error: any) => {
+        console.log({error})
+        setLoading(false)
+      },
+      (res: any) => {
+        setResult(JSON.parse(res))
+        setLoading(false)
       }
     )
-  }
+  }, [])
 
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider mapping={mapping} theme={light}>
         <Layout style={styles.container}>
-          {answersImage ? (
-            <TouchableOpacity onPress={() => setAnswersImage(undefined)}>
-              <Image
-                style={{...styles.imagePreview, aspectRatio}}
-                source={{
-                  uri: `data:image/jpeg;base64,${answersImage}`
-                }}
-              />
-            </TouchableOpacity>
+          {result ? (
+            <ResultView result={result} />
           ) : (
-            <CameraView onTakePicture={onTakePicture} />
+            <CameraView
+              onTakePictureStart={() => setLoading(true)}
+              onTakePicture={onTakePicture}
+            />
+          )}
+          {loading && (
+            <Layout style={styles.spinner}>
+              <Spinner size="large" />
+            </Layout>
           )}
         </Layout>
       </ApplicationProvider>
@@ -98,8 +151,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'column',
-    backgroundColor: 'black'
+    flexDirection: 'column'
   },
   camera: {
     position: 'absolute',
@@ -118,6 +170,30 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   imagePreview: {
-    width: '75%'
+    width: '65%',
+    aspectRatio: 0.7
+  },
+  result: {
+    flex: 1,
+    width: '100%'
+  },
+  answers: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    overflow: 'hidden'
+  },
+  item: {
+    width: '20%'
+  },
+  spinner: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    backgroundColor: 'white',
+    width: '100%',
+    height: '100%'
   }
 })

@@ -3,11 +3,22 @@ package com.quizwizard.decoder;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.imgproc.Imgproc;
-import org.opencv.imgproc.Moments;
 
 import java.util.Comparator;
 
 class SortUtils {
+  public static class SortByX implements Comparator<Point> {
+    public int compare(Point p1, Point p2) {
+      return Double.compare(p1.x, p2.x);
+    }
+  }
+
+  public static class SortByY implements Comparator<Point> {
+    public int compare(Point p1, Point p2) {
+      return Double.compare(p1.y, p2.y);
+    }
+  }
+
   public static class SortByContourArea implements Comparator<MatOfPoint> {
     public int compare(MatOfPoint mat1, MatOfPoint mat2) {
       double area1 = Imgproc.contourArea(mat1);
@@ -16,28 +27,23 @@ class SortUtils {
     }
   }
 
-  public static class SortContoursTopToBottom implements Comparator<MatOfPoint> {
-    public int compare(MatOfPoint cnt1, MatOfPoint cnt2) {
-      Point c1 = getContourCenter(cnt1);
-      Point c2 = getContourCenter(cnt2);
-      return new SortByXY().compare(c1, c2);
-    }
+  public static class SortContoursByY implements Comparator<MatOfPoint> {
+    private Comparator<Point> sortByY = new SortByY();
 
-    private static Point getContourCenter(MatOfPoint cnt) {
-      Moments m = Imgproc.moments(cnt);
-      return new Point(m.m10 / m.m00, m.m01  /m.m00);
+    public int compare(MatOfPoint cnt1, MatOfPoint cnt2) {
+      Point p1 = Imgproc.boundingRect(cnt1).tl();
+      Point p2 = Imgproc.boundingRect(cnt2).tl();
+      return sortByY.compare(p1, p2);
     }
   }
 
-  public static class SortByXY implements Comparator<Point> {
-    public int compare(Point p1, Point p2) {
-      if (p1.x == p2.x && p1.y == p2.y) {
-        return 0;
-      } else if (p1.x < p2.x || (p1.x >= p2.x && p1.y < p2.y)) {
-        return -1;
-      } else {
-        return 1;
-      }
+  public static class SortContoursByX implements Comparator<MatOfPoint> {
+    private Comparator<Point> sortByX = new SortByX();
+
+    public int compare(MatOfPoint cnt1, MatOfPoint cnt2) {
+      Point p1 = Imgproc.boundingRect(cnt1).tl();
+      Point p2 = Imgproc.boundingRect(cnt2).tl();
+      return sortByX.compare(p1, p2);
     }
   }
 }

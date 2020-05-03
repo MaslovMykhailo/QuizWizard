@@ -1,7 +1,5 @@
 package com.quizwizard.decoder;
 
-import com.quizwizard.RNOpenCvLibraryModule;
-
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
@@ -9,45 +7,31 @@ import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
-import org.opencv.imgproc.Moments;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-public class OpenCvUtils {
+class OpenCvUtils {
 
   private static double getContourRatio(MatOfPoint cnt) {
     Rect boundingRect = Imgproc.boundingRect(cnt);
     return (double)boundingRect.width / boundingRect.height;
   }
 
-  static class SortByX implements Comparator<Point> {
-    public int compare(Point p1, Point p2) {
-      return (int)(p1.x - p2.x);
-    }
-  }
-
-  static class SortByY implements Comparator<Point> {
-    public int compare(Point p1, Point p2) {
-      return (int)(p1.y - p2.y);
-    }
-  }
-
   private static List<Point> orderRectPoints(MatOfPoint cnt) {
     List<Point> points = cnt.toList();
 
-    points.sort(new SortByY());
+    points.sort(new SortUtils.SortByY());
     List<Point> topPoints = new ArrayList<>(points.subList(0, 2));
     List<Point> bottomPoints = new ArrayList<>(points.subList(2, 4));
 
-    topPoints.sort(new SortByX());
+    topPoints.sort(new SortUtils.SortByX());
     Point tl = topPoints.get(0);
     Point tr = topPoints.get(1);
 
-    bottomPoints.sort(new SortByX());
+    bottomPoints.sort(new SortUtils.SortByX());
     Point bl = bottomPoints.get(0);
     Point br = bottomPoints.get(1);
 
@@ -55,7 +39,7 @@ public class OpenCvUtils {
     return Arrays.asList(ordered);
   }
 
-  public static Mat fourPointTransform(Mat image, MatOfPoint cnt) {
+  static Mat fourPointTransform(Mat image, MatOfPoint cnt) {
     List<Point> ordered = orderRectPoints(cnt);
 
     Point tl = ordered.get(0);
@@ -86,7 +70,7 @@ public class OpenCvUtils {
     return warped;
   }
 
-  public static List<MatOfPoint> splitContourHorizontal(MatOfPoint cnt) {
+  static List<MatOfPoint> splitContourHorizontal(MatOfPoint cnt) {
     List<Point> ordered = orderRectPoints(cnt);
 
     Point tl = ordered.get(0);
@@ -104,7 +88,25 @@ public class OpenCvUtils {
     return parts;
   }
 
-  public static MatOfPoint detectRect(Mat image, Size blurSize, double approxRatio) {
+  static List<MatOfPoint> splitContourVertical(MatOfPoint cnt) {
+    List<Point> ordered = orderRectPoints(cnt);
+
+    Point tl = ordered.get(0);
+    Point tr = ordered.get(1);
+    Point bl = ordered.get(2);
+    Point br = ordered.get(3);
+
+    Point lMedian = new Point((tl.x + bl.x) / 2, (tl.y + bl.y) / 2);
+    Point rMedian = new Point((tr.x + br.x) / 2, (tr.y + br.y) / 2);
+
+    List<MatOfPoint> parts = new ArrayList<>();
+    parts.add(new MatOfPoint(tl, tr, lMedian, rMedian));
+    parts.add(new MatOfPoint(lMedian, rMedian, bl, br));
+
+    return parts;
+  }
+
+  static MatOfPoint detectRect(Mat image, Size blurSize, double approxRatio) {
     Mat grey = new Mat();
     Imgproc.cvtColor(image, grey, Imgproc.COLOR_BGR2GRAY);
 
@@ -148,12 +150,7 @@ public class OpenCvUtils {
     return detectedRect.orElse(null);
   }
 
-  private static Point getContourCenter(MatOfPoint cnt) {
-    Moments m = Imgproc.moments(cnt);
-    return new Point(m.m10 / m.m00, m.m01 / m.m00);
-  }
-
-  public static boolean approximatelyEqual(double value, double equalTo, double thresholdP) {
+  static boolean approximatelyEqual(double value, double equalTo, double thresholdP) {
     double threshold = equalTo * thresholdP;
     return equalTo - threshold <= value && equalTo + threshold >= value;
   }
