@@ -30,6 +30,7 @@ build/
 local.properties
 *.iml
 android/app/src/main/jniLibs/
+google-services.json
 
 # Visual Studio Code
 #
