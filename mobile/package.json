@@ -1,7 +1,8 @@
 {
-  "name": "quiz-wizard",
+  "name": "quiz-wizard-mobile",
   "version": "0.0.1",
   "private": true,
+  "author": "Mykhailo Maslov <maslov.mikhail2000@gmail.com>",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
