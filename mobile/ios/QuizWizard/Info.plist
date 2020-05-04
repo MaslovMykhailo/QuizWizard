@@ -68,5 +68,20 @@
 	<!-- Include this only if you are planning to use the microphone for video recording -->
 	<!-- <key>NSMicrophoneUsageDescription</key>
 	<string>Your message to user when the microphone is accessed for the first time</string> -->
+  
+  <!-- Facebook auth-->
+  <key>CFBundleURLTypes</key>
+  <array>
+    <dict>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>fb260666531650636</string>
+    </array>
+    </dict>
+  </array>
+  <key>FacebookAppID</key>
+  <string>260666531650636</string>
+  <key>FacebookDisplayName</key>
+  <string>QuizWizard</string>
 </dict>
 </plist>

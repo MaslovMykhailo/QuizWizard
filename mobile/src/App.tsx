@@ -1,4 +1,4 @@
-import React, {useState, useCallback, FC} from 'react'
+import React, {useState, useCallback, FC, useEffect} from 'react'
 import {
   Home,
   BlurRecognitionCamera,
@@ -49,6 +49,12 @@ export const LegacyApp: FC = () => {
 export {ImageProcessor} from '@components'
 
 export const App: FC = () => {
+  useEffect(() => {
+    AccessToken.getCurrentAccessToken().then((data) => {
+      console.log(data?.accessToken.toString())
+    })
+  }, [])
+
   return (
     <View>
       <LoginButton
