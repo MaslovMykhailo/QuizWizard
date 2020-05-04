@@ -1,10 +1,12 @@
-import React, {useState, useCallback} from 'react'
+import React, {useState, useCallback, FC} from 'react'
 import {
   Home,
   BlurRecognitionCamera,
   CircleRecognitionCamera,
   AnswersDetector
 } from '@components'
+import {View} from 'react-native'
+import {LoginButton, AccessToken} from 'react-native-fbsdk'
 
 type Screen =
   | 'home'
@@ -12,7 +14,7 @@ type Screen =
   | 'blur-recognition-camera'
   | 'circle-recognition-camera'
 
-export const App: React.FC = () => {
+export const LegacyApp: FC = () => {
   const [screen, setScreen] = useState<Screen>('home')
 
   const navigateToHome = useCallback(() => setScreen('home'), [])
@@ -45,3 +47,24 @@ export const App: React.FC = () => {
 }
 
 export {ImageProcessor} from '@components'
+
+export const App: FC = () => {
+  return (
+    <View>
+      <LoginButton
+        onLoginFinished={(error, result) => {
+          if (error) {
+            console.log('login has error: ' + result.error)
+          } else if (result.isCancelled) {
+            console.log('login is cancelled.')
+          } else {
+            AccessToken.getCurrentAccessToken().then((data) => {
+              console.log(data?.accessToken.toString())
+            })
+          }
+        }}
+        onLogoutFinished={() => console.log('logout.')}
+      />
+    </View>
+  )
+}

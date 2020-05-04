@@ -19,6 +19,7 @@
     "react-native": "0.61.5",
     "react-native-camera": "^3.21.0",
     "react-native-easy-toast": "^1.2.0",
+    "react-native-fbsdk": "^1.1.2",
     "react-native-svg": "^12.1.0"
   },
   "devDependencies": {
@@ -27,6 +28,7 @@
     "@react-native-community/eslint-config": "^0.0.5",
     "@types/jest": "^24.0.18",
     "@types/react-native": "^0.60.22",
+    "@types/react-native-fbsdk": "^1.1.0",
     "@types/react-test-renderer": "16.9.0",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
