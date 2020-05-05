@@ -18,7 +18,8 @@ module.exports = {
         ],
         alias: {
           '@components': './src/components',
-          '@native-components': './src/native-components'
+          '@native-components': './src/native-components',
+          '@localization': './src/localization'
         }
       }
     ]
