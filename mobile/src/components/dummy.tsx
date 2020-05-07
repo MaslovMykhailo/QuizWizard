@@ -1,30 +1,34 @@
 import React, {FC} from 'react'
 import {useTranslation} from 'react-i18next'
-import {Text, Button} from '@ui-kitten/components'
-import {AsyncStorage} from 'react-native'
+import {Text, Button, Card} from '@ui-kitten/components'
+import {useLanguage, useTheme, useUserPreferences} from '@providers'
+import {observer} from 'mobx-react-lite'
 
-export const Dummy: FC = () => {
-  const [t, i18n] = useTranslation()
+export const Dummy: FC = observer(() => {
+  const [t] = useTranslation()
+  const [, setLanguage] = useLanguage()
 
   const onPressUa = () => {
-    i18n.changeLanguage('ua')
-    AsyncStorage.setItem('lng', 'ua')
+    setLanguage('ua')
   }
   const onPressRu = () => {
-    i18n.changeLanguage('ru')
-    AsyncStorage.setItem('lng', 'ru')
+    setLanguage('ru')
   }
   const onPressEn = () => {
-    i18n.changeLanguage('en')
-    AsyncStorage.setItem('lng', 'en')
+    setLanguage('en')
   }
 
+  const [, toggleTheme] = useTheme()
+  const userPreferences = useUserPreferences()
+  // console.log(userPreferences.store.theme)
+
   return (
-    <>
+    <Card>
       <Text>{t<string>('TEST_KEY')}</Text>
       <Button onPress={onPressUa} children="ua" />
       <Button onPress={onPressEn} children="en" />
       <Button onPress={onPressRu} children="ru" />
-    </>
+      <Button onPress={toggleTheme} children={userPreferences.store.theme} />
+    </Card>
   )
-}
+})

@@ -1,0 +1,47 @@
+import {createContext, useContext} from 'react'
+import {light, dark} from '@eva-design/eva'
+import {UserPreferences, userPreferencesStore} from '@stores'
+import {i18next, Language} from '@localization'
+import {Theme} from '@types'
+
+type ThemeConfig = typeof light & typeof dark
+type ThemeMap<T> = Record<Theme, T>
+
+const themeMap: ThemeMap<ThemeConfig> = {light, dark}
+const oppositeThemeMap: ThemeMap<Theme> = {light: 'dark', dark: 'light'}
+
+type UserPreferencesContextValue = {
+  store: UserPreferences
+  toggleTheme: () => void
+  setLanguage: (lng: Language) => void
+}
+
+export const userPreferencesValue: UserPreferencesContextValue = {
+  store: userPreferencesStore,
+  toggleTheme: () => {
+    userPreferencesStore.setTheme(oppositeThemeMap[userPreferencesStore.theme])
+  },
+  setLanguage: (lng) => {
+    i18next
+      .changeLanguage(lng)
+      .then(() => userPreferencesStore.setLanguage(lng))
+  }
+}
+
+const UserPreferencesContext = createContext<UserPreferencesContextValue>(
+  userPreferencesValue
+)
+
+export const UserPreferencesProvider = UserPreferencesContext.Provider
+
+export const useUserPreferences = () => useContext(UserPreferencesContext)
+
+export const useTheme = () => {
+  const {store, toggleTheme} = useUserPreferences()
+  return [themeMap[store.theme], toggleTheme, store.setTheme] as const
+}
+
+export const useLanguage = () => {
+  const {store, setLanguage} = useUserPreferences()
+  return [store.language, setLanguage] as const
+}
