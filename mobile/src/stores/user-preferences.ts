@@ -5,7 +5,7 @@ import {Theme} from '@types'
 
 import {PersistedStore} from './types'
 
-export class UserPreferences implements PersistedStore {
+export class UserPreferencesStore implements PersistedStore {
   private i18next: I18n
 
   constructor(i18next: I18n) {

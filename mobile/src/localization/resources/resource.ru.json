@@ -1,3 +1,5 @@
 {
-  "TEST_KEY": "Привет"
+  "TEST_KEY": "Привет",
+  "APP_NAME": "Quiz Wizard",
+  "LOGIN_BUTTON_TEXT": "Login"
 }

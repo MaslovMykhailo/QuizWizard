@@ -23,7 +23,10 @@ module.exports = {
           '@localization': './src/localization',
           '@types': './src/types',
           '@providers': './src/providers',
-          '@stores': './src/stores'
+          '@stores': './src/stores',
+          '@utils': './src/utils',
+          '@screens': './src/screens',
+          '@icons': './src/icons'
         }
       }
     ]
