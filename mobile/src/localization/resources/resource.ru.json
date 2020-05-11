@@ -1,5 +1,6 @@
 {
   "TEST_KEY": "Привет",
   "APP_NAME": "Quiz Wizard",
+  "APP_CORPORATION_LABEL": "© 2020 QW",
   "LOGIN_BUTTON_TEXT": "Login"
 }

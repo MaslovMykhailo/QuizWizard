@@ -5,7 +5,7 @@ import {
   GraphRequestManager,
   GraphRequest
 } from 'react-native-fbsdk'
-import {ignore, ObservableResource, ResourceStatus} from '@utils'
+import {ignore, ObservableResource} from '@utils'
 
 export class UserStore {
   private graphRequestManager = new GraphRequestManager()
@@ -23,7 +23,7 @@ export class UserStore {
   }
 
   @computed get userLoggedIn() {
-    return this.accessToken.data.get() !== null
+    return this.accessToken.data !== null
   }
 
   @action fetchAccessToken = () => {
@@ -31,16 +31,15 @@ export class UserStore {
     AccessToken.getCurrentAccessToken()
       .then((token) => {
         if (token) {
-          this.accessToken.data.set(token.accessToken)
+          this.accessToken.success(token.accessToken)
           this.userId = token.getUserId()
         } else {
-          this.accessToken.data.set(null)
-          this.accessToken.status = ResourceStatus.Success
+          this.accessToken.notFound()
           this.userId = null
         }
       })
       .catch((error: object) => {
-        this.accessToken.error.set(error)
+        this.accessToken.fail(error)
         this.userId = null
       })
   }
@@ -85,11 +84,14 @@ export class UserStore {
   private getUserNameRequest = () =>
     new GraphRequest('/me', null, (error, result) => {
       if (error) {
-        console.log(error)
-        return this.userName.error.set(error)
+        return this.userName.fail(error)
       }
 
-      console.log(result)
+      if (result && 'name' in result) {
+        this.userName.success((result as {name: string}).name)
+      } else {
+        this.userName.notFound()
+      }
     })
 
   private getUserPhotoUrlRequest = () =>
@@ -98,11 +100,14 @@ export class UserStore {
       null,
       (error, result) => {
         if (error) {
-          console.log()
-          return this.userPhotoUrl.error.set(error)
+          return this.userPhotoUrl.fail(error)
         }
 
-        console.log(result)
+        if (result && 'url' in result) {
+          this.userPhotoUrl.success((result as {url: string}).url)
+        } else {
+          this.userPhotoUrl.notFound()
+        }
       }
     )
 }

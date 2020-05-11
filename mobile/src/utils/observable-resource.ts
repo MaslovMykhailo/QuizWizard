@@ -4,31 +4,40 @@ export enum ResourceStatus {
   Success = 'Success',
   Loading = 'Loading',
   Error = 'Error',
-  NotAsked = 'NotAsked'
+  Unknown = 'Unknown'
 }
 
 export class ObservableResource<D, E = object> {
-  @observable status: ResourceStatus = ResourceStatus.NotAsked
+  @observable status: ResourceStatus = ResourceStatus.Unknown
 
-  data = observable.box<D | null>(null)
+  private dataRecord = observable.box<D | null>(null)
 
-  error = observable.box<E | null>(null)
+  private errorRecord = observable.box<E | null>(null)
 
-  constructor() {
-    this.data.observe((data) => {
-      if (data.newValue !== null) {
-        this.error.set(null)
-      }
-      if (this.status !== ResourceStatus.Success) {
-        this.status = ResourceStatus.Success
-      }
-    })
-    this.error.observe((error) => {
-      if (error.newValue === null) return
-      if (this.status !== ResourceStatus.Error) {
-        this.status = ResourceStatus.Error
-      }
-    })
+  constructor({data, error}: {data?: D; error?: E} = {}) {
+    if (error !== undefined) {
+      this.errorRecord.set(error)
+      this.status = ResourceStatus.Error
+    }
+
+    if (data !== undefined) {
+      this.dataRecord.set(data)
+      this.status = ResourceStatus.Success
+    }
+  }
+
+  @action success = (data: D) => {
+    this.dataRecord.set(data)
+    this.status = ResourceStatus.Success
+  }
+
+  @action notFound = () => {
+    this.dataRecord.set(null)
+    this.status = ResourceStatus.Success
+  }
+
+  @action fail = (error: E) => {
+    this.errorRecord.set(error)
   }
 
   @action fetch = () => {
@@ -36,9 +45,21 @@ export class ObservableResource<D, E = object> {
   }
 
   @action clear = () => {
-    this.status = ResourceStatus.NotAsked
-    this.data.set(null)
-    this.error.set(null)
+    this.status = ResourceStatus.Unknown
+    this.dataRecord.set(null)
+    this.errorRecord.set(null)
+  }
+
+  @computed get data() {
+    return this.dataRecord.get()
+  }
+
+  @computed get error() {
+    return this.errorRecord.get()
+  }
+
+  @computed get initialized() {
+    return this.status !== ResourceStatus.Unknown
   }
 
   @computed get loading() {
@@ -46,6 +67,8 @@ export class ObservableResource<D, E = object> {
   }
 
   @computed get updating() {
-    return this.status === ResourceStatus.Loading && this.data.get() !== null
+    return (
+      this.status === ResourceStatus.Loading && this.dataRecord.get() !== null
+    )
   }
 }

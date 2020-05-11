@@ -45,3 +45,8 @@ export const useLanguage = () => {
   const {store, setLanguage} = useUserPreferences()
   return [store.language, setLanguage] as const
 }
+
+export const useUserPreferencesStatus = () => {
+  const {store} = useUserPreferences()
+  return [store.initializing] as const
+}

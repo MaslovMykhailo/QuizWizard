@@ -24,8 +24,12 @@ export const LoginScreen: FC = () => {
           size="medium"
           onPress={login}
           accessoryLeft={(props) => <FacebookIcon {...props} />}>
-          {() => (
-            <Text category="p1" children={t<string>('LOGIN_BUTTON_TEXT')} />
+          {(props) => (
+            <Text
+              {...props}
+              category="p1"
+              children={t<string>('LOGIN_BUTTON_TEXT')}
+            />
           )}
         </Button>
       </Layout>

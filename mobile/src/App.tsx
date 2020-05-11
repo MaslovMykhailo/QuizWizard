@@ -17,7 +17,8 @@ import {
   UserPreferencesProvider,
   userPreferencesValue,
   useTheme,
-  useAuth
+  useAuth,
+  useUserPreferencesStatus
 } from '@providers'
 import {NavigationContainer} from '@react-navigation/native'
 import {
@@ -44,12 +45,13 @@ const Tab = createBottomTabNavigator()
 const Root: FC = observer(() => {
   const [theme] = useTheme()
   const [isAuth, isAuthProcessing] = useAuth()
+  const [isPreferencesInitializing] = useUserPreferencesStatus()
 
   return (
     <ApplicationProvider mapping={mapping} theme={theme}>
       <NavigationContainer>
         <Tab.Navigator tabBar={(props) => <BottomTabBar {...props} />}>
-          {isAuthProcessing ? (
+          {isPreferencesInitializing || isAuthProcessing ? (
             <Tab.Screen
               name="Initialization"
               options={{tabBarVisible: false}}

@@ -8,8 +8,11 @@ import {PersistedStore} from './types'
 export class UserPreferencesStore implements PersistedStore {
   private i18next: I18n
 
+  @observable initializing: boolean
+
   constructor(i18next: I18n) {
     this.i18next = i18next
+    this.initializing = true
   }
 
   @persist @observable theme: Theme = 'light'
@@ -23,6 +26,10 @@ export class UserPreferencesStore implements PersistedStore {
   }
 
   onHydrate = () => {
-    this.i18next.changeLanguage(this.language || getDeviceLanguage())
+    const lng = this.language || getDeviceLanguage()
+    this.i18next.changeLanguage(lng).then(() => {
+      this.language = lng
+      this.initializing = false
+    })
   }
 }
