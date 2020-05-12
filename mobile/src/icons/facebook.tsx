@@ -1,6 +1,6 @@
-import React, {FC} from 'react'
+import React from 'react'
 import {Icon, IconProps} from '@ui-kitten/components'
 
-export const FacebookIcon: FC<IconProps> = (props) => (
+export const FacebookIcon = (props?: IconProps) => (
   <Icon {...props} name="facebook" />
 )

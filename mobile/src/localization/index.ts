@@ -19,5 +19,5 @@ i18n.use(initReactI18next).init({
 
 export const i18next = i18n
 export type I18n = typeof i18n
-export {Language} from './resources'
+export {Language, languages} from './resources'
 export {getDeviceLanguage} from './device-locale'

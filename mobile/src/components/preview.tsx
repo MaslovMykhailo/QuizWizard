@@ -1,31 +1,32 @@
 import React, {FC} from 'react'
+import {View} from 'react-native'
 import {useTranslation} from 'react-i18next'
-import {Layout, Text, StyleService, useStyleSheet} from '@ui-kitten/components'
+import {Text, StyleService, useStyleSheet} from '@ui-kitten/components'
 
 export const Preview: FC = ({children}) => {
   const [t] = useTranslation()
   const styles = useStyleSheet(themedStyles)
 
   return (
-    <Layout style={styles.root}>
-      <Layout style={[styles.wrapper, styles.appNameWrapper]}>
+    <View style={styles.root}>
+      <View style={[styles.wrapper, styles.appNameWrapper]}>
         <Text
           category="h1"
           selectable={false}
           style={styles.text}
           children={t<string>('APP_NAME')}
         />
-      </Layout>
+      </View>
       {children}
-      <Layout style={[styles.wrapper, styles.appLabelWrapper]}>
+      <View style={[styles.wrapper, styles.appLabelWrapper]}>
         <Text
           category="label"
           selectable={false}
           style={styles.text}
           children={t<string>('APP_CORPORATION_LABEL')}
         />
-      </Layout>
-    </Layout>
+      </View>
+    </View>
   )
 }
 

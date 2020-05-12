@@ -1,10 +1,6 @@
 import React, {FC} from 'react'
-import {
-  Layout,
-  Spinner,
-  StyleService,
-  useStyleSheet
-} from '@ui-kitten/components'
+import {View} from 'react-native'
+import {Spinner, StyleService, useStyleSheet} from '@ui-kitten/components'
 import {Preview} from '@components'
 
 export const InitializationScreen: FC = () => {
@@ -12,9 +8,9 @@ export const InitializationScreen: FC = () => {
 
   return (
     <Preview>
-      <Layout style={styles.spinnerWrapper}>
+      <View style={styles.spinnerWrapper}>
         <Spinner size="large" />
-      </Layout>
+      </View>
     </Preview>
   )
 }

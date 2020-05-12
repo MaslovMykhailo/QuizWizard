@@ -1,7 +1,7 @@
 import {createContext, useContext} from 'react'
 import {light, dark} from '@eva-design/eva'
 import {UserPreferencesStore, userPreferencesStore} from '@stores'
-import {i18next, Language} from '@localization'
+import {i18next, Language, languages} from '@localization'
 import {Theme} from '@types'
 
 type ThemeConfig = typeof light & typeof dark
@@ -36,14 +36,19 @@ export const UserPreferencesProvider = UserPreferencesContext.Provider
 
 export const useUserPreferences = () => useContext(UserPreferencesContext)
 
+export const useAppTheme = () => {
+  const {store} = useUserPreferences()
+  return themeMap[store.theme]
+}
+
 export const useTheme = () => {
   const {store, toggleTheme} = useUserPreferences()
-  return [themeMap[store.theme], toggleTheme, store.setTheme] as const
+  return [store.theme, toggleTheme, store.setTheme] as const
 }
 
 export const useLanguage = () => {
   const {store, setLanguage} = useUserPreferences()
-  return [store.language, setLanguage] as const
+  return [store.language, setLanguage, languages] as const
 }
 
 export const useUserPreferencesStatus = () => {

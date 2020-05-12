@@ -1,5 +1,4 @@
 import React, {FC} from 'react'
-import {StyleSheet} from 'react-native'
 import {I18nextProvider} from 'react-i18next'
 import {observer} from 'mobx-react-lite'
 import 'mobx-react-lite/batchingForReactNative'
@@ -16,8 +15,8 @@ import {mapping} from '@eva-design/eva'
 import {
   UserPreferencesProvider,
   userPreferencesValue,
-  useTheme,
   useAuth,
+  useAppTheme,
   useUserPreferencesStatus
 } from '@providers'
 import {NavigationContainer} from '@react-navigation/native'
@@ -26,8 +25,10 @@ import {
   BottomTabBarProps
 } from '@react-navigation/bottom-tabs'
 import {i18next} from '@localization'
-import {InitializationScreen, LoginScreen} from '@screens'
+import {InitializationScreen, LoginScreen, OptionsScreen} from '@screens'
 import {Dummy, Preview} from '@components'
+
+import {OptionsIcon} from './icons'
 
 export const App: FC = () => (
   <UserPreferencesProvider value={userPreferencesValue}>
@@ -43,7 +44,7 @@ export const App: FC = () => (
 const Tab = createBottomTabNavigator()
 
 const Root: FC = observer(() => {
-  const [theme] = useTheme()
+  const theme = useAppTheme()
   const [isAuth, isAuthProcessing] = useAuth()
   const [isPreferencesInitializing] = useUserPreferencesStatus()
 
@@ -61,6 +62,7 @@ const Root: FC = observer(() => {
             <>
               <Tab.Screen name="Home" component={Dummy} />
               <Tab.Screen name="Home2" component={Preview} />
+              <Tab.Screen name="Options" component={OptionsScreen} />
             </>
           ) : (
             <Tab.Screen
@@ -77,19 +79,12 @@ const Root: FC = observer(() => {
 
 const BottomTabBar: FC<BottomTabBarProps> = ({navigation, state}) => (
   <BottomNavigation
-    style={styles.tabs}
     selectedIndex={state.index}
     onSelect={(index) => navigation.navigate(state.routeNames[index])}>
     <BottomNavigationTab
       icon={(props) => <Icon {...props} name="person-outline" />}
     />
     <BottomNavigationTab icon={(props) => <Icon {...props} name="home" />} />
+    <BottomNavigationTab icon={OptionsIcon} />
   </BottomNavigation>
 )
-
-const styles = StyleSheet.create({
-  tabs: {
-    // height: 0
-    // bottom: 0
-  }
-})

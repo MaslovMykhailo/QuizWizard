@@ -2,5 +2,14 @@
   "TEST_KEY": "Привет",
   "APP_NAME": "Quiz Wizard",
   "APP_CORPORATION_LABEL": "© 2020 QW",
-  "LOGIN_BUTTON_TEXT": "Login"
+  "LOGIN_BUTTON_TEXT": "Login",
+  "LOGOUT_BUTTON_TEXT": "Logout",
+  "LANGUAGE_EN": "English",
+  "LANGUAGE_UA": "Українська",
+  "LANGUAGE_RU": "Русский",
+  "OPTIONS_SCREEN_TITLE": "Настройки",
+  "OPTIONS_SCREEN_SUBTITLE_THEME": "Тема",
+  "OPTIONS_SCREEN_SUBTITLE_LANGUAGE": "Язык",
+  "THEME_DARK": "Dark",
+  "THEME_LIGHT": "Light"
 }
