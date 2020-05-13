@@ -12,11 +12,7 @@ export const LogoutButton: FC<ButtonProps> = (props) => {
   return (
     <FacebookButton size="medium" {...props} onPress={logout}>
       {(textProps) => (
-        <Text
-          {...textProps}
-          category="p1"
-          children={t<string>('LOGOUT_BUTTON_TEXT')}
-        />
+        <Text {...textProps} children={t<string>('LOGOUT_BUTTON_TEXT')} />
       )}
     </FacebookButton>
   )

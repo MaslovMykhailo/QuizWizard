@@ -8,8 +8,6 @@ import {
 import {ignore, ObservableResource} from '@utils'
 
 export class UserStore {
-  private graphRequestManager = new GraphRequestManager()
-
   @observable userId: string | null = null
 
   userName = new ObservableResource<string>()
@@ -19,7 +17,11 @@ export class UserStore {
   accessToken = new ObservableResource<string>()
 
   constructor() {
-    this.fetchAccessToken()
+    this.fetchAccessToken().then(() => {
+      if (this.userLoggedIn) {
+        this.fetchUserData()
+      }
+    })
   }
 
   @computed get userLoggedIn() {
@@ -28,7 +30,7 @@ export class UserStore {
 
   @action fetchAccessToken = () => {
     this.accessToken.fetch()
-    AccessToken.getCurrentAccessToken()
+    return AccessToken.getCurrentAccessToken()
       .then((token) => {
         if (token) {
           this.accessToken.success(token.accessToken)
@@ -47,8 +49,7 @@ export class UserStore {
   @action fetchUserData = () => {
     this.userName.fetch()
     this.userPhotoUrl.fetch()
-
-    this.graphRequestManager
+    new GraphRequestManager()
       .addRequest(this.getUserNameRequest())
       .addRequest(this.getUserPhotoUrlRequest())
       .start()
@@ -57,13 +58,7 @@ export class UserStore {
   @action loginUser = () => {
     LoginManager.logInWithPermissions(['public_profile'])
       .then((result) => {
-        if (result.error) {
-          console.log('Error')
-          return
-        }
-
-        if (result.isCancelled) {
-          console.log('Cancelled')
+        if (result.error || result.isCancelled) {
           return
         }
 
@@ -103,8 +98,8 @@ export class UserStore {
           return this.userPhotoUrl.fail(error)
         }
 
-        if (result && 'url' in result) {
-          this.userPhotoUrl.success((result as {url: string}).url)
+        if (result && 'data' in result) {
+          this.userPhotoUrl.success((result as {data: {url: string}}).data.url)
         } else {
           this.userPhotoUrl.notFound()
         }

@@ -11,5 +11,9 @@
   "OPTIONS_SCREEN_SUBTITLE_THEME": "Theme",
   "OPTIONS_SCREEN_SUBTITLE_LANGUAGE": "Language",
   "THEME_DARK": "Dark",
-  "THEME_LIGHT": "Light"
+  "THEME_LIGHT": "Light",
+  "USER_PROFILE_TITLE": "Profile",
+  "ADD_QUIZ": "Add new quiz",
+  "ADD_QUIZ_ANSWERS": "Add quiz answers",
+  "DOWNLOAD_ANSWERS_SHEET": "Download answers sheet"
 }
