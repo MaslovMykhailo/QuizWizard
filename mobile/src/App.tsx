@@ -11,12 +11,14 @@ import {mapping} from '@eva-design/eva'
 import {useAuth, useAppTheme, useUserPreferencesStatus} from '@providers'
 import {i18next} from '@localization'
 import {
+  AppRoute,
   InitializationScreen,
   LoginScreen,
   OptionsScreen,
-  HomeScreen
+  HomeScreen,
+  QuizzesScreen
 } from '@screens'
-import {NavigationBar} from '@components'
+import {NavigationBar, Screen} from '@components'
 
 const Tab = createBottomTabNavigator()
 
@@ -33,18 +35,20 @@ export const App: FC = observer(() => {
           <Tab.Navigator tabBar={NavigationBar}>
             {isPreferencesInitializing || isAuthProcessing ? (
               <Tab.Screen
-                name="Initialization"
+                name={AppRoute.Initialization}
                 options={{tabBarVisible: false}}
                 component={InitializationScreen}
               />
             ) : isAuth ? (
               <>
-                <Tab.Screen name="Home" component={HomeScreen} />
-                <Tab.Screen name="Options" component={OptionsScreen} />
+                <Tab.Screen name={AppRoute.Home} component={HomeScreen} />
+                <Tab.Screen name={AppRoute.Quizzes} component={QuizzesScreen} />
+                <Tab.Screen name={AppRoute.Answers} component={Screen} />
+                <Tab.Screen name={AppRoute.Options} component={OptionsScreen} />
               </>
             ) : (
               <Tab.Screen
-                name="Login"
+                name={AppRoute.Login}
                 options={{tabBarVisible: false}}
                 component={LoginScreen}
               />

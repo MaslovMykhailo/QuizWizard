@@ -1,3 +1,4 @@
+export * from './routes'
 export * from './initialization'
 export * from './login'
 export * from './options'
