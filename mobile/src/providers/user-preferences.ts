@@ -16,7 +16,7 @@ type UserPreferencesContextValue = {
   setLanguage: (lng: Language) => void
 }
 
-export const userPreferencesValue: UserPreferencesContextValue = {
+const UserPreferencesContext = createContext<UserPreferencesContextValue>({
   store: userPreferencesStore,
   toggleTheme: () => {
     userPreferencesStore.setTheme(oppositeThemeMap[userPreferencesStore.theme])
@@ -26,13 +26,7 @@ export const userPreferencesValue: UserPreferencesContextValue = {
       .changeLanguage(lng)
       .then(() => userPreferencesStore.setLanguage(lng))
   }
-}
-
-const UserPreferencesContext = createContext<UserPreferencesContextValue>(
-  userPreferencesValue
-)
-
-export const UserPreferencesProvider = UserPreferencesContext.Provider
+})
 
 export const useUserPreferences = () => useContext(UserPreferencesContext)
 

@@ -26,18 +26,25 @@ export class ObservableResource<D, E = object> {
     }
   }
 
-  @action success = (data: D) => {
+  @action success = (data: D, setStatus = true) => {
     this.dataRecord.set(data)
-    this.status = ResourceStatus.Success
+    if (setStatus) {
+      this.status = ResourceStatus.Success
+    }
   }
 
-  @action notFound = () => {
+  @action notFound = (setStatus = true) => {
     this.dataRecord.set(null)
-    this.status = ResourceStatus.Success
+    if (setStatus) {
+      this.status = ResourceStatus.Success
+    }
   }
 
-  @action fail = (error: E) => {
+  @action fail = (error: E, setStatus = true) => {
     this.errorRecord.set(error)
+    if (setStatus) {
+      this.status = ResourceStatus.Error
+    }
   }
 
   @action fetch = () => {
@@ -56,6 +63,10 @@ export class ObservableResource<D, E = object> {
 
   @computed get error() {
     return this.errorRecord.get()
+  }
+
+  @computed get ready() {
+    return this.status === ResourceStatus.Success
   }
 
   @computed get initialized() {

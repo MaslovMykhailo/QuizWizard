@@ -26,7 +26,8 @@ module.exports = {
           '@stores': './src/stores',
           '@utils': './src/utils',
           '@screens': './src/screens',
-          '@icons': './src/icons'
+          '@icons': './src/icons',
+          '@api': './src/api'
         }
       }
     ]

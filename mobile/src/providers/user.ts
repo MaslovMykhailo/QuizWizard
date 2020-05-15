@@ -9,8 +9,6 @@ export const UserContext = createContext<UserContextValue>({
   store: userStore
 })
 
-export const UserContextProvider = UserContext.Provider
-
 export const useUserLogin = () => {
   const {store} = useContext(UserContext)
   return store.loginUser
