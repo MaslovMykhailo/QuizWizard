@@ -27,7 +27,8 @@ module.exports = {
           '@utils': './src/utils',
           '@screens': './src/screens',
           '@icons': './src/icons',
-          '@api': './src/api'
+          '@api': './src/api',
+          '@constants': './src/constants'
         }
       }
     ]

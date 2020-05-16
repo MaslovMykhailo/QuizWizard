@@ -20,5 +20,13 @@
   "NEW_QUIZ_SCREEN_TITLE": "New quiz",
   "ALL_QUIZZES_SCREEN_TITLE": "Your quizzes",
   "NO_QUIZZES_TITLE": "You do not have quizzes yet 😢",
-  "NO_QUIZZES_SUBTITLE": "When you add new quiz, you will see it here!"
+  "NO_QUIZZES_SUBTITLE": "When you add new quiz, you will see it here!",
+  "ADD_QUESTION": "Add question",
+  "QUIZ_NAME_LABEL": "Quiz name",
+  "QUIZ_NAME_PLACEHOLDER": "Magic quiz",
+  "CANCEL": "Cancel",
+  "SAVE": "Save",
+  "COPY": "Copy",
+  "DELETE": "Delete",
+  "COPY_INDICATOR": "copy"
 }

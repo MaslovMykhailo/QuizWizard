@@ -24,5 +24,13 @@
   "DELETE_MODAL_TITLE": "Are you sure?",
   "DELETE_DIALOG_DECLINE": "Cancel",
   "DELETE_DIALOG_ACCEPT": "Delete",
-  "DELETE_QUIZ_CONFIRMATION_TEXT": "{{quiz}} will be deleted!"
+  "DELETE_QUIZ_CONFIRMATION_TEXT": "{{quiz}} will be deleted!",
+  "ADD_QUESTION": "Add question",
+  "QUIZ_NAME_LABEL": "Quiz name",
+  "QUIZ_NAME_PLACEHOLDER": "Magic quiz",
+  "CANCEL": "Cancel",
+  "SAVE": "Save",
+  "COPY": "Copy",
+  "DELETE": "Delete",
+  "COPY_INDICATOR": "copy"
 }

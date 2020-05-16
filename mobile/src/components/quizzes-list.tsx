@@ -21,7 +21,6 @@ export interface QuizzesListProps {
   onShowQuizAnswersPress(quizId: UUID): void
   onCopyQuizPress(quizId: UUID): void
   onDeleteQuizPress(quizId: UUID): void
-  onAddNewQuizPress(): void
 }
 
 export const QuizzesList: FC<QuizzesListProps> = memo(
@@ -30,8 +29,7 @@ export const QuizzesList: FC<QuizzesListProps> = memo(
     onQuizPress,
     onShowQuizAnswersPress,
     onCopyQuizPress,
-    onDeleteQuizPress,
-    onAddNewQuizPress
+    onDeleteQuizPress
   }) => {
     const [t] = useTranslation()
     const styles = useStyleSheet(themedStyles)
@@ -103,7 +101,7 @@ export const QuizzesList: FC<QuizzesListProps> = memo(
           )}
         />
         <View style={[styles.wrapper, styles.addNewQuizWrapper]}>
-          <AddQuizButton onPress={onAddNewQuizPress} />
+          <AddQuizButton />
         </View>
       </>
     )

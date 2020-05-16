@@ -6,13 +6,26 @@ import {useQuizzesStore} from '@providers'
 import {Screen, QuizzesList, DeleteModal, useDeleteModal} from '@components'
 import {UUID} from '@types'
 import {useTranslation} from 'react-i18next'
+import {useNavigation} from '@react-navigation/native'
+import {QuizzesRoute} from '@constants'
 
 export const AllQuizzesScreen: FC = observer(() => {
   const [t] = useTranslation()
   const styles = useStyleSheet(themedStyles)
+  const {navigate} = useNavigation()
 
   const quizzesStore = useQuizzesStore()
   const resource = quizzesStore.quizzes
+
+  const onQuizPress = useCallback(
+    (quizId: UUID) => navigate(QuizzesRoute.Quiz, {quizId}),
+    [navigate]
+  )
+
+  const onCopyQuizPress = useCallback(
+    (quizId: UUID) => navigate(QuizzesRoute.NewQuiz, {quizId}),
+    [navigate]
+  )
 
   const [quizIdToDelete, setQuizIdToDelete] = useState<UUID | undefined>()
   const onDeleteQuiz = useCallback(() => {
@@ -40,10 +53,9 @@ export const AllQuizzesScreen: FC = observer(() => {
       ) : (
         <QuizzesList
           quizzes={quizzesStore.quizzesList}
-          onAddNewQuizPress={() => {}}
-          onQuizPress={() => {}}
+          onQuizPress={onQuizPress}
           onShowQuizAnswersPress={() => {}}
-          onCopyQuizPress={() => {}}
+          onCopyQuizPress={onCopyQuizPress}
           onDeleteQuizPress={onDeleteQuizPress}
         />
       )}

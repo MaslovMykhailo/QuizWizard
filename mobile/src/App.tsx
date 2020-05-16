@@ -11,7 +11,6 @@ import {mapping} from '@eva-design/eva'
 import {useAuth, useAppTheme, useUserPreferencesStatus} from '@providers'
 import {i18next} from '@localization'
 import {
-  AppRoute,
   InitializationScreen,
   LoginScreen,
   OptionsScreen,
@@ -19,6 +18,7 @@ import {
   QuizzesScreen
 } from '@screens'
 import {NavigationBar, Screen} from '@components'
+import {AppRoute} from '@constants'
 
 const Tab = createBottomTabNavigator()
 

@@ -34,7 +34,8 @@
     "react-native-reanimated": "^1.8.0",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.7.0",
-    "react-native-svg": "^12.1.0"
+    "react-native-svg": "^12.1.0",
+    "react-native-uuid-generator": "^6.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -44,6 +45,7 @@
     "@types/jest": "^24.0.18",
     "@types/react-native": "^0.60.22",
     "@types/react-native-fbsdk": "^1.1.0",
+    "@types/react-native-uuid-generator": "^4.0.0",
     "@types/react-test-renderer": "16.9.0",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",

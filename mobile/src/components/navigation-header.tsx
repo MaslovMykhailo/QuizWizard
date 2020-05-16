@@ -24,7 +24,7 @@ export const NavigationHeader: FC<NavigationHeaderProps> = ({
   ...props
 }) => {
   const {
-    navigation,
+    navigation: {goBack},
     scene: {route}
   } = props
 
@@ -37,12 +37,7 @@ export const NavigationHeader: FC<NavigationHeaderProps> = ({
       subtitle={getSubtitle(route)}
       accessoryLeft={
         canGoBack(route)
-          ? () => (
-              <TopNavigationAction
-                onPress={navigation.goBack}
-                icon={ArrowBackIcon}
-              />
-            )
+          ? () => <TopNavigationAction onPress={goBack} icon={ArrowBackIcon} />
           : undefined
       }
       accessoryRight={

@@ -4,14 +4,12 @@ import {BottomNavigation, BottomNavigationTab} from '@ui-kitten/components'
 import {OptionsIcon, HomeIcon, FileIcon, CheckmarkSquareIcon} from '@icons'
 
 export const NavigationBar: FC<BottomTabBarProps> = ({
-  navigation,
+  navigation: {navigate},
   state: {index, routeNames}
 }) => (
   <BottomNavigation
     selectedIndex={index}
-    onSelect={(indexToNavigate) =>
-      navigation.navigate(routeNames[indexToNavigate])
-    }>
+    onSelect={(indexToNavigate) => navigate(routeNames[indexToNavigate])}>
     <BottomNavigationTab icon={HomeIcon} />
     <BottomNavigationTab icon={FileIcon} />
     <BottomNavigationTab icon={CheckmarkSquareIcon} />
