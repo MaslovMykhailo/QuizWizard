@@ -25,16 +25,24 @@ export class QuizzesStore {
   }
 
   @action add = (quiz: Quiz) => {
+    this.quizzes.fetch()
     this.quizzes.success([...(this.quizzes.data ?? []), quiz], false)
-    this.api.createQuiz(quiz).catch((error) => this.quizzes.fail(error))
+    this.api
+      .createQuiz(quiz)
+      .then(() => this.quizzes.success(this.quizzes.data!))
+      .catch((error) => this.quizzes.fail(error))
   }
 
   @action remove = (quizId: UUID) => {
+    this.quizzes.fetch()
     this.quizzes.success(
       [...(this.quizzes.data?.filter(({id}) => id !== quizId) ?? [])],
       false
     )
-    this.api.deleteQuiz(quizId).catch((error) => this.quizzes.fail(error))
+    this.api
+      .deleteQuiz(quizId)
+      .then(() => this.quizzes.success(this.quizzes.data!))
+      .catch((error) => this.quizzes.fail(error))
   }
 
   getQuizById = (quizId: UUID) =>
@@ -51,6 +59,6 @@ export class QuizzesStore {
       return []
     }
 
-    return sortByDate(this.quizzes.data, 'creationDate')
+    return sortByDate([...this.quizzes.data], 'creationDate').reverse()
   }
 }

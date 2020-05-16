@@ -1,17 +1,35 @@
-import React, {FC, useCallback} from 'react'
+import React, {FC, useCallback, useEffect, useMemo} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'react-i18next'
+import {Route} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import {Screen, NavigationHeader} from '@components'
-import {Button} from '@ui-kitten/components'
-import {useNavigation, Route} from '@react-navigation/native'
+import {useQuizzesStore} from '@providers'
 
 import {QuizzesRoute} from './routes'
+import {AllQuizzesScreen} from './all-quizzes'
 
 const Stack = createStackNavigator()
 
 export const QuizzesScreen: FC = observer(() => {
   const [t] = useTranslation()
+
+  const quizzesStore = useQuizzesStore()
+  useEffect(() => {
+    quizzesStore.load()
+  }, [quizzesStore])
+
+  // const isFocused = useIsFocused()
+  // useEffect(() => {
+  //   if (isFocused) {
+  //     quizzesStore.load()
+  //   }
+  // }, [isFocused, quizzesStore])
+
+  const showLoadingIndicator = useMemo(
+    () => Boolean(quizzesStore.quizzes.data && quizzesStore.quizzes.loading),
+    [quizzesStore.quizzes.data, quizzesStore.quizzes.loading]
+  )
 
   const getTitle = useCallback(
     (route: Route<string>) => {
@@ -38,7 +56,12 @@ export const QuizzesScreen: FC = observer(() => {
     []
   )
 
-  const navigationHeaderProps = {getTitle, getSubtitle, canGoBack}
+  const navigationHeaderProps = {
+    getTitle,
+    getSubtitle,
+    canGoBack,
+    showLoadingIndicator
+  }
 
   return (
     <Stack.Navigator
@@ -47,21 +70,12 @@ export const QuizzesScreen: FC = observer(() => {
           <NavigationHeader {...navigationHeaderProps} {...headerProps} />
         )
       }}>
-      <Stack.Screen name="AllQuizzes" component={S} />
+      <Stack.Screen name="AllQuizzes" component={AllQuizzesScreen} />
       <Stack.Screen
         name="Quiz"
         initialParams={{subtitle: 'sub'}}
-        component={S}
+        component={Screen}
       />
     </Stack.Navigator>
   )
 })
-
-const S: FC = (props: any) => {
-  const {navigate} = useNavigation()
-  return (
-    <Screen {...props} style={{flex: 1, height: '100%'}} level="2">
-      <Button onPress={() => navigate('Quiz')} children="press" />
-    </Screen>
-  )
-}

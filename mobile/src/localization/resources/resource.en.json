@@ -15,5 +15,14 @@
   "USER_PROFILE_TITLE": "Profile",
   "ADD_QUIZ": "Add new quiz",
   "ADD_QUIZ_ANSWERS": "Add quiz answers",
-  "DOWNLOAD_ANSWERS_SHEET": "Download answers sheet"
+  "DOWNLOAD_ANSWERS_SHEET": "Download answers sheet",
+  "QUIZ_SCREEN_TITLE": "Quiz",
+  "NEW_QUIZ_SCREEN_TITLE": "New quiz",
+  "ALL_QUIZZES_SCREEN_TITLE": "Your quizzes",
+  "NO_QUIZZES_TITLE": "You do not have quizzes yet 😢",
+  "NO_QUIZZES_SUBTITLE": "When you add new quiz, you will see it here!",
+  "DELETE_MODAL_TITLE": "Are you sure?",
+  "DELETE_DIALOG_DECLINE": "Cancel",
+  "DELETE_DIALOG_ACCEPT": "Delete",
+  "DELETE_QUIZ_CONFIRMATION_TEXT": "{{quiz}} will be deleted!"
 }

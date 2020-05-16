@@ -4,20 +4,23 @@ import {Api} from './api'
 import {quizzes} from './mocks'
 
 export class QuizzesApi extends Api {
+  private storage = quizzes
+
   public getQuizzes = (): Promise<Quiz[]> => {
     return this.withAuth().then(
       () =>
         new Promise((resolve) => {
-          setTimeout(() => resolve(quizzes), 500)
+          setTimeout(() => resolve(this.storage), 500)
         })
     )
   }
 
-  public createQuiz = (quiz: Quiz): Promise<Quiz> => {
+  public createQuiz = (quiz: Quiz): Promise<UUID> => {
     return this.withAuth().then(
       () =>
         new Promise((resolve) => {
-          setTimeout(() => resolve(quiz), 500)
+          this.storage.push(quiz)
+          setTimeout(() => resolve(quiz.id), 500)
         })
     )
   }
@@ -26,6 +29,7 @@ export class QuizzesApi extends Api {
     return this.withAuth().then(
       () =>
         new Promise((resolve) => {
+          this.storage = this.storage.filter(({id}) => id !== quizId)
           setTimeout(() => resolve(quizId), 500)
         })
     )

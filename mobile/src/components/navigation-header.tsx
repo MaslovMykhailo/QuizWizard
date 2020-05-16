@@ -2,19 +2,25 @@ import React, {FC} from 'react'
 import {StyleSheet} from 'react-native'
 import {Route} from '@react-navigation/native'
 import {StackHeaderProps} from '@react-navigation/stack'
-import {TopNavigation, TopNavigationAction} from '@ui-kitten/components'
+import {
+  TopNavigation,
+  TopNavigationAction,
+  Spinner
+} from '@ui-kitten/components'
 import {ArrowBackIcon} from '@icons'
 
 export interface NavigationHeaderProps extends StackHeaderProps {
   getTitle: (route: Route<string>) => string
   getSubtitle: (route: Route<string>) => string | undefined
   canGoBack: (route: Route<string>) => boolean
+  showLoadingIndicator?: boolean
 }
 
 export const NavigationHeader: FC<NavigationHeaderProps> = ({
   getTitle,
   getSubtitle,
   canGoBack,
+  showLoadingIndicator,
   ...props
 }) => {
   const {
@@ -39,12 +45,16 @@ export const NavigationHeader: FC<NavigationHeaderProps> = ({
             )
           : undefined
       }
+      accessoryRight={
+        showLoadingIndicator ? () => <Spinner size="small" /> : undefined
+      }
     />
   )
 }
 
 const styles = StyleSheet.create({
   root: {
-    height: 60
+    height: 60,
+    paddingHorizontal: 12
   }
 })
