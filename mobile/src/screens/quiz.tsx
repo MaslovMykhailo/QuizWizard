@@ -10,9 +10,9 @@ export const QuizScreen: FC = observer(() => {
   const route = useRoute()
   const quizzesStore = useQuizzesStore()
 
-  const quiz = quizzesStore
-    .getQuizById((route.params as {quizId: UUID})?.quizId)
-    .get()
+  const quiz = quizzesStore.getQuizById(
+    (route.params as {quizId: UUID})?.quizId
+  )
 
   const [quizStore, setQuizStore] = useState(new QuizStore(quiz))
   useEffect(() => {

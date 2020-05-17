@@ -1,5 +1,5 @@
-import {action, computed} from 'mobx'
-import {ObservableResource, sortByDate} from '@utils'
+import {action, computed, observable} from 'mobx'
+import {ObservableResource, sortByDate, ResourceStatus, exist} from '@utils'
 import {Quiz, UUID} from '@types'
 import {QuizzesApi} from '@api'
 
@@ -10,55 +10,82 @@ export class QuizzesStore {
     this.api = api
   }
 
-  quizzes = new ObservableResource<Quiz[]>()
+  @observable status: ResourceStatus = ResourceStatus.Unknown
+
+  @observable quizzes: ObservableResource<Quiz>[] = []
+
+  @observable pendingQuizzes: ObservableResource<Quiz>[] = []
 
   @action load = () => {
-    this.quizzes.fetch()
+    this.status = ResourceStatus.Loading
     this.api
       .getQuizzes()
       .then((quizzes) => {
-        this.quizzes.success(quizzes)
+        this.status = ResourceStatus.Success
+        this.quizzes = quizzes.map((data) => new ObservableResource({data}))
       })
-      .catch((error) => {
-        this.quizzes.fail(error)
+      .catch(() => {
+        this.status = ResourceStatus.Error
       })
   }
 
   @action add = (quiz: Quiz) => {
-    this.quizzes.fetch()
-    this.quizzes.success([...(this.quizzes.data ?? []), quiz], false)
+    const quizResource = new ObservableResource({data: quiz})
+    this.quizzes.push(quizResource)
+
+    quizResource.fetch()
     this.api
       .createQuiz(quiz)
-      .then(() => this.quizzes.success(this.quizzes.data!))
-      .catch((error) => this.quizzes.fail(error))
+      .then(() => {
+        quizResource.success(quiz)
+      })
+      .catch((error) => {
+        quizResource.fail(error)
+      })
   }
 
   @action remove = (quizId: UUID) => {
-    this.quizzes.fetch()
-    this.quizzes.success(
-      [...(this.quizzes.data?.filter(({id}) => id !== quizId) ?? [])],
-      false
+    const index = this.quizzes.findIndex(
+      (resource) => resource.data?.id === quizId
     )
+    const [quizResource] = this.quizzes.splice(index, 1)
+    this.pendingQuizzes.push(quizResource)
+
+    quizResource.fetch()
     this.api
       .deleteQuiz(quizId)
-      .then(() => this.quizzes.success(this.quizzes.data!))
-      .catch((error) => this.quizzes.fail(error))
+      .then(() => {
+        this.pendingQuizzes = this.pendingQuizzes.filter(
+          (resource) => resource !== quizResource
+        )
+      })
+      .catch((error) => {
+        quizResource.fail(error)
+      })
   }
 
   getQuizById = (quizId: UUID) =>
-    computed(() => {
-      if (!this.quizzes.data) {
-        return null
-      }
-
-      return this.quizzes.data.find(({id}) => id === quizId) ?? null
-    })
+    computed(
+      () => this.quizzes.find((resource) => resource.data?.id === quizId)?.data
+    ).get()
 
   @computed get quizzesList() {
-    if (!this.quizzes.data) {
-      return []
-    }
+    return sortByDate(
+      this.quizzes.map((resource) => resource.data).filter(exist),
+      'creationDate'
+    ).reverse()
+  }
 
-    return sortByDate([...this.quizzes.data], 'creationDate').reverse()
+  @computed get loaded() {
+    return this.status === ResourceStatus.Success
+  }
+
+  @computed get someQuizLoading() {
+    return (
+      this.quizzes.some(isQuizLoading) ||
+      this.pendingQuizzes.some(isQuizLoading)
+    )
   }
 }
+
+const isQuizLoading = (resource: ObservableResource<Quiz>) => resource.loading

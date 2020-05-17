@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useMemo} from 'react'
+import React, {FC, useCallback, useEffect} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'react-i18next'
 import {Route} from '@react-navigation/native'
@@ -29,11 +29,6 @@ export const QuizzesScreen: FC = observer(() => {
   //   }
   // }, [isFocused, quizzesStore])
 
-  const showLoadingIndicator = useMemo(
-    () => Boolean(quizzesStore.quizzes.data && quizzesStore.quizzes.loading),
-    [quizzesStore.quizzes.data, quizzesStore.quizzes.loading]
-  )
-
   const getTitle = useCallback(
     (route: Route<string>) => {
       switch (route.name) {
@@ -52,7 +47,7 @@ export const QuizzesScreen: FC = observer(() => {
     ({params}: Route<string>) => {
       if (params && 'quizId' in params) {
         const {quizId} = params as {quizId: UUID}
-        return quizzesStore.getQuizById(quizId).get()?.name
+        return quizzesStore.getQuizById(quizId)?.name
       } else {
         return
       }
@@ -64,6 +59,8 @@ export const QuizzesScreen: FC = observer(() => {
     (route: Route<string>) => route.name !== QuizzesRoute.AllQuizzes,
     []
   )
+
+  const showLoadingIndicator = quizzesStore.someQuizLoading
 
   const navigationHeaderProps = {
     getTitle,

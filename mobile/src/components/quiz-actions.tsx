@@ -26,8 +26,10 @@ export const QuizActions: FC<ViewProps> = observer((props) => {
 
   const onDelete = useCallback(() => {
     if (quizId) {
-      requestAnimationFrame(() => navigate(QuizzesRoute.AllQuizzes))
-      quizzesStore.remove(quizId)
+      requestAnimationFrame(() => {
+        navigate(QuizzesRoute.AllQuizzes)
+        quizzesStore.remove(quizId)
+      })
     }
   }, [navigate, quizId, quizzesStore])
 

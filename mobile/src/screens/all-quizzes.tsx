@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useState} from 'react'
+import React, {FC, useCallback, useRef} from 'react'
 import {observer} from 'mobx-react-lite'
 import {View} from 'react-native'
 import {Spinner, StyleService, useStyleSheet, Text} from '@ui-kitten/components'
@@ -15,7 +15,6 @@ export const AllQuizzesScreen: FC = observer(() => {
   const {navigate} = useNavigation()
 
   const quizzesStore = useQuizzesStore()
-  const resource = quizzesStore.quizzes
 
   const onQuizPress = useCallback(
     (quizId: UUID) => navigate(QuizzesRoute.Quiz, {quizId}),
@@ -27,18 +26,18 @@ export const AllQuizzesScreen: FC = observer(() => {
     [navigate]
   )
 
-  const [quizIdToDelete, setQuizIdToDelete] = useState<UUID | undefined>()
+  const quizIdToDeleteRef = useRef<UUID | null>(null)
   const onDeleteQuiz = useCallback(() => {
-    if (quizIdToDelete) {
-      quizzesStore.remove(quizIdToDelete)
+    if (quizIdToDeleteRef.current) {
+      quizzesStore.remove(quizIdToDeleteRef.current)
     }
-  }, [quizIdToDelete, quizzesStore])
+  }, [quizzesStore])
 
   const {onOpenDeleteModal, ...deleteModalProps} = useDeleteModal(onDeleteQuiz)
 
   const onDeleteQuizPress = useCallback(
     (quizId: UUID) => {
-      setQuizIdToDelete(quizId)
+      quizIdToDeleteRef.current = quizId
       onOpenDeleteModal()
     },
     [onOpenDeleteModal]
@@ -46,7 +45,7 @@ export const AllQuizzesScreen: FC = observer(() => {
 
   return (
     <Screen level="2">
-      {!resource.initialized || (resource.loading && !resource.data) ? (
+      {!quizzesStore.loaded ? (
         <View style={styles.loaderWrapper}>
           <Spinner size="giant" />
         </View>
@@ -62,8 +61,8 @@ export const AllQuizzesScreen: FC = observer(() => {
       <DeleteModal {...deleteModalProps}>
         <Text
           children={t<string>('DELETE_QUIZ_CONFIRMATION_TEXT', {
-            quiz: quizIdToDelete
-              ? quizzesStore.getQuizById(quizIdToDelete).get()?.name ?? ''
+            quiz: quizIdToDeleteRef.current
+              ? quizzesStore.getQuizById(quizIdToDeleteRef.current)?.name ?? ''
               : ''
           })}
         />

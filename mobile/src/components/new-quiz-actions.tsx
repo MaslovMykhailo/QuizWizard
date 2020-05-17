@@ -15,20 +15,24 @@ export const NewQuizActions: FC<ViewProps> = observer((props) => {
   const quizzesStore = useQuizzesStore()
   const {navigate} = useNavigation()
 
-  const onCancel = useCallback(() => {
-    navigate(QuizzesRoute.AllQuizzes)
-    requestAnimationFrame(() => {
-      quizStore.reset()
-    })
-  }, [navigate, quizStore])
+  const onCancel = useCallback(
+    () =>
+      requestAnimationFrame(() => {
+        navigate(QuizzesRoute.AllQuizzes)
+        quizStore.reset()
+      }),
+    [navigate, quizStore]
+  )
 
-  const onSave = useCallback(() => {
-    quizzesStore.add(quizStore.quiz)
-    navigate(QuizzesRoute.AllQuizzes)
-    requestAnimationFrame(() => {
-      quizStore.reset()
-    })
-  }, [navigate, quizStore, quizzesStore])
+  const onSave = useCallback(
+    () =>
+      requestAnimationFrame(() => {
+        quizzesStore.add(quizStore.quiz)
+        navigate(QuizzesRoute.AllQuizzes)
+        quizStore.reset()
+      }),
+    [navigate, quizStore, quizzesStore]
+  )
 
   return (
     <View {...props} style={[styles.root, props.style]}>
