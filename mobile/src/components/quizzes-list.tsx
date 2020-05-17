@@ -42,20 +42,24 @@ export const QuizzesList: FC<QuizzesListProps> = memo(
             appearance="ghost"
             style={styles.action}
             accessoryLeft={CheckmarkCircleIcon}
-            onPress={() => onShowQuizAnswersPress(quizId)}
+            onPress={() =>
+              requestAnimationFrame(() => onShowQuizAnswersPress(quizId))
+            }
           />
           <Button
             appearance="ghost"
             style={styles.action}
             accessoryLeft={CopyIcon}
-            onPress={() => onCopyQuizPress(quizId)}
+            onPress={() => requestAnimationFrame(() => onCopyQuizPress(quizId))}
           />
           <Button
             status="danger"
             appearance="ghost"
             style={styles.action}
             accessoryLeft={TrashIcon}
-            onPress={() => onDeleteQuizPress(quizId)}
+            onPress={() =>
+              requestAnimationFrame(() => onDeleteQuizPress(quizId))
+            }
           />
         </View>
       ),
@@ -73,7 +77,7 @@ export const QuizzesList: FC<QuizzesListProps> = memo(
         <ListItem
           title={name}
           description={creationDate.toLocaleDateString()}
-          onPress={() => onQuizPress(id)}
+          onPress={() => requestAnimationFrame(() => onQuizPress(id))}
           accessoryLeft={FileTextIcon}
           accessoryRight={(viewProps) =>
             renderQuizActions({quizId: id, ...viewProps})

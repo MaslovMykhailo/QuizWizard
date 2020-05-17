@@ -3,6 +3,7 @@ import {I18nextProvider} from 'react-i18next'
 import {observer} from 'mobx-react-lite'
 import 'mobx-react-lite/batchingForReactNative'
 import 'react-native-gesture-handler'
+import {enableScreens} from 'react-native-screens'
 import {NavigationContainer} from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {IconRegistry, ApplicationProvider} from '@ui-kitten/components'
@@ -19,6 +20,8 @@ import {
 } from '@screens'
 import {NavigationBar, Screen} from '@components'
 import {AppRoute} from '@constants'
+
+enableScreens()
 
 const Tab = createBottomTabNavigator()
 

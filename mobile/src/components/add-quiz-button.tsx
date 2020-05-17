@@ -13,10 +13,12 @@ export const AddQuizButton: FC<ButtonProps> = (props) => {
 
   const onPress = useCallback(
     () =>
-      navigate(
-        route.name !== QuizzesRoute.AllQuizzes
-          ? AppRoute.Quizzes
-          : QuizzesRoute.NewQuiz
+      requestAnimationFrame(() =>
+        navigate(
+          route.name !== QuizzesRoute.AllQuizzes
+            ? AppRoute.Quizzes
+            : QuizzesRoute.NewQuiz
+        )
       ),
     [navigate, route]
   )

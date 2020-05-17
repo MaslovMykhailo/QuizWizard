@@ -1,4 +1,4 @@
-import React, {FC, useCallback} from 'react'
+import React, {FC, useCallback, memo} from 'react'
 import {observer} from 'mobx-react-lite'
 import {View} from 'react-native'
 import {AnswerOption} from '@types'
@@ -20,38 +20,74 @@ export interface AnswerOptionsInput {
   options: Set<AnswerOption>
 }
 
-export const AnswerOptionsInput: FC<AnswerOptionsInput> = observer(
+export const AnswerOptionsInput: FC<AnswerOptionsInput> = memo(
   ({index, options, readOnly}) => {
     const styles = useStyleSheet(themedStyles)
-    const quizStore = useQuizStore()
 
     return (
       <View style={[styles.root, readOnly ? styles.readOnlyRoot : undefined]}>
         <Text style={styles.count} category="h5" children={index + 1} />
-        {OPTIONS.map((option) => (
-          <OptionButton
-            key={`${index}-${option}`}
-            appearance={options.has(option) ? 'filled' : 'outline'}
-            size="small"
-            children={option}
-            onPress={
-              !readOnly
-                ? () => quizStore.toggleAnswerOption(index, option)
-                : undefined
-            }
-          />
-        ))}
+        <Options index={index} options={options} readOnly={readOnly} />
         {!readOnly && <DeleteButton index={index} />}
       </View>
     )
   }
 )
 
-const OptionButton: FC<ButtonProps> = (props) => {
-  const styles = useStyleSheet(themedStyles)
+interface OptionsProps {
+  index: number
+  options: Set<AnswerOption>
+  readOnly?: boolean
+}
+
+const Options: FC<OptionsProps> = observer(({index, options, readOnly}) => {
+  const quizStore = useQuizStore()
+  const onToggleOption = useCallback(
+    (option: AnswerOption) => quizStore.toggleAnswerOption(index, option),
+    [index, quizStore]
+  )
+
   return (
-    <Button {...props} style={[styles.optionButton, props.style]}>
-      {(optionProps) => <Text {...optionProps}>{String(props.children)}</Text>}
+    <>
+      {OPTIONS.map((option) => (
+        <OptionButton
+          key={`${index}-${option}`}
+          readOnly={readOnly}
+          option={option}
+          onToggleOption={onToggleOption}
+          appearance={options.has(option) ? 'filled' : 'outline'}
+          size="small"
+        />
+      ))}
+    </>
+  )
+})
+
+interface OptionButtonProps extends ButtonProps {
+  option: AnswerOption
+  onToggleOption(option: AnswerOption): void
+  readOnly?: boolean
+  appearance: string
+}
+
+const OptionButton: FC<OptionButtonProps> = ({
+  option,
+  onToggleOption,
+  readOnly,
+  ...props
+}) => {
+  const styles = useStyleSheet(themedStyles)
+  const onPress = useCallback(() => onToggleOption(option), [
+    onToggleOption,
+    option
+  ])
+
+  return (
+    <Button
+      {...props}
+      onPress={!readOnly ? onPress : undefined}
+      style={[styles.optionButton, props.style]}>
+      {(optionProps) => <Text {...optionProps}>{option}</Text>}
     </Button>
   )
 }
@@ -61,10 +97,10 @@ const DeleteButton: FC<ButtonProps & {index: number}> = observer(
     const styles = useStyleSheet(themedStyles)
     const quizStore = useQuizStore()
 
-    const onPress = useCallback(() => quizStore.removeAnswer(index), [
-      index,
-      quizStore
-    ])
+    const onPress = useCallback(
+      () => requestAnimationFrame(() => quizStore.removeAnswer(index)),
+      [index, quizStore]
+    )
 
     return (
       <Button

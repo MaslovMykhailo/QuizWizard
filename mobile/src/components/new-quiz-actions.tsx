@@ -17,13 +17,17 @@ export const NewQuizActions: FC<ViewProps> = observer((props) => {
 
   const onCancel = useCallback(() => {
     navigate(QuizzesRoute.AllQuizzes)
-    quizStore.reset()
+    requestAnimationFrame(() => {
+      quizStore.reset()
+    })
   }, [navigate, quizStore])
 
   const onSave = useCallback(() => {
     quizzesStore.add(quizStore.quiz)
     navigate(QuizzesRoute.AllQuizzes)
-    quizStore.reset()
+    requestAnimationFrame(() => {
+      quizStore.reset()
+    })
   }, [navigate, quizStore, quizzesStore])
 
   return (

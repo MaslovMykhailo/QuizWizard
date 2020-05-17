@@ -77,12 +77,18 @@ export const useDeleteModal = (
 ): DeleteModalHookPayload => {
   const [visible, setVisible] = useState(false)
 
-  const onOpenDeleteModal = useCallback(() => setVisible(true), [])
-  const onCloseDeleteModal = useCallback(() => setVisible(false), [])
+  const onOpenDeleteModal = useCallback(
+    () => requestAnimationFrame(() => setVisible(true)),
+    []
+  )
+  const onCloseDeleteModal = useCallback(
+    () => requestAnimationFrame(() => setVisible(false)),
+    []
+  )
 
   const onAccept = useCallback(() => {
-    onDelete()
     onCloseDeleteModal()
+    requestAnimationFrame(onDelete)
   }, [onCloseDeleteModal, onDelete])
 
   const onDecline = onCloseDeleteModal

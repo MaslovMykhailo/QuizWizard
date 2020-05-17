@@ -48,11 +48,15 @@ const AddQuestion: FC = observer(() => {
   const styles = useStyleSheet(themedStyles)
 
   const quizStore = useQuizStore()
+  const onPress = useCallback(
+    () => requestAnimationFrame(quizStore.addAnswer),
+    [quizStore.addAnswer]
+  )
 
   return (
     <View style={styles.addQuestionWrapper}>
       <Button
-        onPress={quizStore.addAnswer}
+        onPress={onPress}
         accessoryLeft={PlusIcon}
         children={t<string>('ADD_QUESTION')}
       />

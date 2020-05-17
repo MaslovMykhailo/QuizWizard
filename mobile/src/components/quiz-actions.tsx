@@ -20,13 +20,13 @@ export const QuizActions: FC<ViewProps> = observer((props) => {
 
   const onCopy = useCallback(() => {
     if (quizId) {
-      navigate(QuizzesRoute.NewQuiz, {quizId})
+      requestAnimationFrame(() => navigate(QuizzesRoute.NewQuiz, {quizId}))
     }
   }, [navigate, quizId])
 
   const onDelete = useCallback(() => {
     if (quizId) {
-      navigate(QuizzesRoute.AllQuizzes)
+      requestAnimationFrame(() => navigate(QuizzesRoute.AllQuizzes))
       quizzesStore.remove(quizId)
     }
   }, [navigate, quizId, quizzesStore])

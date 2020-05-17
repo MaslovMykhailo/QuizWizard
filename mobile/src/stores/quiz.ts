@@ -53,7 +53,6 @@ export class QuizStore {
       } else {
         options.add(option)
       }
-      this.answers[answerIndex] = new Set(options)
     }
   }
 

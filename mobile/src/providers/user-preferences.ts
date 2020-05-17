@@ -1,7 +1,7 @@
 import {createContext, useContext} from 'react'
 import {light, dark} from '@eva-design/eva'
 import {UserPreferencesStore, userPreferencesStore} from '@stores'
-import {i18next, Language, languages} from '@localization'
+import {Language, languages} from '@localization'
 import {Theme} from '@types'
 
 type ThemeConfig = typeof light & typeof dark
@@ -22,9 +22,7 @@ const UserPreferencesContext = createContext<UserPreferencesContextValue>({
     userPreferencesStore.setTheme(oppositeThemeMap[userPreferencesStore.theme])
   },
   setLanguage: (lng) => {
-    i18next
-      .changeLanguage(lng)
-      .then(() => userPreferencesStore.setLanguage(lng))
+    userPreferencesStore.setLanguage(lng)
   }
 })
 

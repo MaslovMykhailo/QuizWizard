@@ -17,8 +17,14 @@ export const ThemeToggle: FC<ViewProps> = observer((props) => {
   const style = useStyleSheet(themedStyles)
 
   const [theme, toggleTheme, setTheme] = useTheme()
-  const setDarkTheme = useCallback(() => setTheme('dark'), [setTheme])
-  const setLightTheme = useCallback(() => setTheme('light'), [setTheme])
+  const setDarkTheme = useCallback(
+    () => requestAnimationFrame(() => setTheme('dark')),
+    [setTheme]
+  )
+  const setLightTheme = useCallback(
+    () => requestAnimationFrame(() => setTheme('light')),
+    [setTheme]
+  )
 
   return (
     <View {...props} style={[style.root, props.style]}>
