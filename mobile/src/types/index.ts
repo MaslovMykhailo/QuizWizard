@@ -1,4 +1,6 @@
 export * from './theme'
 export * from './uuid'
-export * from './answer'
+export * from './answer-options'
 export * from './quiz'
+export * from './answer'
+export * from './responder'

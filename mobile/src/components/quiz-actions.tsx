@@ -37,15 +37,15 @@ export const QuizActions: FC<ViewProps> = observer((props) => {
     <View {...props} style={[styles.root, props.style]}>
       <Button
         style={styles.action}
-        onPress={onCopy}
-        status="success"
-        children={t<string>('COPY')}
-      />
-      <Button
-        style={styles.action}
         onPress={onDelete}
         status="danger"
         children={t<string>('DELETE')}
+      />
+      <Button
+        style={styles.action}
+        onPress={onCopy}
+        status="success"
+        children={t<string>('COPY')}
       />
     </View>
   )

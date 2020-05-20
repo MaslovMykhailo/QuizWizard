@@ -1,9 +1,9 @@
 import {UUID} from './uuid'
-import {Answer} from './answer'
+import {AnswerOptions} from './answer-options'
 
 export type Quiz = {
   id: UUID
   name: string
-  answers: Answer[]
+  answers: AnswerOptions[]
   creationDate: Date
 }

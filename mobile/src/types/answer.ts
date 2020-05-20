@@ -1,3 +1,13 @@
-export type AnswerOption = 'A' | 'B' | 'C' | 'D' | 'E'
+import {UUID} from './uuid'
+import {ResponderId} from './responder'
+import {AnswerOptions} from './answer-options'
 
-export type Answer = Array<AnswerOption>
+export type Answer = {
+  id: UUID
+  name: string
+  answers: AnswerOptions[]
+  pictureUrl?: string
+  quizId: UUID
+  responderId?: ResponderId
+  creationDate: Date
+}

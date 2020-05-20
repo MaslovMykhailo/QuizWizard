@@ -1,12 +1,6 @@
 import {createContext, useContext} from 'react'
-import {QuizzesStore, quizzesStore} from '@stores'
+import {quizzesStore, QuizzesStore} from '@stores'
 
-type QuizzesContextValue = {
-  store: QuizzesStore
-}
+export const QuizzesContext = createContext<QuizzesStore>(quizzesStore)
 
-export const QuizzesContext = createContext<QuizzesContextValue>({
-  store: quizzesStore
-})
-
-export const useQuizzesStore = () => useContext(QuizzesContext).store
+export const useQuizzesStore = () => useContext(QuizzesContext)

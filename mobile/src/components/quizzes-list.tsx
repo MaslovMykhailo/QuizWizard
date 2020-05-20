@@ -1,5 +1,6 @@
 import React, {FC, useCallback, memo} from 'react'
 import {View, ViewProps} from 'react-native'
+import {useTranslation} from 'react-i18next'
 import {
   List,
   ListItem,
@@ -10,8 +11,8 @@ import {
   Text
 } from '@ui-kitten/components'
 import {FileTextIcon, CheckmarkCircleIcon, CopyIcon, TrashIcon} from '@icons'
+import {keyExtractor} from '@utils'
 import {Quiz, UUID} from '@types'
-import {useTranslation} from 'react-i18next'
 
 import {AddQuizButton} from './add-quiz-button'
 
@@ -91,6 +92,7 @@ export const QuizzesList: FC<QuizzesListProps> = memo(
       <>
         <List
           data={quizzes}
+          keyExtractor={keyExtractor}
           renderItem={renderQuiz}
           ItemSeparatorComponent={Divider}
           ListEmptyComponent={() => (

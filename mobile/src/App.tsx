@@ -16,9 +16,10 @@ import {
   LoginScreen,
   OptionsScreen,
   HomeScreen,
-  QuizzesScreen
+  QuizzesScreen,
+  AnswersScreen
 } from '@screens'
-import {NavigationBar, Screen} from '@components'
+import {NavigationBar} from '@components'
 import {AppRoute} from '@constants'
 
 enableScreens()
@@ -46,7 +47,7 @@ export const App: FC = observer(() => {
               <>
                 <Tab.Screen name={AppRoute.Home} component={HomeScreen} />
                 <Tab.Screen name={AppRoute.Quizzes} component={QuizzesScreen} />
-                <Tab.Screen name={AppRoute.Answers} component={Screen} />
+                <Tab.Screen name={AppRoute.Answers} component={AnswersScreen} />
                 <Tab.Screen name={AppRoute.Options} component={OptionsScreen} />
               </>
             ) : (

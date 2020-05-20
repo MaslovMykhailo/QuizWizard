@@ -21,7 +21,7 @@ export const QuizScreen: FC = observer(() => {
 
   return (
     <QuizStoreProvider value={quizStore}>
-      <Screen level="2">
+      <Screen level="3">
         <AnswerOptionList readOnly />
         <QuizActions />
       </Screen>

@@ -14,8 +14,6 @@ export enum QuizzesRoute {
 }
 
 export enum AnswersRoute {
-  AllQuizzesAnswers = 'AllQuizzesAnswers',
-  AllAnswersByQuiz = 'AllAnswersByQuiz',
-  Answer = 'Answer',
-  NewAnswer = 'NewAnswer'
+  AllAnswers = 'AllAnswers',
+  Answer = 'Answer'
 }

@@ -32,5 +32,7 @@
   "SAVE": "Save",
   "COPY": "Copy",
   "DELETE": "Delete",
-  "COPY_INDICATOR": "copy"
+  "COPY_INDICATOR": "copy",
+  "ANSWER_SCREEN_TITLE": "Quiz answer",
+  "ALL_ANSWERS_SCREEN_TITLE": "Answers on your quizzes"
 }

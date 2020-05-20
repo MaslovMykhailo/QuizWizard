@@ -44,7 +44,7 @@ export const AllQuizzesScreen: FC = observer(() => {
   )
 
   return (
-    <Screen level="2">
+    <Screen level="3">
       {!quizzesStore.loaded ? (
         <View style={styles.loaderWrapper}>
           <Spinner size="giant" />
