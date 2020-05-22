@@ -17,7 +17,10 @@ export class QuizzesStore {
   @observable pendingQuizzes: ObservableResource<Quiz>[] = []
 
   @action load = () => {
-    this.status = ResourceStatus.Loading
+    if (this.status === ResourceStatus.Unknown) {
+      this.status = ResourceStatus.Loading
+    }
+
     this.api
       .getQuizzes()
       .then((quizzes) => {

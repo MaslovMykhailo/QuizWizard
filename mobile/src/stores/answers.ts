@@ -12,7 +12,7 @@ export class AnswersStore {
   private quizzesStore: QuizzesStore
   private respondersStore: RespondersStore
 
-  private answers: ObservableResource<Answer>[] = []
+  @observable answers: ObservableResource<Answer>[] = []
 
   constructor(
     api: AnswersApi,
@@ -29,9 +29,6 @@ export class AnswersStore {
   @action load = () => {
     this.status = ResourceStatus.Loading
 
-    this.quizzesStore.load()
-    this.respondersStore.load()
-
     this.api
       .getAnswers()
       .then((answers) => {
@@ -39,6 +36,9 @@ export class AnswersStore {
         this.answers = answers.map(
           (answer) => new ObservableResource({data: answer})
         )
+
+        this.quizzesStore.load()
+        this.respondersStore.load()
       })
       .catch(() => {
         this.status = ResourceStatus.Error
@@ -73,10 +73,12 @@ export class AnswersStore {
     ).get()
 
   @computed get answersList(): AnswersList {
-    return this.quizzesStore.quizzesList.map((quiz) => ({
-      quiz,
-      data: this.getAnswersByQuiz(quiz)
-    }))
+    return this.quizzesStore.quizzesList
+      .map((quiz) => ({
+        quiz,
+        data: this.getAnswersByQuiz(quiz)
+      }))
+      .filter((answers) => answers.data.length)
   }
 
   @computed get someAnswerLoading() {

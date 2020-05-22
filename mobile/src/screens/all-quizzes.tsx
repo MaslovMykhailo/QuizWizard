@@ -53,7 +53,7 @@ export const AllQuizzesScreen: FC = observer(() => {
         <QuizzesList
           quizzes={quizzesStore.quizzesList}
           onQuizPress={onQuizPress}
-          onShowQuizAnswersPress={() => {}}
+          onAddQuizAnswersPress={() => {}}
           onCopyQuizPress={onCopyQuizPress}
           onDeleteQuizPress={onDeleteQuizPress}
         />

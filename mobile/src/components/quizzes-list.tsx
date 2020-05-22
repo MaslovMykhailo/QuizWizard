@@ -19,16 +19,16 @@ import {AddQuizButton} from './add-quiz-button'
 export interface QuizzesListProps {
   quizzes: Quiz[]
   onQuizPress(quizId: UUID): void
-  onShowQuizAnswersPress(quizId: UUID): void
-  onCopyQuizPress(quizId: UUID): void
-  onDeleteQuizPress(quizId: UUID): void
+  onAddQuizAnswersPress?(quizId: UUID): void
+  onCopyQuizPress?(quizId: UUID): void
+  onDeleteQuizPress?(quizId: UUID): void
 }
 
 export const QuizzesList: FC<QuizzesListProps> = memo(
   ({
     quizzes,
     onQuizPress,
-    onShowQuizAnswersPress,
+    onAddQuizAnswersPress,
     onCopyQuizPress,
     onDeleteQuizPress
   }) => {
@@ -38,36 +38,44 @@ export const QuizzesList: FC<QuizzesListProps> = memo(
     const renderQuizActions = useCallback(
       ({quizId, ...viewProps}: ViewProps & {quizId: UUID}) => (
         <View {...viewProps} style={[viewProps.style, styles.actions]}>
-          <Button
-            status="success"
-            appearance="ghost"
-            style={styles.action}
-            accessoryLeft={CheckmarkCircleIcon}
-            onPress={() =>
-              requestAnimationFrame(() => onShowQuizAnswersPress(quizId))
-            }
-          />
-          <Button
-            appearance="ghost"
-            style={styles.action}
-            accessoryLeft={CopyIcon}
-            onPress={() => requestAnimationFrame(() => onCopyQuizPress(quizId))}
-          />
-          <Button
-            status="danger"
-            appearance="ghost"
-            style={styles.action}
-            accessoryLeft={TrashIcon}
-            onPress={() =>
-              requestAnimationFrame(() => onDeleteQuizPress(quizId))
-            }
-          />
+          {onAddQuizAnswersPress && (
+            <Button
+              status="success"
+              appearance="ghost"
+              style={styles.action}
+              accessoryLeft={CheckmarkCircleIcon}
+              onPress={() =>
+                requestAnimationFrame(() => onAddQuizAnswersPress(quizId))
+              }
+            />
+          )}
+          {onCopyQuizPress && (
+            <Button
+              appearance="ghost"
+              style={styles.action}
+              accessoryLeft={CopyIcon}
+              onPress={() =>
+                requestAnimationFrame(() => onCopyQuizPress(quizId))
+              }
+            />
+          )}
+          {onDeleteQuizPress && (
+            <Button
+              status="danger"
+              appearance="ghost"
+              style={styles.action}
+              accessoryLeft={TrashIcon}
+              onPress={() =>
+                requestAnimationFrame(() => onDeleteQuizPress(quizId))
+              }
+            />
+          )}
         </View>
       ),
       [
         onCopyQuizPress,
         onDeleteQuizPress,
-        onShowQuizAnswersPress,
+        onAddQuizAnswersPress,
         styles.action,
         styles.actions
       ]
@@ -88,6 +96,20 @@ export const QuizzesList: FC<QuizzesListProps> = memo(
       [onQuizPress, renderQuizActions]
     )
 
+    const renderListEmpty = useCallback(
+      () => (
+        <View style={[styles.wrapper, styles.noQuizzesWrapper]}>
+          <Text category="h4" children={t<string>('NO_QUIZZES_TITLE')} />
+          <Text
+            appearance="hint"
+            category="h6"
+            children={t<string>('NO_QUIZZES_SUBTITLE')}
+          />
+        </View>
+      ),
+      [styles.noQuizzesWrapper, styles.wrapper, t]
+    )
+
     return (
       <>
         <List
@@ -95,16 +117,7 @@ export const QuizzesList: FC<QuizzesListProps> = memo(
           keyExtractor={keyExtractor}
           renderItem={renderQuiz}
           ItemSeparatorComponent={Divider}
-          ListEmptyComponent={() => (
-            <View style={[styles.wrapper, styles.noQuizzesWrapper]}>
-              <Text category="h4" children={t<string>('NO_QUIZZES_TITLE')} />
-              <Text
-                appearance="hint"
-                category="h6"
-                children={t<string>('NO_QUIZZES_SUBTITLE')}
-              />
-            </View>
-          )}
+          ListEmptyComponent={renderListEmpty}
         />
         <View style={[styles.wrapper, styles.addNewQuizWrapper]}>
           <AddQuizButton />

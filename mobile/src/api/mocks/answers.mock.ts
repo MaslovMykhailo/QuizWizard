@@ -15,5 +15,12 @@ export const answers: Answer[] = [
     quizId: '2',
     answers: [['A'], ['B'], ['C', 'D'], [], ['E', 'C', 'A']],
     creationDate: new Date('2012-10-10')
+  },
+  {
+    id: '3',
+    name: 'Result 3',
+    quizId: '2',
+    answers: [['A'], ['B'], ['C', 'D'], ['C'], ['E', 'C', 'A']],
+    creationDate: new Date('2012-12-10')
   }
 ]
