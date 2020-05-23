@@ -36,5 +36,8 @@
   "DELETE": "Delete",
   "COPY_INDICATOR": "copy",
   "ANSWER_SCREEN_TITLE": "Quiz answer",
-  "ALL_ANSWERS_SCREEN_TITLE": "Answers on your quizzes"
+  "ALL_ANSWERS_SCREEN_TITLE": "Answers on your quizzes",
+  "RESPONDER_CAPTION": "Responder",
+  "GRADE_CAPTION": "Grade",
+  "ANONYMOUS": "Anonymous"
 }

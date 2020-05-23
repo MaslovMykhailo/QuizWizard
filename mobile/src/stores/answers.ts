@@ -1,6 +1,12 @@
 import {action, observable, computed} from 'mobx'
 import {AnswersApi} from '@api'
-import {ResourceStatus, ObservableResource, exist, sortByDate} from '@utils'
+import {
+  ResourceStatus,
+  ObservableResource,
+  exist,
+  sortByDate,
+  checkQuiz
+} from '@utils'
 import {Answer, Quiz, UUID} from '@types'
 
 import {QuizzesStore} from './quizzes'
@@ -71,6 +77,21 @@ export class AnswersStore {
         'creationDate'
       ).reverse()
     ).get()
+
+  getCheckedAnswers = (answerId: UUID) =>
+    computed(() => {
+      const answer = this.getAnswerById(answerId)
+      if (!answer) {
+        return
+      }
+
+      const quiz = this.quizzesStore.getQuizById(answer.quizId)
+      if (!quiz) {
+        return
+      }
+
+      return checkQuiz(quiz, answer.answers)
+    }).get()
 
   @computed get answersList(): AnswersList {
     return this.quizzesStore.quizzesList

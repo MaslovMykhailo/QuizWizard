@@ -3,12 +3,13 @@ import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'react-i18next'
 import {Route} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
-import {NavigationHeader, Screen} from '@components'
+import {NavigationHeader} from '@components'
 import {useAnswersStore} from '@providers'
 import {AnswersRoute} from '@constants'
 import {UUID} from '@types'
 
 import {AllAnswersScreen} from './all-answers'
+import {AnswerScreen} from './answer'
 
 const Stack = createStackNavigator()
 
@@ -69,7 +70,7 @@ export const AnswersScreen: FC = observer(() => {
         name={AnswersRoute.AllAnswers}
         component={AllAnswersScreen}
       />
-      <Stack.Screen name={AnswersRoute.Answer} component={Screen} />
+      <Stack.Screen name={AnswersRoute.Answer} component={AnswerScreen} />
     </Stack.Navigator>
   )
 })

@@ -12,23 +12,28 @@ import {
 } from '@ui-kitten/components'
 import {KeypadIcon} from '@icons'
 import {keyExtractor} from '@utils'
-import {Answer} from '@types'
+import {Answer, UUID} from '@types'
 
-export const AnswersList: FC = observer(() => {
+export interface AnswersListProps {
+  onAnswerPress(answerId: UUID): void
+}
+
+export const AnswersList: FC<AnswersListProps> = observer(({onAnswerPress}) => {
   const [t] = useTranslation()
   const styles = useStyleSheet(themedStyles)
+
   const answersStore = useAnswersStore()
 
   const renderItem = useCallback(
-    ({item: {name, creationDate}}: {item: Answer}) => (
+    ({item: {id, name, creationDate}}: {item: Answer}) => (
       <ListItem
         title={name}
         description={creationDate.toLocaleDateString()}
-        // onPress={() => requestAnimationFrame(() => onAnswerPress(id))}
+        onPress={() => requestAnimationFrame(() => onAnswerPress(id))}
         accessoryLeft={KeypadIcon}
       />
     ),
-    []
+    [onAnswerPress]
   )
 
   const renderSectionHeader = useCallback(
