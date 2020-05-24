@@ -19,6 +19,7 @@ export class AnswersStore {
   private respondersStore: RespondersStore
 
   @observable answers: ObservableResource<Answer>[] = []
+  @observable pendingAnswers: ObservableResource<Answer>[] = []
 
   constructor(
     api: AnswersApi,
@@ -48,6 +49,26 @@ export class AnswersStore {
       })
       .catch(() => {
         this.status = ResourceStatus.Error
+      })
+  }
+
+  @action remove = (answerId: UUID) => {
+    const index = this.answers.findIndex(
+      (resource) => resource.data?.id === answerId
+    )
+    const [answerResource] = this.answers.splice(index, 1)
+    this.pendingAnswers.push(answerResource)
+
+    answerResource.fetch()
+    this.api
+      .deleteAnswer(answerId)
+      .then(() => {
+        this.pendingAnswers = this.pendingAnswers.filter(
+          (resource) => resource !== answerResource
+        )
+      })
+      .catch((error) => {
+        answerResource.fail(error)
       })
   }
 
@@ -103,8 +124,14 @@ export class AnswersStore {
   }
 
   @computed get someAnswerLoading() {
-    return this.answers.some((resource) => resource.loading)
+    return (
+      this.answers.some(resourceLoading) ||
+      this.pendingAnswers.some(resourceLoading)
+    )
   }
 }
+
+const resourceLoading = (resource: ObservableResource<Answer>) =>
+  resource.loading
 
 export type AnswersList = Array<{quiz: Quiz; data: Answer[]}>

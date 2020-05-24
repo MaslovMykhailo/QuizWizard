@@ -2,7 +2,8 @@ import {AnswerOption} from './answer-options'
 
 export type CheckedAnswerOption = {
   option: AnswerOption
-  correct: boolean
+  correct?: boolean
+  missed?: boolean
 }
 
 export type CheckedAnswerOptions = Array<CheckedAnswerOption>

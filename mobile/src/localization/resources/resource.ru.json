@@ -27,6 +27,7 @@
   "DELETE_DIALOG_DECLINE": "Cancel",
   "DELETE_DIALOG_ACCEPT": "Delete",
   "DELETE_QUIZ_CONFIRMATION_TEXT": "{{quiz}} will be deleted!",
+  "DELETE_ANSWER_CONFIRMATION_TEXT": "{{answer}} will be deleted!",
   "ADD_QUESTION": "Add question",
   "QUIZ_NAME_LABEL": "Quiz name",
   "QUIZ_NAME_PLACEHOLDER": "Magic quiz",
@@ -39,5 +40,8 @@
   "ALL_ANSWERS_SCREEN_TITLE": "Answers on your quizzes",
   "RESPONDER_CAPTION": "Responder",
   "GRADE_CAPTION": "Grade",
-  "ANONYMOUS": "Anonymous"
+  "ANONYMOUS": "Anonymous",
+  "CORRECT_MARK_EXPLANATION": "Correct",
+  "INCORRECT_MARK_EXPLANATION": "Incorrect",
+  "MISSED_MARK_EXPLANATION": "Missed"
 }

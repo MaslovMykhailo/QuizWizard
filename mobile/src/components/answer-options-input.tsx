@@ -11,8 +11,7 @@ import {
 } from '@ui-kitten/components'
 import {useQuizStore} from '@providers'
 import {TrashIcon} from '@icons'
-
-const OPTIONS: AnswerOption[] = ['A', 'B', 'C', 'D', 'E']
+import {OPTIONS} from '@constants'
 
 export interface AnswerOptionsInput {
   readOnly?: boolean
@@ -26,7 +25,7 @@ export const AnswerOptionsInput: FC<AnswerOptionsInput> = memo(
 
     return (
       <View style={[styles.root, readOnly ? styles.readOnlyRoot : undefined]}>
-        <Text style={styles.count} category="h5" children={index + 1} />
+        <Text style={styles.counter} category="h5" children={index + 1} />
         <Options index={index} options={options} readOnly={readOnly} />
         {!readOnly && <DeleteButton index={index} />}
       </View>
@@ -132,7 +131,7 @@ const themedStyles = StyleService.create({
     borderRadius: 24,
     height: 42
   },
-  count: {
+  counter: {
     marginLeft: 6,
     width: 28
   },

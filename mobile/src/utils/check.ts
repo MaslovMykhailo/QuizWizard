@@ -10,36 +10,50 @@ export const checkQuiz = (
   {answers: correctAnswers}: Quiz,
   answers: AnswerOptions[]
 ): QuizResult => {
-  const checkedOptions: CheckedAnswerOptions[] = answers.map(
-    (options, answerIndex) =>
-      options.map((option) => {
-        if (correctAnswers[answerIndex].includes(option)) {
+  const answersCount = Math.max(correctAnswers.length, answers.length)
+
+  const checkedAnswerOptions: CheckedAnswerOptions[] = new Array(answersCount)
+    .fill(null)
+    .map((_, answerIndex) => {
+      const correctOptions = new Set(correctAnswers[answerIndex] ?? [])
+      const answerOptions = new Set(answers[answerIndex] ?? [])
+
+      const allOptions = new Set([...correctOptions, ...answerOptions])
+
+      return Array.from(allOptions).map((option) => {
+        if (correctOptions.has(option) && answerOptions.has(option)) {
           return {
             option,
             correct: true
           }
-        } else {
+        }
+
+        if (correctOptions.has(option)) {
           return {
             option,
-            correct: false
+            missed: true
           }
         }
-      })
-  )
 
-  const currentGrade = checkedOptions.reduce(
+        return {
+          option
+        }
+      })
+    })
+
+  const incorrectCount = checkedAnswerOptions.reduce(
     (grade, options) =>
-      grade + options.filter((option) => option.correct).length,
+      grade + options.filter(({correct, missed}) => !correct || missed).length,
     0
   )
 
-  const maxGrade = correctAnswers.reduce(
+  const correctCount = correctAnswers.reduce(
     (grade, options) => grade + options.length,
     0
   )
 
   return {
-    grade: currentGrade / maxGrade,
-    options: checkedOptions
+    grade: Math.max(correctCount - incorrectCount, 0) / correctCount,
+    options: checkedAnswerOptions
   }
 }

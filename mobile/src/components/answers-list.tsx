@@ -1,4 +1,4 @@
-import React, {FC, useCallback} from 'react'
+import React, {FC, useCallback, useRef} from 'react'
 import {observer} from 'mobx-react-lite'
 import {SectionList, View, SectionListData} from 'react-native'
 import {useTranslation} from 'react-i18next'
@@ -8,11 +8,14 @@ import {
   Text,
   Divider,
   StyleService,
-  useStyleSheet
+  useStyleSheet,
+  Button
 } from '@ui-kitten/components'
-import {KeypadIcon} from '@icons'
+import {KeypadIcon, TrashIcon} from '@icons'
 import {keyExtractor} from '@utils'
 import {Answer, UUID} from '@types'
+
+import {useDeleteModal, DeleteModal} from './delete-modal'
 
 export interface AnswersListProps {
   onAnswerPress(answerId: UUID): void
@@ -24,6 +27,18 @@ export const AnswersList: FC<AnswersListProps> = observer(({onAnswerPress}) => {
 
   const answersStore = useAnswersStore()
 
+  const answerIdToDeleteRef = useRef<UUID | null>(null)
+  const onDeleteAnswer = useCallback(() => {
+    const answerId = answerIdToDeleteRef.current
+    if (answerId) {
+      answersStore.remove(answerId)
+    }
+  }, [answersStore])
+
+  const {onOpenDeleteModal, ...deleteModalProps} = useDeleteModal(
+    onDeleteAnswer
+  )
+
   const renderItem = useCallback(
     ({item: {id, name, creationDate}}: {item: Answer}) => (
       <ListItem
@@ -31,9 +46,23 @@ export const AnswersList: FC<AnswersListProps> = observer(({onAnswerPress}) => {
         description={creationDate.toLocaleDateString()}
         onPress={() => requestAnimationFrame(() => onAnswerPress(id))}
         accessoryLeft={KeypadIcon}
+        accessoryRight={(props) => (
+          <Button
+            {...props}
+            status="danger"
+            appearance="ghost"
+            accessoryLeft={TrashIcon}
+            onPress={() =>
+              requestAnimationFrame(() => {
+                answerIdToDeleteRef.current = id
+                onOpenDeleteModal()
+              })
+            }
+          />
+        )}
       />
     ),
-    [onAnswerPress]
+    [onAnswerPress, onOpenDeleteModal]
   )
 
   const renderSectionHeader = useCallback(
@@ -66,14 +95,25 @@ export const AnswersList: FC<AnswersListProps> = observer(({onAnswerPress}) => {
   )
 
   return (
-    <SectionList
-      sections={answersStore.answersList}
-      keyExtractor={keyExtractor}
-      renderItem={renderItem}
-      ItemSeparatorComponent={Divider}
-      ListEmptyComponent={renderListEmpty}
-      renderSectionHeader={renderSectionHeader}
-    />
+    <>
+      <SectionList
+        sections={answersStore.answersList}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        ItemSeparatorComponent={Divider}
+        ListEmptyComponent={renderListEmpty}
+        renderSectionHeader={renderSectionHeader}
+      />
+      <DeleteModal {...deleteModalProps}>
+        <Text
+          children={t<string>('DELETE_ANSWER_CONFIRMATION_TEXT', {
+            answer: answerIdToDeleteRef.current
+              ? answersStore.getAnswerById(answerIdToDeleteRef.current)?.name
+              : ''
+          })}
+        />
+      </DeleteModal>
+    </>
   )
 })
 
