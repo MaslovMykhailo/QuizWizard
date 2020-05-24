@@ -9,9 +9,10 @@ import {
 } from '@ui-kitten/components'
 import {ArrowBackIcon} from '@icons'
 
-export interface NavigationHeaderProps extends StackHeaderProps {
+export interface NavigationHeaderProps
+  extends Pick<StackHeaderProps, 'scene' | 'navigation'> {
   getTitle: (route: Route<string>) => string
-  getSubtitle: (route: Route<string>) => string | undefined
+  getSubtitle?: (route: Route<string>) => string | undefined
   canGoBack: (route: Route<string>) => boolean
   showLoadingIndicator?: boolean
 }
@@ -34,7 +35,7 @@ export const NavigationHeader: FC<NavigationHeaderProps> = ({
       style={styles.root}
       alignment="center"
       title={getTitle(route)}
-      subtitle={getSubtitle(route)}
+      subtitle={getSubtitle?.(route)}
       accessoryLeft={
         canGoBack(route)
           ? () => <TopNavigationAction onPress={goBack} icon={ArrowBackIcon} />

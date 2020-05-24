@@ -1,9 +1,14 @@
 import React, {FC, useCallback, useRef} from 'react'
 import {observer} from 'mobx-react-lite'
-import {View} from 'react-native'
-import {Spinner, StyleService, useStyleSheet, Text} from '@ui-kitten/components'
+import {Text} from '@ui-kitten/components'
 import {useQuizzesStore} from '@providers'
-import {Screen, QuizzesList, DeleteModal, useDeleteModal} from '@components'
+import {
+  Screen,
+  QuizzesList,
+  DeleteModal,
+  useDeleteModal,
+  Loader
+} from '@components'
 import {UUID} from '@types'
 import {useTranslation} from 'react-i18next'
 import {useNavigation} from '@react-navigation/native'
@@ -11,7 +16,6 @@ import {QuizzesRoute} from '@constants'
 
 export const AllQuizzesScreen: FC = observer(() => {
   const [t] = useTranslation()
-  const styles = useStyleSheet(themedStyles)
   const {navigate} = useNavigation()
 
   const quizzesStore = useQuizzesStore()
@@ -46,9 +50,7 @@ export const AllQuizzesScreen: FC = observer(() => {
   return (
     <Screen level="3">
       {!quizzesStore.loaded ? (
-        <View style={styles.loaderWrapper}>
-          <Spinner size="giant" />
-        </View>
+        <Loader />
       ) : (
         <QuizzesList
           quizzes={quizzesStore.quizzesList}
@@ -69,13 +71,4 @@ export const AllQuizzesScreen: FC = observer(() => {
       </DeleteModal>
     </Screen>
   )
-})
-
-const themedStyles = StyleService.create({
-  loaderWrapper: {
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
 })

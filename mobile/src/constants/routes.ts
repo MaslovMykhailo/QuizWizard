@@ -4,7 +4,9 @@ export enum AppRoute {
   Home = 'Home',
   Quizzes = 'Quizzes',
   Answers = 'Answers',
-  Options = 'Options'
+  Options = 'Options',
+  QuizSelection = 'QuizSelection',
+  AnswersDetection = 'AnswersDetection'
 }
 
 export enum QuizzesRoute {
@@ -16,4 +18,10 @@ export enum QuizzesRoute {
 export enum AnswersRoute {
   AllAnswers = 'AllAnswers',
   Answer = 'Answer'
+}
+
+export enum DetectionRoutes {
+  Detection = 'Detection',
+  NewAnswer = 'NewAnswer',
+  Responders = 'Responders'
 }

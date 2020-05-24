@@ -8,8 +8,13 @@ import {
   useStyleSheet,
   Divider
 } from '@ui-kitten/components'
-import {Screen, UserProfile, AddQuizButton} from '@components'
-import {CameraIcon, DownloadIcon} from '@icons'
+import {
+  Screen,
+  UserProfile,
+  AddQuizButton,
+  AddQuizAnswersButton
+} from '@components'
+import {DownloadIcon} from '@icons'
 
 export const HomeScreen: FC = () => {
   const [t] = useTranslation()
@@ -20,11 +25,7 @@ export const HomeScreen: FC = () => {
       <UserProfile />
       <View style={styles.actionsWrapper}>
         <AddQuizButton />
-        <Button accessoryLeft={CameraIcon}>
-          {(props) => (
-            <Text {...props} children={t<string>('ADD_QUIZ_ANSWERS')} />
-          )}
-        </Button>
+        <AddQuizAnswersButton />
         <Divider style={styles.divider} />
         <Button accessoryLeft={DownloadIcon}>
           {(props) => (

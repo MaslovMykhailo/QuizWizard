@@ -3,16 +3,16 @@ import {observer} from 'mobx-react-lite'
 import {View} from 'react-native'
 import {useNavigation} from '@react-navigation/native'
 import {useAnswersStore} from '@providers'
-import {Screen, AnswersList} from '@components'
-import {useStyleSheet, StyleService, Spinner} from '@ui-kitten/components'
+import {Screen, AnswersList, Loader, AddQuizAnswersButton} from '@components'
 import {AnswersRoute} from '@constants'
 import {UUID} from '@types'
+import {StyleService, useStyleSheet} from '@ui-kitten/components'
 
 export const AllAnswersScreen: FC = observer(() => {
   const styles = useStyleSheet(themedStyles)
   const {navigate} = useNavigation()
-  const answersStore = useAnswersStore()
 
+  const answersStore = useAnswersStore()
   const onAnswerPress = useCallback(
     (answerId: UUID) => navigate(AnswersRoute.Answer, {answerId}),
     [navigate]
@@ -21,21 +21,24 @@ export const AllAnswersScreen: FC = observer(() => {
   return (
     <Screen level="3">
       {!answersStore.loaded ? (
-        <View style={styles.loaderWrapper}>
-          <Spinner size="giant" />
-        </View>
+        <Loader />
       ) : (
-        <AnswersList onAnswerPress={onAnswerPress} />
+        <>
+          <AnswersList onAnswerPress={onAnswerPress} />
+          <View style={styles.addAnswersButtonWrapper}>
+            <AddQuizAnswersButton />
+          </View>
+        </>
       )}
     </Screen>
   )
 })
 
 const themedStyles = StyleService.create({
-  loaderWrapper: {
-    flex: 1,
+  addAnswersButtonWrapper: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 12
   }
 })
