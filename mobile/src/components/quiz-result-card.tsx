@@ -19,7 +19,7 @@ export const QuizResultCard: FC<QuizResultCardProps> = observer(
     const renderHeader = useCallback(
       (viewProps?: ViewProps) => (
         <View {...viewProps}>
-          <Text category="h5" children={quiz?.name} />
+          <Text category="h6" children={quiz?.name} />
         </View>
       ),
       [quiz]

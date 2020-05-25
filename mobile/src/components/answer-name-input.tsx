@@ -14,7 +14,7 @@ export const AnswerNameInput: FC<ViewProps> = observer((props) => {
   return (
     <View {...props}>
       <Text
-        category="h6"
+        category="s1"
         style={styles.label}
         children={t<string>('ANSWER_NAME_LABEL')}
       />

@@ -42,6 +42,8 @@ export const Responder: FC<ResponderProps> = observer(
               fill={theme['text-primary-color']}
             />
             <Text
+              style={styles.responderName}
+              numberOfLines={1}
               children={responder?.name ?? t<string>('UNKNOWN_RESPONDER')}
             />
           </>
@@ -65,9 +67,12 @@ const themedStyles = StyleService.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
+  responderName: {
+    width: 96
+  },
   icon: {
-    width: 24,
-    height: 24
+    width: 18,
+    height: 18
   },
   separator: {
     marginRight: 3

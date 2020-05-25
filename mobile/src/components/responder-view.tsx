@@ -24,7 +24,7 @@ export const ResponderView: FC<ResponderViewProps> = ({
 
   return (
     <Root {...props} onPress={onPress} style={[styles.root, style]}>
-      <Text category="h6" children={t<string>('RESPONDER_CAPTION')} />
+      <Text category="s1" children={t<string>('RESPONDER_CAPTION')} />
       <Responder style={styles.responder} responderId={responderId} />
     </Root>
   )

@@ -8,7 +8,8 @@ import {
   CheckedOptionsList,
   ResultExplanation,
   AnswerNameInput,
-  NewAnswerActions
+  NewAnswerActions,
+  SheetPreview
 } from '@components'
 import {useAnswerStore} from '@providers'
 import {QuizGrade} from '@icons'
@@ -28,6 +29,11 @@ export const NewAnswerScreen: FC = observer(() => {
     [navigate]
   )
 
+  const onSheetPreviewPress = useCallback(
+    () => navigate(DetectionRoutes.AnswerSheet),
+    [navigate]
+  )
+
   return (
     <Screen level="2">
       <AnswerNameInput />
@@ -39,6 +45,7 @@ export const NewAnswerScreen: FC = observer(() => {
             onPress={onResponderPress}
           />
           <QuizGrade style={styles.grade} grade={checkedAnswers.grade} />
+          <SheetPreview onPress={onSheetPreviewPress} />
         </View>
       </QuizResultCard>
       <CheckedOptionsList
@@ -54,13 +61,15 @@ export const NewAnswerScreen: FC = observer(() => {
 const themedStyles = StyleService.create({
   card: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   responder: {
     flex: 3
   },
   grade: {
-    flex: 1
+    flex: 1,
+    marginRight: 6
   },
   list: {
     marginTop: 12

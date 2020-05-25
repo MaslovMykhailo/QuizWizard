@@ -52,6 +52,7 @@
   "QUIZ_SELECTION_SCREEN_TITLE": "Select quiz",
   "RESPONDERS_SCREEN_TITLE": "Select responder",
   "NEW_ANSWER_SCREEN_TITLE": "New quiz answer",
+  "ANSWER_SHEET_SCREEN_TITLE": "Answers sheet",
   "NO_ANSWERS": "No answers",
   "ANSWER_NAME_LABEL": "Answer name",
   "DETECTION_ERROR": "Answers sheer was not recognized 😢",

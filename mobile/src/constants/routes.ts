@@ -23,5 +23,6 @@ export enum AnswersRoute {
 export enum DetectionRoutes {
   Detection = 'Detection',
   NewAnswer = 'NewAnswer',
-  Responders = 'Responders'
+  Responders = 'Responders',
+  AnswerSheet = 'AnswerSheet'
 }

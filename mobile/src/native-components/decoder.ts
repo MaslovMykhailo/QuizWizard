@@ -18,12 +18,20 @@ export const Decoder = {
 }
 
 const normalizeDecodingResult = (result: any): DecodedResult => {
-  if (result.responderId.length !== 3) {
-    delete result.responderId
-  }
+  const lastNotEmptyLine = Math.max(
+    ...result.answers.filter((options: string[]) => options.length)
+  )
+
+  const answers = result.answers.splice(0, lastNotEmptyLine + 1)
+  const sheetBase64 = result.sheetBase64
+  const responderId =
+    result.responderId?.length === 3
+      ? result.responderId?.map((id: number[]) => id[0]).join('')
+      : undefined
 
   return {
-    ...result,
-    responderId: result.responderId?.map((id: number[]) => id[0]).join('')
+    answers,
+    sheetBase64,
+    responderId
   }
 }

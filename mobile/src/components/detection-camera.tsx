@@ -83,8 +83,8 @@ const Tips: FC = () => {
   const styles = useStyleSheet(themedStyles)
 
   return (
-    <View style={styles.tips}>
-      <View style={styles.tipsQr}>
+    <View style={[styles.tips, styles.dashedBorder]}>
+      <View style={[styles.tipsQr, styles.dashedBorder]}>
         <Text category="h4" appearance="hint" children={t<string>('QR')} />
       </View>
       <Text
@@ -115,31 +115,28 @@ const themedStyles = StyleService.create({
     justifyContent: 'space-around',
     backgroundColor: 'color-basic-1100'
   },
-  tips: {
-    top: '12%',
+  dashedBorder: {
     borderWidth: 1,
     borderColor: 'text-hint-color',
+    borderStyle: 'dashed',
+    borderRadius: 3
+  },
+  tips: {
+    top: '12%',
     width: '84%',
-    marginHorizontal: 'auto',
     aspectRatio: 0.7,
     padding: '3%',
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    borderStyle: 'dashed',
-    borderRadius: 3
+    alignItems: 'flex-start'
   },
   tipsQr: {
     width: '42%',
     aspectRatio: 1,
     padding: '3%',
-    borderWidth: 1,
-    borderColor: 'text-hint-color',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    borderStyle: 'dashed',
-    borderRadius: 3,
     marginRight: '8%'
   },
   tipText: {

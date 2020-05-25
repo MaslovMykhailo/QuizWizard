@@ -13,9 +13,9 @@ export const QuizGrade: FC<QuizGradeProps> = memo(({grade, ...props}) => {
 
   return (
     <View {...props}>
-      <Text category="h6" children={t<string>('GRADE_CAPTION')} />
+      <Text category="s1" children={t<string>('GRADE_CAPTION')} />
       <Text
-        category="h5"
+        category="h6"
         style={styles.grade}
         status={getGradeStatus(grade)}
         children={getGradePercent(grade)}

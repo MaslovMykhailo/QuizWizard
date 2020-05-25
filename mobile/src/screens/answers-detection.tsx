@@ -12,6 +12,7 @@ import {UUID} from '@types'
 import {DetectionScreen} from './detection'
 import {NewAnswerScreen} from './new-answer'
 import {RespondersScreen} from './responders'
+import {AnswerSheetScreen} from './answer-sheet'
 
 const Stack = createStackNavigator()
 
@@ -38,6 +39,8 @@ export const AnswersDetectionScreen: FC = observer(() => {
   const getTitle = useCallback(
     ({name}: Route<string>) => {
       switch (name) {
+        case DetectionRoutes.AnswerSheet:
+          return t<string>('ANSWER_SHEET_SCREEN_TITLE')
         case DetectionRoutes.Responders:
           return t<string>('RESPONDERS_SCREEN_TITLE')
         default:
@@ -48,7 +51,9 @@ export const AnswersDetectionScreen: FC = observer(() => {
   )
 
   const canGoBack = useCallback(
-    ({name}: Route<string>) => name === DetectionRoutes.Responders,
+    ({name}: Route<string>) =>
+      name === DetectionRoutes.Responders ||
+      name === DetectionRoutes.AnswerSheet,
     []
   )
 
@@ -76,6 +81,10 @@ export const AnswersDetectionScreen: FC = observer(() => {
         <Stack.Screen
           name={DetectionRoutes.Responders}
           component={RespondersScreen}
+        />
+        <Stack.Screen
+          name={DetectionRoutes.AnswerSheet}
+          component={AnswerSheetScreen}
         />
       </Stack.Navigator>
     </AnswerStoreProvider>

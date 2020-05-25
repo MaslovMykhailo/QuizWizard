@@ -47,7 +47,11 @@ export const DetectionScreen = observer(() => {
       )}
       {isLoading && (
         <Loader style={styles.overlay}>
-          <Text children={t<string>('PROCESSING')} />
+          <Text
+            category="s1"
+            style={styles.loadingText}
+            children={t<string>('PROCESSING')}
+          />
         </Loader>
       )}
       {isError && (
@@ -68,6 +72,9 @@ export const DetectionScreen = observer(() => {
 const themedStyles = StyleService.create({
   screen: {
     padding: 0
+  },
+  loadingText: {
+    marginTop: 12
   },
   overlay: {
     position: 'absolute',
