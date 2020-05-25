@@ -29,6 +29,17 @@ export class RespondersStore {
       })
   }
 
+  @action create = (name: string, id?: ResponderId) => {
+    if (id && this.responders.every((resource) => resource.data?.id !== id)) {
+      this.add({id, name})
+    } else {
+      this.add({
+        id: getResponderId(this.responderList.map((responder) => responder.id)),
+        name
+      })
+    }
+  }
+
   @action add = (responder: Responder) => {
     const responderResource = new ObservableResource({data: responder})
     this.responders.push(responderResource)
@@ -64,5 +75,30 @@ export class RespondersStore {
 
   @computed get someResponderLoading() {
     return this.responders.some((responder) => responder.loading)
+  }
+}
+
+const getResponderId = (ids: ResponderId[]) => {
+  const numIds = ids.map(Number)
+  return getNextId(new Set(numIds), Math.min(0, ...numIds))
+}
+
+const getNextId = (ids: Set<number>, min = 0): ResponderId => {
+  if (ids.has(min + 1)) {
+    ids.delete(min)
+    return getNextId(ids, Math.min(...ids))
+  } else {
+    return numberToResponderId(min + 1)
+  }
+}
+
+const numberToResponderId = (numId: number): ResponderId => {
+  const strId = String(numId)
+  if (strId.length === 1) {
+    return `00${strId}`
+  } else if (strId.length === 2) {
+    return `0${strId}`
+  } else {
+    return strId
   }
 }

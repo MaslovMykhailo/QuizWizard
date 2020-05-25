@@ -52,6 +52,29 @@ export class AnswersStore {
       })
   }
 
+  @action add = (answer: Answer) => {
+    if (
+      this.respondersStore.responderList.every(
+        (responder) => responder.id !== answer.responderId
+      )
+    ) {
+      delete answer.responderId
+    }
+
+    const answerResource = new ObservableResource({data: answer})
+    this.answers.push(answerResource)
+
+    answerResource.fetch()
+    this.api
+      .createAnswer(answer)
+      .then(() => {
+        answerResource.success(answer)
+      })
+      .catch((error) => {
+        answerResource.fail(error)
+      })
+  }
+
   @action remove = (answerId: UUID) => {
     const index = this.answers.findIndex(
       (resource) => resource.data?.id === answerId
@@ -111,7 +134,7 @@ export class AnswersStore {
         return
       }
 
-      return checkQuiz(quiz, answer.answers)
+      return checkQuiz(quiz.answers.slice(), answer.answers.slice())
     }).get()
 
   @computed get answersList(): AnswersList {

@@ -1,4 +1,4 @@
-import {Quiz, AnswerOptions, QuizResult, CheckedAnswerOptions} from '@types'
+import {AnswerOptions, QuizResult, CheckedAnswerOptions} from '@types'
 
 /**
  * @Note
@@ -7,7 +7,7 @@ import {Quiz, AnswerOptions, QuizResult, CheckedAnswerOptions} from '@types'
  */
 
 export const checkQuiz = (
-  {answers: correctAnswers}: Quiz,
+  correctAnswers: AnswerOptions[],
   answers: AnswerOptions[]
 ): QuizResult => {
   const answersCount = Math.max(correctAnswers.length, answers.length)

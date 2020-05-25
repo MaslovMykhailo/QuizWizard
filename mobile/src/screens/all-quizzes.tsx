@@ -12,7 +12,7 @@ import {
 import {UUID} from '@types'
 import {useTranslation} from 'react-i18next'
 import {useNavigation} from '@react-navigation/native'
-import {QuizzesRoute} from '@constants'
+import {QuizzesRoute, AppRoute} from '@constants'
 
 export const AllQuizzesScreen: FC = observer(() => {
   const [t] = useTranslation()
@@ -27,6 +27,11 @@ export const AllQuizzesScreen: FC = observer(() => {
 
   const onCopyQuizPress = useCallback(
     (quizId: UUID) => navigate(QuizzesRoute.NewQuiz, {quizId}),
+    [navigate]
+  )
+
+  const onAddQuizAnswersPress = useCallback(
+    (quizId: UUID) => navigate(AppRoute.AnswersDetection, {quizId}),
     [navigate]
   )
 
@@ -55,7 +60,7 @@ export const AllQuizzesScreen: FC = observer(() => {
         <QuizzesList
           quizzes={quizzesStore.quizzesList}
           onQuizPress={onQuizPress}
-          onAddQuizAnswersPress={() => {}}
+          onAddQuizAnswersPress={onAddQuizAnswersPress}
           onCopyQuizPress={onCopyQuizPress}
           onDeleteQuizPress={onDeleteQuizPress}
         />

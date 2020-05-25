@@ -22,13 +22,6 @@ export const QuizzesScreen: FC = observer(() => {
     quizzesStore.load()
   }, [quizzesStore])
 
-  // const isFocused = useIsFocused()
-  // useEffect(() => {
-  //   if (isFocused) {
-  //     quizzesStore.load()
-  //   }
-  // }, [isFocused, quizzesStore])
-
   const getTitle = useCallback(
     (route: Route<string>) => {
       switch (route.name) {

@@ -5,6 +5,7 @@ import {useQuizzesStore} from '@providers'
 import {QuizzesList, Screen, NavigationHeader, Loader} from '@components'
 import {UUID} from '@types'
 import {useNavigation, useRoute} from '@react-navigation/native'
+import {AppRoute} from '@constants'
 
 export const QuizSelectionScreen: FC = observer(() => {
   const [t] = useTranslation()
@@ -17,7 +18,10 @@ export const QuizSelectionScreen: FC = observer(() => {
   ])
 
   const quizzesStore = useQuizzesStore()
-  const onQuizPress = useCallback((quizId: UUID) => {}, [])
+  const onQuizPress = useCallback(
+    (quizId: UUID) => navigation.navigate(AppRoute.AnswersDetection, {quizId}),
+    [navigation]
+  )
 
   useEffect(() => {
     if (!quizzesStore.loaded) {

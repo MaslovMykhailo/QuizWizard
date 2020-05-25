@@ -24,12 +24,13 @@ export const Responder: FC<ResponderProps> = observer(
 
     const responderStore = useRespondersStore()
 
-    const responder =
-      responderId && responderStore.getResponderById(responderId)
+    const responder = responderId
+      ? responderStore.getResponderById(responderId)
+      : undefined
 
     return (
       <View {...props} style={[styles.root, style]}>
-        {responder ? (
+        {responderId ? (
           <>
             <HashIcon
               style={[styles.icon, styles.separator]}
@@ -40,7 +41,9 @@ export const Responder: FC<ResponderProps> = observer(
               style={[styles.icon, styles.separator]}
               fill={theme['text-primary-color']}
             />
-            <Text children={responder.name} />
+            <Text
+              children={responder?.name ?? t<string>('UNKNOWN_RESPONDER')}
+            />
           </>
         ) : (
           <>

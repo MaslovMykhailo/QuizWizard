@@ -7,10 +7,11 @@ import {UUID} from '@types'
 
 export interface QuizResultCardProps extends CardProps {
   quizId: UUID
+  headless?: boolean
 }
 
 export const QuizResultCard: FC<QuizResultCardProps> = observer(
-  ({quizId, ...props}) => {
+  ({quizId, headless, ...props}) => {
     const quizzesStore = useQuizzesStore()
 
     const quiz = quizzesStore.getQuizById(quizId)
@@ -18,7 +19,7 @@ export const QuizResultCard: FC<QuizResultCardProps> = observer(
     const renderHeader = useCallback(
       (viewProps?: ViewProps) => (
         <View {...viewProps}>
-          <Text category="h4" children={quiz?.name} />
+          <Text category="h5" children={quiz?.name} />
         </View>
       ),
       [quiz]
@@ -28,6 +29,8 @@ export const QuizResultCard: FC<QuizResultCardProps> = observer(
       return null
     }
 
-    return <Card {...props} disabled header={renderHeader} />
+    return (
+      <Card header={!headless ? renderHeader : undefined} {...props} disabled />
+    )
   }
 )

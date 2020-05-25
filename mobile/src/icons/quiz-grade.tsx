@@ -13,7 +13,7 @@ export const QuizGrade: FC<QuizGradeProps> = memo(({grade, ...props}) => {
 
   return (
     <View {...props}>
-      <Text category="h5" children={t<string>('GRADE_CAPTION')} />
+      <Text category="h6" children={t<string>('GRADE_CAPTION')} />
       <Text
         category="h5"
         style={styles.grade}

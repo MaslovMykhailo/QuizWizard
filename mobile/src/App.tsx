@@ -18,7 +18,8 @@ import {
   HomeScreen,
   QuizzesScreen,
   AnswersScreen,
-  QuizSelectionScreen
+  QuizSelectionScreen,
+  AnswersDetectionScreen
 } from '@screens'
 import {NavigationBar} from '@components'
 import {AppRoute} from '@constants'
@@ -54,6 +55,11 @@ export const App: FC = observer(() => {
                   name={AppRoute.QuizSelection}
                   options={{tabBarVisible: false}}
                   component={QuizSelectionScreen}
+                />
+                <Tab.Screen
+                  name={AppRoute.AnswersDetection}
+                  options={{tabBarVisible: false}}
+                  component={AnswersDetectionScreen}
                 />
               </>
             ) : (
