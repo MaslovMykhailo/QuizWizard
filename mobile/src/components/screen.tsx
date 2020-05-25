@@ -6,9 +6,9 @@ import {
   useStyleSheet
 } from '@ui-kitten/components'
 
-export const Screen: FC<LayoutProps> = (props) => {
+export const Screen: FC<LayoutProps> = ({style, ...props}) => {
   const styles = useStyleSheet(themedStyles)
-  return <Layout style={[styles.root, props.style]} {...props} />
+  return <Layout {...props} style={[styles.root, style]} />
 }
 
 const themedStyles = StyleService.create({

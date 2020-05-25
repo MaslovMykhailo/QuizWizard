@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next'
 import {StyleService, useStyleSheet, Button} from '@ui-kitten/components'
 import {useNavigation} from '@react-navigation/native'
 import {useAnswerStore, useAnswersStore} from '@providers'
-import {AppRoute} from '@constants'
+import {AppRoute, DetectionRoutes} from '@constants'
 
 export const NewAnswerActions: FC<ViewProps> = observer((props) => {
   const [t] = useTranslation()
@@ -18,6 +18,7 @@ export const NewAnswerActions: FC<ViewProps> = observer((props) => {
   const onCancel = useCallback(
     () =>
       requestAnimationFrame(() => {
+        navigate(DetectionRoutes.Detection)
         navigate(AppRoute.Answers)
       }),
     [navigate]
@@ -27,6 +28,7 @@ export const NewAnswerActions: FC<ViewProps> = observer((props) => {
     () =>
       requestAnimationFrame(() => {
         answersStore.add(answerStore.answer)
+        navigate(DetectionRoutes.Detection)
         navigate(AppRoute.Answers)
       }),
     [navigate, answerStore, answersStore]

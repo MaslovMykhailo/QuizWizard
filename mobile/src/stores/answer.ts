@@ -1,6 +1,13 @@
 import UUIDGenerator from 'react-native-uuid-generator'
 import {observable, computed, action} from 'mobx'
-import {ResponderId, AnswerOptions, UUID, Quiz, Answer} from '@types'
+import {
+  ResponderId,
+  AnswerOptions,
+  UUID,
+  Quiz,
+  Answer,
+  DecodedResult
+} from '@types'
 import {i18next} from '@localization'
 import {checkQuiz} from '@utils'
 
@@ -29,6 +36,15 @@ export class AnswerStore {
   }
 
   @action changeResponderId = (id?: ResponderId) => (this.responderId = id)
+
+  @action processDecodedAnswers = ({
+    answers,
+    responderId,
+    sheetBase64
+  }: DecodedResult) => {
+    this.answers = answers as AnswerOptions[]
+    ;(this.responderId = responderId), (this.sheetBase64 = sheetBase64)
+  }
 
   @computed get answer(): Answer {
     return {

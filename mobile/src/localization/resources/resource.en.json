@@ -37,6 +37,7 @@
   "COPY": "Copy",
   "DELETE": "Delete",
   "ADD": "Add",
+  "PROCESSING": "Processing",
   "COPY_INDICATOR": "copy",
   "RESULT_INDICATOR": "result",
   "ANSWER_SCREEN_TITLE": "Quiz answer",
@@ -52,5 +53,9 @@
   "RESPONDERS_SCREEN_TITLE": "Select responder",
   "NEW_ANSWER_SCREEN_TITLE": "New quiz answer",
   "NO_ANSWERS": "No answers",
-  "ANSWER_NAME_LABEL": "Answer name"
+  "ANSWER_NAME_LABEL": "Answer name",
+  "DETECTION_ERROR": "Answers sheer was not recognized 😢",
+  "TRY_AGAIN": "Try again",
+  "QR": "QR",
+  "QR_EXPLANATION": "Please, put the whole answers sheet into camera!"
 }

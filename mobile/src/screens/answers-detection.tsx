@@ -1,7 +1,7 @@
-import React, {FC, useState, useEffect, useCallback} from 'react'
+import React, {FC, useState, useEffect, useCallback, useMemo} from 'react'
 import {observer} from 'mobx-react-lite'
 import {useTranslation} from 'react-i18next'
-import {useRoute, Route} from '@react-navigation/native'
+import {useRoute, Route, useNavigation} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import {AnswerStore} from '@stores'
 import {useQuizzesStore, AnswerStoreProvider} from '@providers'
@@ -18,16 +18,22 @@ const Stack = createStackNavigator()
 export const AnswersDetectionScreen: FC = observer(() => {
   const [t] = useTranslation()
   const route = useRoute()
+  const {navigate} = useNavigation()
 
   const quizzesStore = useQuizzesStore()
-  const quiz = quizzesStore.getQuizById(
-    (route.params as {quizId: UUID})?.quizId
-  )
+  const quizId = useMemo(() => (route.params as {quizId: UUID})?.quizId, [
+    route.params
+  ])
 
-  const [answerStore, setAnswerStore] = useState(new AnswerStore(quiz!))
+  const [answerStore, setAnswerStore] = useState(
+    new AnswerStore(quizzesStore.getQuizById(quizId)!)
+  )
   useEffect(() => {
-    setAnswerStore(new AnswerStore(quiz!))
-  }, [quiz])
+    const quiz = quizzesStore.getQuizById(quizId)
+    if (quiz) {
+      setAnswerStore(new AnswerStore(quiz))
+    }
+  }, [navigate, quizId, quizzesStore])
 
   const getTitle = useCallback(
     ({name}: Route<string>) => {

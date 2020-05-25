@@ -8,6 +8,7 @@ export const Loader: FC<ViewProps> = ({style, ...props}) => {
   return (
     <View {...props} style={[styles.root, style]}>
       <Spinner size="giant" />
+      {props.children}
     </View>
   )
 }
