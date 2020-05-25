@@ -8,7 +8,6 @@ export const Decoder = {
       OpenCV.decodeImage(
         pictureBase64,
         (error: unknown) => {
-          console.log({error})
           reject(error)
         },
         (result: string) => {
