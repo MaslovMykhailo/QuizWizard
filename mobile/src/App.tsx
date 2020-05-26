@@ -21,7 +21,7 @@ import {
   QuizSelectionScreen,
   AnswersDetectionScreen
 } from '@screens'
-import {NavigationBar} from '@components'
+import {NavigationBar, SafeArea} from '@components'
 import {AppRoute} from '@constants'
 
 enableScreens()
@@ -37,40 +37,51 @@ export const App: FC = observer(() => {
     <I18nextProvider i18n={i18next}>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider mapping={mapping} theme={theme}>
-        <NavigationContainer>
-          <Tab.Navigator tabBar={NavigationBar}>
-            {isPreferencesInitializing || isAuthProcessing ? (
-              <Tab.Screen
-                name={AppRoute.Initialization}
-                options={{tabBarVisible: false}}
-                component={InitializationScreen}
-              />
-            ) : isAuth ? (
-              <>
-                <Tab.Screen name={AppRoute.Home} component={HomeScreen} />
-                <Tab.Screen name={AppRoute.Quizzes} component={QuizzesScreen} />
-                <Tab.Screen name={AppRoute.Answers} component={AnswersScreen} />
-                <Tab.Screen name={AppRoute.Options} component={OptionsScreen} />
+        <SafeArea>
+          <NavigationContainer>
+            <Tab.Navigator tabBar={NavigationBar}>
+              {isPreferencesInitializing || isAuthProcessing ? (
                 <Tab.Screen
-                  name={AppRoute.QuizSelection}
+                  name={AppRoute.Initialization}
                   options={{tabBarVisible: false}}
-                  component={QuizSelectionScreen}
+                  component={InitializationScreen}
                 />
+              ) : isAuth ? (
+                <>
+                  <Tab.Screen name={AppRoute.Home} component={HomeScreen} />
+                  <Tab.Screen
+                    name={AppRoute.Quizzes}
+                    component={QuizzesScreen}
+                  />
+                  <Tab.Screen
+                    name={AppRoute.Answers}
+                    component={AnswersScreen}
+                  />
+                  <Tab.Screen
+                    name={AppRoute.Options}
+                    component={OptionsScreen}
+                  />
+                  <Tab.Screen
+                    name={AppRoute.QuizSelection}
+                    options={{tabBarVisible: false}}
+                    component={QuizSelectionScreen}
+                  />
+                  <Tab.Screen
+                    name={AppRoute.AnswersDetection}
+                    options={{tabBarVisible: false}}
+                    component={AnswersDetectionScreen}
+                  />
+                </>
+              ) : (
                 <Tab.Screen
-                  name={AppRoute.AnswersDetection}
+                  name={AppRoute.Login}
                   options={{tabBarVisible: false}}
-                  component={AnswersDetectionScreen}
+                  component={LoginScreen}
                 />
-              </>
-            ) : (
-              <Tab.Screen
-                name={AppRoute.Login}
-                options={{tabBarVisible: false}}
-                component={LoginScreen}
-              />
-            )}
-          </Tab.Navigator>
-        </NavigationContainer>
+              )}
+            </Tab.Navigator>
+          </NavigationContainer>
+        </SafeArea>
       </ApplicationProvider>
     </I18nextProvider>
   )
