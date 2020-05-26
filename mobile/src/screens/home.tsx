@@ -1,23 +1,15 @@
 import React, {FC} from 'react'
 import {View} from 'react-native'
-import {useTranslation} from 'react-i18next'
-import {
-  Button,
-  Text,
-  StyleService,
-  useStyleSheet,
-  Divider
-} from '@ui-kitten/components'
+import {StyleService, useStyleSheet, Divider} from '@ui-kitten/components'
 import {
   Screen,
   UserProfile,
   AddQuizButton,
-  AddQuizAnswersButton
+  AddQuizAnswersButton,
+  DownloadSheetButton
 } from '@components'
-import {DownloadIcon} from '@icons'
 
 export const HomeScreen: FC = () => {
-  const [t] = useTranslation()
   const styles = useStyleSheet(themedStyles)
 
   return (
@@ -27,11 +19,7 @@ export const HomeScreen: FC = () => {
         <AddQuizButton />
         <AddQuizAnswersButton />
         <Divider style={styles.divider} />
-        <Button accessoryLeft={DownloadIcon}>
-          {(props) => (
-            <Text {...props} children={t<string>('DOWNLOAD_ANSWERS_SHEET')} />
-          )}
-        </Button>
+        <DownloadSheetButton />
       </View>
     </Screen>
   )
