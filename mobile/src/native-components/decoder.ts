@@ -19,7 +19,9 @@ export const Decoder = {
 
 const normalizeDecodingResult = (result: any): DecodedResult => {
   const lastNotEmptyLine = Math.max(
-    ...result.answers.filter((options: string[]) => options.length)
+    ...result.answers.map((options: string[], index: number) =>
+      options.length ? index : -1
+    )
   )
 
   const answers = result.answers.splice(0, lastNotEmptyLine + 1)

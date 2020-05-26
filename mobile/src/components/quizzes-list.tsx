@@ -99,10 +99,10 @@ export const QuizzesList: FC<QuizzesListProps> = memo(
     const renderListEmpty = useCallback(
       () => (
         <View style={[styles.wrapper, styles.noQuizzesWrapper]}>
-          <Text category="h4" children={t<string>('NO_QUIZZES_TITLE')} />
+          <Text category="h6" children={t<string>('NO_QUIZZES_TITLE')} />
           <Text
             appearance="hint"
-            category="h6"
+            category="s1"
             children={t<string>('NO_QUIZZES_SUBTITLE')}
           />
         </View>

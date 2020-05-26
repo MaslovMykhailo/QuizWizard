@@ -83,10 +83,10 @@ export const AnswersList: FC<AnswersListProps> = observer(({onAnswerPress}) => {
   const renderListEmpty = useCallback(
     () => (
       <View style={[styles.wrapper, styles.noAnswersWrapper]}>
-        <Text category="h4" children={t<string>('NO_ANSWERS_TITLE')} />
+        <Text category="h6" children={t<string>('NO_ANSWERS_TITLE')} />
         <Text
           appearance="hint"
-          category="h6"
+          category="s1"
           children={t<string>('NO_ANSWERS_SUBTITLE')}
         />
       </View>

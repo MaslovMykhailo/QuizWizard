@@ -30,7 +30,6 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
   public void decodeImage(String imageBase64, Callback errorCallback, Callback successCallback) {
     try {
       DecodedSheet decoded = decoder.decode(imageBase64);
-      System.out.println(gson.toJson(decoded));
       successCallback.invoke(gson.toJson(decoded));
     } catch (Exception e) {
       errorCallback.invoke(e.getMessage());
