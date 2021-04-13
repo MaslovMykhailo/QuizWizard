@@ -1,0 +1,10 @@
+{
+  "name": "quiz-wizard-monorepo",
+  "version": "1.0.0",
+  "description": "Monorepo for QuizWizard project",
+  "main": "index.js",
+  "repository": "git@github.com:maslovmichail20/QuizWizard.git",
+  "author": "Mykhailo Maslov <maslov.mikhail2000@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
