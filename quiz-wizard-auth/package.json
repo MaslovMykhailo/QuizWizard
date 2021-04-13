@@ -1,7 +1,7 @@
 {
   "name": "quiz-wizard-auth",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "build/index.js",
   "private": true,
   "author": "Mykhailo Maslov <maslov.mikhail2000@gmail.com>",
   "license": "MIT",
