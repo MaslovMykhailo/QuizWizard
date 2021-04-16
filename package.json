@@ -11,7 +11,8 @@
     "quiz-wizard-web",
     "quiz-wizard-mobile",
     "quiz-wizard-redux",
-    "quiz-wizard-auth"
+    "quiz-wizard-auth",
+    "quiz-wizard-client"
   ],
   "devDependencies": {
     "@babel/core": "^7.6.2",
