@@ -1,4 +1,4 @@
-import {UserSchema} from "../../../schemas"
+import {UserSchema} from "quiz-wizard-schema"
 
 export const data: UserSchema[] = [
   {

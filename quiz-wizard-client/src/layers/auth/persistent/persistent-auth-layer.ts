@@ -5,17 +5,17 @@ export const createPersistentAuthLayer = (
   persistentStorage: PersistentStorage,
   storageKey = 'auth'
 ): AuthLayer => {
-  const getAccessToken = () => 
+  const getAccessToken = () =>
     persistentStorage.getData<string>(storageKey)
 
-  const setAccessToken = (accessToken: string) => 
+  const setAccessToken = (accessToken: string) =>
     persistentStorage.setData<string>(storageKey, accessToken)
 
-  const removeAccessToken = () => 
+  const removeAccessToken = () =>
     persistentStorage.removeData(storageKey)
-  
-  const withAccessToken = <T, F extends (accessToken?: string) => T>(f: F) => 
-     getAccessToken().then(f)
+
+  const withAccessToken = <T, F extends (accessToken?: string) => T>(f: F) =>
+    getAccessToken().then(f)
 
   return {
     getAccessToken,

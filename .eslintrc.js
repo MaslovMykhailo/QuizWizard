@@ -12,10 +12,11 @@ module.exports = {
     'prettier'
   ],
   rules: {
+    'quotes': ['error', 'single'],
     'import/order': [
       'error',
       {
-          'newlines-between': 'always'
+        'newlines-between': 'always'
       }
     ],
     'comma-dangle': [
@@ -31,15 +32,28 @@ module.exports = {
     'object-curly-spacing': ['error', 'never'],
     'array-bracket-spacing': ['error', 'never'],
     'no-multiple-empty-lines': ['error', {max: 1}],
-    '@typescript-eslint/explicit-module-boundary-types': 'off'
+    'no-multi-spaces': 'error',
+    'no-trailing-spaces': 'error',
+    'keyword-spacing': [2],
+    'eol-last': ['error', 'always'],
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/indent': [
+      'error',
+      2,
+      {
+        SwitchCase: 1,
+        ignoredNodes: ['TSTypeParameterInstantiation']
+      }
+    ]
   },
   overrides: [
     {
-        files: ['*.eslintrc.js'],
-        rules: {
-            'no-undef': 'off',
-            '@typescript-eslint/no-var-requires': 'off'
-        }
+      files: ['*.eslintrc.js'],
+      rules: {
+        'no-undef': 'off',
+        '@typescript-eslint/no-var-requires': 'off'
+      }
     }
   ]
 }

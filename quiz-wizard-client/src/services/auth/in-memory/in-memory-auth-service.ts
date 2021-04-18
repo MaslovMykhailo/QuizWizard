@@ -1,27 +1,28 @@
-import {createToken, parseToken, delayMethods} from "../../../helpers"
-import {AuthLayer} from "../../../layers"
-import {UserSchema} from "../../../schemas"
-import {createInvalidCredentialsError, createUserAlreadyExistsError} from "../errors"
-import {AuthService, Tokens} from "../types"
+import {UserSchema} from 'quiz-wizard-schema'
 
-import {data} from "./data"
+import {AuthLayer} from '../../../layers'
+import {createToken, parseToken, delayMethods} from '../../../helpers'
+import {createInvalidCredentialsError, createUserAlreadyExistsError} from '../errors'
+import {AuthService, Tokens} from '../types'
+
+import {data} from './data'
 
 type Email = string;
 
 type AuthData = Map<Email, {
   tokens: Tokens
-  userData: UserSchema
+  user: UserSchema
   password: string
 }>
 
 export const createInMemoryAuthService = (
   authLayer: AuthLayer,
-  latency = 250 
-): AuthService<UserSchema> => {
+  latency = 750
+): AuthService => {
   const authData = data.reduce<AuthData>(
     (records, record) => {
-      records.set(record.email, { 
-        userData: record,
+      records.set(record.email, {
+        user: record,
         password: record.email.split('@')[0],
         tokens: {
           accessToken: createToken({
@@ -37,7 +38,7 @@ export const createInMemoryAuthService = (
   const signUp = async (
     email: string,
     password: string,
-    userData: UserSchema
+    user: UserSchema
   ) => {
     if (authData.has(email)) {
       throw createUserAlreadyExistsError()
@@ -47,10 +48,10 @@ export const createInMemoryAuthService = (
       accessToken: createToken({email})
     }
 
-    authData.set(email, {password, tokens, userData})
+    authData.set(email, {password, tokens, user})
     await authLayer.setAccessToken(tokens.accessToken)
 
-    return {userData, tokens}
+    return {user, tokens}
   }
 
   const signIn = async (

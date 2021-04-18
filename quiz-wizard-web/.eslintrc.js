@@ -1,4 +1,3 @@
-
 module.exports = {
   extends: [
     'react-app',
@@ -8,7 +7,7 @@ module.exports = {
     'prettier',
     '../.eslintrc.js'
   ],
-  plugins: ['jsx-a11y'],
+  plugins: ['jsx-a11y', 'react-hooks'],
   rules: {
     'quotes': ['error', 'single'],
     'react/jsx-indent' : ['error', 2],
@@ -21,22 +20,25 @@ module.exports = {
     'react/self-closing-comp': 'error',
     'react/jsx-closing-bracket-location': 'error',
     'react/jsx-wrap-multilines': [
-        'error',
-        {
-            declaration: 'parens-new-line',
-            assignment: 'parens-new-line',
-            return: 'parens-new-line',
-            arrow: 'parens-new-line',
-            condition: 'parens-new-line',
-            logical: 'parens-new-line',
-            prop: 'ignore'
-        }
+      'error',
+      {
+        declaration: 'parens-new-line',
+        assignment: 'parens-new-line',
+        return: 'parens-new-line',
+        arrow: 'parens-new-line',
+        condition: 'parens-new-line',
+        logical: 'parens-new-line',
+        prop: 'ignore'
+      }
     ],
     'react/jsx-one-expression-per-line': [
       'error',
       {
         allow: 'single-child'
       }
-    ]
+    ],
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'error',
+    'jsx-a11y/no-autofocus': 'off'
   }
 }

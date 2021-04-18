@@ -1,5 +1,5 @@
 {
-  "name": "quiz-wizard-redux",
+  "name": "quiz-wizard-schema",
   "version": "1.0.0",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -8,11 +8,5 @@
   "scripts": {
     "build": "tsc",
     "start": "tsc --watch"
-  },
-  "dependencies": {
-    "@reduxjs/toolkit": "^1.5.1",
-    "quiz-wizard-client": "1.0.0",
-    "quiz-wizard-schema": "1.0.0",
-    "react-redux": "^7.2.3"
   }
 }
