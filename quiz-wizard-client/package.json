@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "tsc --watch"
+    "start": "tsc --watch",
+    "lint": "eslint ./src"
   },
   "dependencies": {
     "quiz-wizard-schema": "1.0.0",

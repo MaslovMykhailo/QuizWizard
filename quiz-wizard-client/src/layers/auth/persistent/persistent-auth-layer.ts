@@ -1,5 +1,5 @@
-import {PersistentStorage} from "../../../storages/persistent"
-import {AuthLayer} from "../types"
+import {PersistentStorage} from '../../../storages/persistent'
+import {AuthLayer} from '../types'
 
 export const createPersistentAuthLayer = (
   persistentStorage: PersistentStorage,

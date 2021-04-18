@@ -15,18 +15,18 @@ export class AuthServiceError extends Error {
 export const isAuthServiceError = (
   error: unknown,
   reason?: AuthServiceErrorReason
-) =>  
-  error instanceof AuthServiceError && 
+) =>
+  error instanceof AuthServiceError &&
   (!reason || error.reason === reason)
 
-export const createUserAlreadyExistsError = () => 
+export const createUserAlreadyExistsError = () =>
   new AuthServiceError(AuthServiceErrorReason.USER_ALREADY_EXISTS)
 
-export const isUserAlreadyExistsError = (error: unknown) => 
+export const isUserAlreadyExistsError = (error: unknown) =>
   isAuthServiceError(error, AuthServiceErrorReason.USER_ALREADY_EXISTS)
 
-export const createInvalidCredentialsError = () => 
+export const createInvalidCredentialsError = () =>
   new AuthServiceError(AuthServiceErrorReason.INVALID_CREDENTIALS)
 
-export const isInvalidCredentialsError = (error: unknown) => 
+export const isInvalidCredentialsError = (error: unknown) =>
   isAuthServiceError(error, AuthServiceErrorReason.INVALID_CREDENTIALS)
