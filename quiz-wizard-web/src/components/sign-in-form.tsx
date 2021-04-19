@@ -1,4 +1,5 @@
 import {FormEvent} from 'react'
+import {useTranslation} from 'quiz-wizard-localization'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
@@ -7,7 +8,6 @@ import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import {makeStyles} from '@material-ui/core/styles'
-import {useTranslation} from 'quiz-wizard-localization'
 
 import {Link} from './link'
 
@@ -88,15 +88,18 @@ export function SignInForm({
           type="submit"
           className={classes.submit}
         >
-          Sign In
+          {t('SIGN_IN_SUBMIT_BUTTON')}
         </Button>
-        <Grid container>
+        <Grid
+          container
+          justify="flex-end"
+        >
           <Grid item>
             <Link
               to={signUpLink}
               variant="body2"
             >
-              {'Don\'t have an account? Sign Up'}
+              {t('SIGN_IN_FORM_SIGN_UP_HINT')}
             </Link>
           </Grid>
         </Grid>

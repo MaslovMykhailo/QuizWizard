@@ -1,6 +1,6 @@
 import {BrowserRouter, Switch} from 'react-router-dom'
 
-import {HomePage, SignInPage} from '../pages'
+import {HomePage, SignInPage, SignUpPage} from '../pages'
 
 import {Path} from './path'
 import {PublicRoute} from './public-route'
@@ -16,6 +16,13 @@ export function Router() {
           path={Path.signIn()}
         >
           <SignInPage />
+        </PublicRoute>
+
+        <PublicRoute
+          exact
+          path={Path.signUp()}
+        >
+          <SignUpPage />
         </PublicRoute>
 
         <PrivateRoute
