@@ -10,12 +10,20 @@ export function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <PublicRoute path={Path.signIn()}>
+
+        <PublicRoute
+          exact
+          path={Path.signIn()}
+        >
           <SignInPage />
         </PublicRoute>
-        <PrivateRoute path={Path.home()}>
+
+        <PrivateRoute
+          path={Path.home()}
+        >
           <HomePage />
         </PrivateRoute>
+
       </Switch>
     </BrowserRouter>
   )

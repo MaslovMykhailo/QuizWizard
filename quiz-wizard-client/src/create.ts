@@ -2,9 +2,9 @@ import {createPersistentAuthLayer} from './layers'
 import {createInMemoryAuthService, Services} from './services'
 import {createPersistentStorageFromLocalStorage} from './storages'
 
-const persistentAuthLayer = createPersistentAuthLayer(
-  createPersistentStorageFromLocalStorage()
-)
+const persistentStorage = createPersistentStorageFromLocalStorage()
+
+const persistentAuthLayer = createPersistentAuthLayer(persistentStorage)
 
 export const createInMemoryServices = (): Services => ({
   auth: createInMemoryAuthService(persistentAuthLayer)

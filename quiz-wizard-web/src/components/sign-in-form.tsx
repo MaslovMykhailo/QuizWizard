@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import {makeStyles} from '@material-ui/core/styles'
+import {useTranslation} from 'quiz-wizard-localization'
 
 import {Link} from './link'
 
@@ -24,6 +25,7 @@ export function SignInForm({
   signInError
 }: SignInProps) {
   const classes = useStyles()
+  const [t] = useTranslation()
 
   if (isSigningIn) {
     return (
@@ -48,7 +50,7 @@ export function SignInForm({
         component="h1"
         variant="h5"
       >
-        Sign in
+        {t('SIGN_IN_CAPTION')}
       </Typography>
       <form
         className={classes.form}
