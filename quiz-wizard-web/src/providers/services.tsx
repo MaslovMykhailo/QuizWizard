@@ -2,7 +2,8 @@ import {createContext, useContext} from 'react'
 import {Services} from 'quiz-wizard-client'
 
 const services: Array<keyof Services> = [
-  'auth'
+  'auth',
+  'preferences'
 ]
 
 export const ServicesContext = createContext<Services>(
@@ -26,9 +27,8 @@ export const {
 
 export const useServices = () => useContext(ServicesContext)
 
-const createUseService = (service: keyof Services) =>
+const createUseService = <K extends keyof Services>(service: K) =>
   () => useServices()[service]
 
-export const [
-  useAuthService
-] = services.map(createUseService)
+export const useAuthService = createUseService('auth')
+export const usePreferencesService = createUseService('preferences')

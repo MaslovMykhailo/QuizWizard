@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {setUser, useDispatch} from 'quiz-wizard-redux'
+import {fetchPreferences, setUser, useDispatch} from 'quiz-wizard-redux'
 
 import {Page, SignInForm} from '../components'
 import {useAuthService} from '../providers'
@@ -15,7 +15,10 @@ export function SignInPage() {
   const onSignIn = (email: string, password: string) => {
     setIsSigningIn(true)
     auth.signIn(email, password)
-      .then(({user}) => requestAnimationFrame(() => dispatch(setUser(user))))
+      .then(
+        ({user}) => dispatch(fetchPreferences())
+          .then(() => requestAnimationFrame(() => dispatch(setUser(user))))
+      )
       .catch(setSignInError)
       .finally(() => setIsSigningIn(false))
   }

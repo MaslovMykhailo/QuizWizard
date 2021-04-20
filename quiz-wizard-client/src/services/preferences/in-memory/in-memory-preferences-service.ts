@@ -8,12 +8,12 @@ import {PreferencesService} from '../types'
 
 import {data} from './data'
 
-const preferencesStorageKey = 'preferences'
-
 export const createInMemoryPreferencesService = (
   authLayer: AuthLayer,
   storage: PersistentStorage,
   defaultPreferences = DEFAULT_PREFERENCES,
+  localStoragePreferencesKey = 'local-preferences',
+  inMemoryPreferencesStorageKey = 'in-memory-preferences',
   latency = 750
 ): PreferencesService => {
   let inMemoryPreferences = {...data}
@@ -22,19 +22,27 @@ export const createInMemoryPreferencesService = (
     inMemoryPreferences[email] || defaultPreferences
 
   const syncPreferencesWithStorage = () => storage
-    .getData<Record<string, PreferencesSchema>>(preferencesStorageKey)
+    .getData<Record<string, PreferencesSchema>>(inMemoryPreferencesStorageKey)
     .then(
       (data) => storage.setData(
-        preferencesStorageKey,
+        inMemoryPreferencesStorageKey,
         inMemoryPreferences = {...data, ...inMemoryPreferences}
       )
     )
+
+  const getLocalPreferences = () =>
+    storage.getData<PreferencesSchema>(localStoragePreferencesKey)
+      .then(preferences => preferences || defaultPreferences)
+
+  const setLocalPreferences = (preferences: PreferencesSchema) =>
+    storage.setData<PreferencesSchema>(localStoragePreferencesKey, preferences)
 
   const getPreferences = () => authLayer.withAccessToken(
     (token) => {
       const {email} = parseToken(token)
       inMemoryPreferences[email] = getInMemoryPreferences(email)
-      return syncPreferencesWithStorage().then(() => inMemoryPreferences[email])
+      return syncPreferencesWithStorage()
+        .then(() => inMemoryPreferences[email])
     }
   )
 
@@ -42,15 +50,20 @@ export const createInMemoryPreferencesService = (
     (token) => {
       const {email} = parseToken(token)
       inMemoryPreferences[email] = {...getInMemoryPreferences(email), ...preferences}
-      return syncPreferencesWithStorage().then(() => inMemoryPreferences[email])
+      return syncPreferencesWithStorage()
+        .then(() => inMemoryPreferences[email])
     }
   )
 
-  return delayMethods(
-    {
-      getPreferences,
-      patchPreferences
-    },
-    latency
-  )
+  return {
+    ...delayMethods(
+      {
+        getPreferences,
+        patchPreferences
+      },
+      latency
+    ),
+    getLocalPreferences,
+    setLocalPreferences
+  }
 }

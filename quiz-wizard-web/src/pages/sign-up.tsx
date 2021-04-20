@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {setUser, useDispatch} from 'quiz-wizard-redux'
+import {fetchPreferences, setUser, useDispatch} from 'quiz-wizard-redux'
 import {UserSchema} from 'quiz-wizard-schema'
 
 import {Page, SignUpForm} from '../components'
@@ -16,7 +16,10 @@ export function SignUpPage() {
   const onSignUp = (email: string, password: string, user: UserSchema) => {
     setIsSigningUp(true)
     auth.signUp(email, password, user)
-      .then(({user}) => requestAnimationFrame(() => dispatch(setUser(user))))
+      .then(
+        ({user}) => dispatch(fetchPreferences())
+          .then(() => requestAnimationFrame(() => dispatch(setUser(user))))
+      )
       .catch(setSignUpError)
       .finally(() => setIsSigningUp(false))
   }

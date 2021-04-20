@@ -1,42 +1,31 @@
-export type PendingResource = {
-  status: 'pending'
-}
+import {SerializedError} from '@reduxjs/toolkit'
 
-export type FulfilledResource<D> = {
+export type Resource<D, E = SerializedError> = {
   data?: D
-  status: 'fulfilled'
-}
-
-export type RejectedResource<E> = {
   error?: E
-  status: 'rejected'
+  status: 'pending' | 'fulfilled' | 'rejected'
 }
 
-export type Resource<D, E = Error> =
-  | PendingResource
-  | FulfilledResource<D>
-  | RejectedResource<E>
-
-export const pending = <D, E, R extends Resource<D, E>>(
-  resource: R
-): R => ({
+export const pending = <D, E>(
+  resource: Resource<D, E>
+): Resource<D, E> => ({
   ...resource,
   status: 'pending'
 })
 
-export const fulfilled = <D, E, R extends Resource<D, E>>(
-  resource: R,
+export const fulfilled = <D, E>(
+  resource: Resource<D, E>,
   data?: D
-): R => ({
+): Resource<D, E> => ({
   ...resource,
   status: 'fulfilled',
   data
 })
 
-export const rejected = <D, E, R extends Resource<D, E>>(
-  resource: R,
-  error?: D
-): R => ({
+export const rejected = <D, E>(
+  resource: Resource<D, E>,
+  error?: E
+): Resource<D, E> => ({
   ...resource,
   status: 'rejected',
   error
@@ -44,15 +33,20 @@ export const rejected = <D, E, R extends Resource<D, E>>(
 
 export const isPending = <D, E>(
   resource: Resource<D, E>
-): resource is PendingResource =>
-  resource.status === 'pending'
+) => resource.status === 'pending'
 
 export const isFulfilled = <D, E>(
   resource: Resource<D, E>
-): resource is FulfilledResource<D> =>
-  resource.status === 'fulfilled'
+) => resource.status === 'fulfilled'
 
 export const isRejected = <D, E>(
   resource: Resource<D, E>
-): resource is RejectedResource<E> =>
-  resource.status === 'rejected'
+) => resource.status === 'rejected'
+
+export const getData = <D>(
+  resource: Resource<D, unknown>
+) => resource.data
+
+export const getError = <E>(
+  resource: Resource<unknown, E>
+) => resource.error
