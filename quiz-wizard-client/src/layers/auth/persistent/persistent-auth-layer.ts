@@ -1,4 +1,5 @@
 import {PersistentStorage} from '../../../storages/persistent'
+import {NotAuthorizedError} from '../errors'
 import {AuthLayer} from '../types'
 
 export const createPersistentAuthLayer = (
@@ -14,8 +15,15 @@ export const createPersistentAuthLayer = (
   const removeAccessToken = () =>
     persistentStorage.removeData(storageKey)
 
-  const withAccessToken = <T, F extends (accessToken?: string) => T>(f: F) =>
-    getAccessToken().then(f)
+  const withAccessToken = async <T>(f: (accessToken: string) => Promise<T>) => {
+    const token = await getAccessToken()
+
+    if (!token) {
+      return Promise.reject(new NotAuthorizedError())
+    }
+
+    return f(token)
+  }
 
   return {
     getAccessToken,

@@ -13,11 +13,16 @@ export class AuthServiceError extends Error {
 }
 
 export const isAuthServiceError = (
-  error: unknown,
+  error?: unknown,
   reason?: AuthServiceErrorReason
-) =>
-  error instanceof AuthServiceError &&
-  (!reason || error.reason === reason)
+) => {
+  if (!reason) {
+    return error instanceof AuthServiceError
+  }
+
+  return (error instanceof Error || (error && typeof error === 'object')) &&
+   'reason' in error && (error as Record<string, unknown>).reason === reason
+}
 
 export const createUserAlreadyExistsError = () =>
   new AuthServiceError(AuthServiceErrorReason.USER_ALREADY_EXISTS)
