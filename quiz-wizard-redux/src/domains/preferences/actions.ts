@@ -21,8 +21,9 @@ export const updatePreferences = createThunkAction(
     dispatch(setPreferences((patchedPreferences)))
     return Promise
       .all([
-        services.preferences.setLocalPreferences(patchedPreferences),
-        services.preferences.patchPreferences(preferences)
+        services.preferences.patchPreferences(preferences),
+        services.preferences.setLocalPreferences(patchedPreferences)
       ])
+      .then(([preferences]) => preferences)
   }
 )

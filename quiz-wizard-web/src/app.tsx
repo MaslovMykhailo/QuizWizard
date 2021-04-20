@@ -2,7 +2,7 @@ import {createInMemoryServices} from 'quiz-wizard-client'
 import {createStore, StoreProvider} from 'quiz-wizard-redux'
 import {CssBaseline} from '@material-ui/core'
 
-import {InitializationProvider, ServicesProvider} from './providers'
+import {InitializationProvider, ServicesProvider, ThemeProvider} from './providers'
 import {Router} from './routes'
 
 const services = createInMemoryServices()
@@ -12,10 +12,12 @@ export function App() {
   return (
     <ServicesProvider value={services}>
       <StoreProvider store={store} >
-        <InitializationProvider>
+        <ThemeProvider>
           <CssBaseline />
-          <Router />
-        </InitializationProvider>
+          <InitializationProvider>
+            <Router />
+          </InitializationProvider>
+        </ThemeProvider>
       </StoreProvider>
     </ServicesProvider>
   )

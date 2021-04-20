@@ -1,7 +1,7 @@
-import Typography from '@material-ui/core/Typography'
+import {NavigationDrawer} from '../components'
 
 export function HomePage() {
   return (
-    <Typography children="QuizWizard" />
+    <NavigationDrawer />
   )
 }
