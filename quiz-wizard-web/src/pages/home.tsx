@@ -1,7 +1,7 @@
-import {NavigationDrawer} from '../components'
+import Typography from '@material-ui/core/Typography'
 
 export function HomePage() {
   return (
-    <NavigationDrawer />
+    <Typography children="Home page" />
   )
 }
