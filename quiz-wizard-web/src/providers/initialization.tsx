@@ -10,9 +10,8 @@ import {
   useSelector
 } from 'quiz-wizard-redux'
 import {initLocalization} from 'quiz-wizard-localization'
-import CircularProgress from '@material-ui/core/CircularProgress'
 
-import {Page} from '../components'
+import {InitialLoader} from '../components'
 
 const useAuthorizationInit = () => {
   const dispatch = useDispatch()
@@ -71,11 +70,13 @@ export const InitializationProvider: FC = ({children}) => {
   const isPreferencesInitializing = usePreferencesInit()
   const isLocalizationInitializing = useLocalizationInit()
 
-  if (isAuthorizing || isPreferencesInitializing || isLocalizationInitializing) {
+  if (
+    isAuthorizing ||
+    isPreferencesInitializing ||
+    isLocalizationInitializing
+  ) {
     return (
-      <Page>
-        <CircularProgress />
-      </Page>
+      <InitialLoader />
     )
   }
 
