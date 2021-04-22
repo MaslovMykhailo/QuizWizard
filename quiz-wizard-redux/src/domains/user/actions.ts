@@ -2,12 +2,12 @@ import {createAction} from '@reduxjs/toolkit'
 import type {AuthPayload} from 'quiz-wizard-client'
 import type {UserSchema} from 'quiz-wizard-schema'
 
-import {createThunkAction} from '../../common'
+import {createAsyncThunkAction} from '../../common'
 
 const getUserFromPayload = (payload?: AuthPayload) =>
   payload?.user
 
-export const authorizeUser = createThunkAction(
+export const authorizeUser = createAsyncThunkAction(
   'AuthorizeUser',
   (_, {extra: {services}}) => services.auth
     .getAuthorized()
@@ -16,7 +16,7 @@ export const authorizeUser = createThunkAction(
 
 export const setUser = createAction<UserSchema | undefined>('SetUser')
 
-export const signUp = createThunkAction(
+export const signUp = createAsyncThunkAction(
   'SignUp',
   (
     {email, password, user}: {email: string, password: string, user: UserSchema},
@@ -26,7 +26,7 @@ export const signUp = createThunkAction(
     .then(getUserFromPayload)
 )
 
-export const signIn = createThunkAction(
+export const signIn = createAsyncThunkAction(
   'SignIn',
   (
     {email, password}: {email: string, password: string},
@@ -36,7 +36,7 @@ export const signIn = createThunkAction(
     .then(getUserFromPayload)
 )
 
-export const signOut = createThunkAction(
+export const signOut = createAsyncThunkAction(
   'SignOut',
   (_, {extra: {services}}) => services.auth.signOut()
 )

@@ -5,20 +5,20 @@ import GroupIcon from '@material-ui/icons/Group'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
 import EqualizerIcon from '@material-ui/icons/Equalizer'
-import HomeIcon from '@material-ui/icons/Home'
+import DashboardIcon from '@material-ui/icons/Dashboard'
 
 import {
   AccountPage,
   AnalyticsPage,
   AnswersPage,
+  DashboardPage,
   GroupsPage,
-  HomePage,
   QuizzesPage,
   SignInPage,
   SignUpPage,
   StudentsPage
 } from '../pages'
-import {NavigationTarget, PageWithNavigation} from '../components'
+import {NavigationTarget, PageWithNavigation, Toolbar} from '../components'
 
 import {Path} from './path'
 import {PublicRoute} from './public-route'
@@ -32,16 +32,14 @@ export function Router() {
         <PublicRoute
           exact
           path={Path.signIn()}
-        >
-          <SignInPage />
-        </PublicRoute>
+          component={SignInPage}
+        />
 
         <PublicRoute
           exact
           path={Path.signUp()}
-        >
-          <SignUpPage />
-        </PublicRoute>
+          component={SignUpPage}
+        />
 
         <AppRoute />
 
@@ -73,68 +71,49 @@ function AppRoute() {
       <PageWithNavigation
         {...navigationTargets}
         onNavigate={onNavigate}
-        toolbar={null}
+        toolbar={<Toolbar />}
       >
         <Switch>
 
           <PrivateRoute
             exact
-            path={Path.students()}
-          >
-            <StudentsPage />
-          </PrivateRoute>
-
-          <PrivateRoute
-            exact
-            path={Path.groups()}
-          >
-            <GroupsPage />
-          </PrivateRoute>
-
-          <PrivateRoute
-            exact
-            path={Path.quizzes()}
-          >
-            <QuizzesPage />
-          </PrivateRoute>
-
-          <PrivateRoute
-            exact
-            path={Path.quizzes()}
-          >
-            <QuizzesPage />
-          </PrivateRoute>
-
-          <PrivateRoute
-            exact
-            path={Path.answers()}
-          >
-            <AnswersPage />
-          </PrivateRoute>
-
-          <PrivateRoute
-            exact
-            path={Path.analytics()}
-          >
-            <AnalyticsPage />
-          </PrivateRoute>
+            path={Path.dashboard()}
+            component={DashboardPage}
+          />
 
           <PrivateRoute
             exact
             path={Path.account()}
-          >
-            <AccountPage />
-          </PrivateRoute>
+            component={AccountPage}
+          />
 
           <PrivateRoute
-            exact
-            path={Path.home()}
-          >
-            <HomePage />
-          </PrivateRoute>
+            path={Path.students()}
+            component={StudentsPage}
+          />
+
+          <PrivateRoute
+            path={Path.groups()}
+            component={GroupsPage}
+          />
+
+          <PrivateRoute
+            path={Path.quizzes()}
+            component={QuizzesPage}
+          />
+
+          <PrivateRoute
+            path={Path.answers()}
+            component={AnswersPage}
+          />
+
+          <PrivateRoute
+            path={Path.analytics()}
+            component={AnalyticsPage}
+          />
 
           <Redirect
-            to={Path.home()}
+            to={Path.dashboard()}
           />
 
         </Switch>
@@ -175,15 +154,17 @@ const useNavigationTargets = () => {
     []
   )
 
-  const bottomNavigationTargets = useMemo<NavigationTarget[]>(
-    () => [
+  const {pathname} = useLocation()
+
+  const bottomNavigationTargets = useMemo<NavigationTarget[] | undefined>(
+    () => !pathname.match(Path.dashboard()) ? [
       {
-        path: Path.home(),
-        caption: 'Home',
-        Icon: HomeIcon
+        path: Path.dashboard(),
+        caption: 'Dashboard',
+        Icon: DashboardIcon
       }
-    ],
-    []
+    ] : undefined,
+    [pathname]
   )
 
   return {topNavigationTargets, bottomNavigationTargets}

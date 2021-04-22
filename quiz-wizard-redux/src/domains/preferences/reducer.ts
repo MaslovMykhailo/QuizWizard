@@ -1,4 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit'
+import {PreferencesSchema} from 'quiz-wizard-schema'
 
 import {pending, fulfilled, rejected} from '../../helpers'
 
@@ -15,7 +16,7 @@ export const preferencesReducer = createReducer(
     .addCase(
       setPreferences,
       (state, action) => {
-        state.data = action.payload
+        state.data = {...state.data, ...action.payload} as PreferencesSchema
       }
     )
     .addMatcher(

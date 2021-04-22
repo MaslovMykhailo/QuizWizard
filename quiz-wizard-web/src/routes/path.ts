@@ -1,5 +1,5 @@
 export const Path = {
-  home: () => '/home',
+  dashboard: () => '/dashboard',
   signUp: () => '/signUp',
   signIn: () => '/signIn',
   students: () => '/students',

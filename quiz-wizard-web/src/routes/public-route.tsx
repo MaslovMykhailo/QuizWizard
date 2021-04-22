@@ -15,7 +15,7 @@ export function PublicRoute({
       render={({location}) => !isAuthorized ? children : (
         <Redirect
           to={{
-            pathname: state && 'signInFrom' in state ? state.signInFrom.pathname : Path.home(),
+            pathname: state && 'signInFrom' in state ? state.signInFrom.pathname : Path.dashboard(),
             state: {signOutFrom: location}
           }}
         />
