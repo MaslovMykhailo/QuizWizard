@@ -1,46 +1,47 @@
 import {UserSchema} from 'quiz-wizard-schema'
 
 import {AuthLayer} from '../../../layers'
+import {PersistentStorage} from '../../../storages'
 import {createToken, parseToken, delayMethods} from '../../../helpers'
 import {createInvalidCredentialsError, createUserAlreadyExistsError} from '../errors'
 import {AuthService, Tokens} from '../types'
 
-import {data} from './data'
-
-type Email = string;
-
-type AuthData = Map<Email, {
-  tokens: Tokens
-  user: UserSchema
-  password: string
-}>
+const userDataToAuthData = (userData?: UserSchema) =>
+  userData && ({
+    user: userData,
+    password: userData.email.split('@')[0],
+    tokens: {
+      accessToken: createToken({
+        email: userData.email
+      })
+    }
+  })
 
 export const createInMemoryAuthService = (
   authLayer: AuthLayer,
+  persistentStorage: PersistentStorage,
+  inMemoryUserDataStorageKey = 'in-memory-user-data',
   latency = 750
 ): AuthService => {
-  const authData = data.reduce<AuthData>(
-    (records, record) => {
-      records.set(record.email, {
-        user: record,
-        password: record.email.split('@')[0],
-        tokens: {
-          accessToken: createToken({
-            email: record.email
-          })
-        }
-      })
-      return records
-    },
-    new Map()
-  )
+  const getAllUserData = () => persistentStorage
+    .getData<Record<string, UserSchema>>(inMemoryUserDataStorageKey)
+
+  const getUserData = (email: string) => getAllUserData()
+    .then((userData) => userData?.[email])
+
+  const setUserData = (email: string, user: UserSchema) => getAllUserData()
+    .then((userData) => persistentStorage
+      .setData(inMemoryUserDataStorageKey, {...userData, [email]: user})
+    )
 
   const signUp = async (
     email: string,
     password: string,
     user: UserSchema
   ) => {
-    if (authData.has(email)) {
+    const authData = await getUserData(email).then(userDataToAuthData)
+
+    if (authData) {
       throw createUserAlreadyExistsError()
     }
 
@@ -48,7 +49,7 @@ export const createInMemoryAuthService = (
       accessToken: createToken({email})
     }
 
-    authData.set(email, {password, tokens, user})
+    await setUserData(email, user)
     await authLayer.setAccessToken(tokens.accessToken)
 
     return {user, tokens}
@@ -58,19 +59,19 @@ export const createInMemoryAuthService = (
     email: string,
     password: string
   ) => {
-    if (!authData.has(email)) {
+    const authData = await getUserData(email).then(userDataToAuthData)
+
+    if (!authData) {
       throw createInvalidCredentialsError()
     }
 
-    const record = authData.get(email)
-
-    if (!record || record?.password !== password) {
+    if (authData.password !== password) {
       throw createInvalidCredentialsError()
     }
 
-    await authLayer.setAccessToken(record.tokens.accessToken)
+    await authLayer.setAccessToken(authData.tokens.accessToken)
 
-    return record
+    return authData
   }
 
   const signOut = async () => {
@@ -85,7 +86,7 @@ export const createInMemoryAuthService = (
     }
 
     const {email} = parseToken(token)
-    return authData.get(email)
+    return getUserData(email).then(userDataToAuthData)
   }
 
   return delayMethods(

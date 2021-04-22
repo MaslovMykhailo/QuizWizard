@@ -10,9 +10,17 @@ export const setPreferences = createAction<Partial<PreferencesSchema>>('SetPrefe
 
 export const fetchPreferences = createAsyncThunkAction(
   'FetchPreferences',
-  (local: boolean | undefined = false, {extra: {services}}) => local ?
-    services.preferences.getLocalPreferences() :
-    services.preferences.getPreferences()
+  (local: boolean | undefined = false, {extra: {services}}) => {
+    if (local) {
+      return services.preferences.getLocalPreferences()
+    }
+
+    return services.preferences.getPreferences()
+      .then(preferences => {
+        services.preferences.setLocalPreferences(preferences)
+        return preferences
+      })
+  }
 )
 
 export const updatePreferences = createAsyncThunkAction(

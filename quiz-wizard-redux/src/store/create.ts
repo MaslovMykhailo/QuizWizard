@@ -22,6 +22,11 @@ export const createStore = (
   services: Services
 ) => configureStore({
   reducer,
+  preloadedState: {
+    preferences: {
+      data: services.preferences.getLocalPreferences()
+    }
+  },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: getDefaultMiddleware({
     thunk: {extraArgument: {services}}

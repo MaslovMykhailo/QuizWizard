@@ -32,13 +32,13 @@ export function Router() {
         <PublicRoute
           exact
           path={Path.signIn()}
-          component={SignInPage}
+          children={<SignInPage />}
         />
 
         <PublicRoute
           exact
           path={Path.signUp()}
-          component={SignUpPage}
+          children={<SignUpPage />}
         />
 
         <AppRoute />
@@ -67,7 +67,7 @@ function AppRoute() {
   const navigationTargets = useNavigationTargets()
 
   return (
-    <Route>
+    <PrivateRoute>
       <PageWithNavigation
         {...navigationTargets}
         onNavigate={onNavigate}
@@ -75,39 +75,39 @@ function AppRoute() {
       >
         <Switch>
 
-          <PrivateRoute
+          <Route
             exact
             path={Path.dashboard()}
             component={DashboardPage}
           />
 
-          <PrivateRoute
+          <Route
             exact
             path={Path.account()}
             component={AccountPage}
           />
 
-          <PrivateRoute
+          <Route
             path={Path.students()}
             component={StudentsPage}
           />
 
-          <PrivateRoute
+          <Route
             path={Path.groups()}
             component={GroupsPage}
           />
 
-          <PrivateRoute
+          <Route
             path={Path.quizzes()}
             component={QuizzesPage}
           />
 
-          <PrivateRoute
+          <Route
             path={Path.answers()}
             component={AnswersPage}
           />
 
-          <PrivateRoute
+          <Route
             path={Path.analytics()}
             component={AnalyticsPage}
           />
@@ -118,7 +118,7 @@ function AppRoute() {
 
         </Switch>
       </PageWithNavigation>
-    </Route>
+    </PrivateRoute>
   )
 }
 

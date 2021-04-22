@@ -5,7 +5,6 @@ import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import {makeStyles} from '@material-ui/core/styles'
@@ -14,27 +13,17 @@ import {Link} from './link'
 
 export interface SignUpProps {
   signInLink: string
-  isSigningUp: boolean
   onSignUp: (email: string, password: string, user: UserSchema) => void
   signUpError?: Error
 }
 
 export function SignUpForm({
   signInLink,
-  isSigningUp,
   onSignUp,
   signUpError
 }: SignUpProps) {
   const classes = useStyles()
   const [t] = useTranslation()
-
-  if (isSigningUp) {
-    return (
-      <div className={classes.paper}>
-        <CircularProgress />
-      </div>
-    )
-  }
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     const formData = new FormData(e.target as HTMLFormElement)
@@ -161,7 +150,7 @@ export function SignUpForm({
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    paddingTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'

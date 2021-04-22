@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {fetchPreferences, setUser, useDispatch} from 'quiz-wizard-redux'
 
-import {Page, SignInForm} from '../components'
+import {InitialLoader, Page, SignInForm} from '../components'
 import {useAuthService} from '../providers'
 import {Path} from '../routes'
 
@@ -23,11 +23,16 @@ export function SignInPage() {
       .finally(() => setIsSigningIn(false))
   }
 
+  if (isSigningIn) {
+    return (
+      <InitialLoader />
+    )
+  }
+
   return (
     <Page maxWidth="xs">
       <SignInForm
         signUpLink={Path.signUp()}
-        isSigningIn={isSigningIn}
         onSignIn={onSignIn}
         signInError={signInError}
       />

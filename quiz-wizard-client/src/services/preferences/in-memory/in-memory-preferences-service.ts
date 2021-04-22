@@ -11,7 +11,6 @@ import {data} from './data'
 export const createInMemoryPreferencesService = (
   authLayer: AuthLayer,
   storage: PersistentStorage,
-  defaultPreferences = DEFAULT_PREFERENCES,
   localStoragePreferencesKey = 'local-preferences',
   inMemoryPreferencesStorageKey = 'in-memory-preferences',
   latency = 750
@@ -19,7 +18,7 @@ export const createInMemoryPreferencesService = (
   let inMemoryPreferences = {...data}
 
   const getInMemoryPreferences = (email: string) =>
-    inMemoryPreferences[email] || defaultPreferences
+    inMemoryPreferences[email] || DEFAULT_PREFERENCES
 
   const syncPreferencesWithStorage = () => storage
     .getData<Record<string, PreferencesSchema>>(inMemoryPreferencesStorageKey)
@@ -30,12 +29,17 @@ export const createInMemoryPreferencesService = (
       )
     )
 
-  const getLocalPreferences = () =>
-    storage.getData<PreferencesSchema>(localStoragePreferencesKey)
-      .then(preferences => preferences || defaultPreferences)
+  syncPreferencesWithStorage()
 
-  const setLocalPreferences = (preferences: PreferencesSchema) =>
-    storage.setData<PreferencesSchema>(localStoragePreferencesKey, preferences)
+  const getLocalPreferences = () => {
+    const localPreferences = localStorage.getItem(localStoragePreferencesKey)
+    return localPreferences ? JSON.parse(localPreferences) : DEFAULT_PREFERENCES
+  }
+
+  const setLocalPreferences = (preferences: PreferencesSchema) => {
+    const localPreferences = JSON.stringify(preferences)
+    localStorage.setItem(localStoragePreferencesKey, localPreferences)
+  }
 
   const getPreferences = () => authLayer.withAccessToken(
     (token) => {
