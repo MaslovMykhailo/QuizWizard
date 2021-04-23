@@ -9,18 +9,33 @@ export const selectUser = createSelector(
   (state) => state.data
 )
 
-export const selectUserAuthorizationStatus = createSelector(
+export const selectUserStatus = createSelector(
   selectUserState,
   (state) => state.status
 )
 
 export const selectIsUserAuthorized = createSelector(
   selectUser,
-  selectUserAuthorizationStatus,
+  selectUserStatus,
   (user, status) => user && status.isAuthorized
 )
 
 export const selectIsUserAuthorizing = createSelector(
-  selectUserAuthorizationStatus,
+  selectUserStatus,
   (status) => status.isAuthorizing
+)
+
+export const selectIsUserSigningOut = createSelector(
+  selectUserStatus,
+  (status) => status.isSigningOut
+)
+
+export const selectIsUserDataFetching = createSelector(
+  selectUserStatus,
+  (status) => status.isFetching
+)
+
+export const selectIsUserDataUpdating = createSelector(
+  selectUserStatus,
+  (status) => status.isUpdating
 )

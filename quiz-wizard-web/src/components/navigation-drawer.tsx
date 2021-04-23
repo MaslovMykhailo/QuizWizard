@@ -134,7 +134,8 @@ const useStyles = makeStyles((theme) => {
   const drawerWidth = theme.spacing(30)
   return {
     root: {
-      display: 'flex'
+      display: 'flex',
+      height: '100%'
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
@@ -187,7 +188,9 @@ const useStyles = makeStyles((theme) => {
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3)
+      padding: theme.spacing(3),
+      display: 'flex',
+      flexDirection: 'column'
     },
     listItem: {
       paddingLeft: theme.spacing(3)

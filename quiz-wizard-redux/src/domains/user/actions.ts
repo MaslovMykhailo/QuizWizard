@@ -40,3 +40,13 @@ export const signOut = createAsyncThunkAction(
   'SignOut',
   (_, {extra: {services}}) => services.auth.signOut()
 )
+
+export const fetchUserData = createAsyncThunkAction(
+  'FetchUserData',
+  (_, {extra: {services}}) => services.user.getUserData()
+)
+
+export const updateUserData = createAsyncThunkAction(
+  'UpdateUserData',
+  (userData: UserSchema, {extra: {services}}) => services.user.updateUserData(userData)
+)
