@@ -70,6 +70,12 @@ export const createInMemoryStudentsService = (
       return updateStudent(studentId, {...student, id: studentId})
     })
 
+  const deleteStudent = (studentId: GroupId) =>
+    authLayer.withAccessToken(() => {
+      delete inMemoryStudents[studentId]
+      return syncStudentsWithStorage()
+    })
+
   const getStudents = () => syncStudentsWithStorage()
     .then(() => Object.values(inMemoryStudents))
 
@@ -81,6 +87,7 @@ export const createInMemoryStudentsService = (
       getStudent,
       updateStudent,
       createStudent,
+      deleteStudent,
       getStudents,
       getStudentsByGroup
     },

@@ -6,15 +6,21 @@ import {
 import {Services} from 'quiz-wizard-client'
 
 import {UserState, userReducer} from '../domains/user'
+import {GroupsState, groupsReduces} from '../domains/groups'
+import {StudentsState, studentsReduces} from '../domains/students'
 import {PreferencesState, preferencesReducer} from '../domains/preferences'
 
 export interface State {
   user: UserState,
+  groups: GroupsState
+  students: StudentsState
   preferences: PreferencesState
 }
 
 const reducer = combineReducers<State>({
   user: userReducer,
+  groups: groupsReduces,
+  students: studentsReduces,
   preferences: preferencesReducer
 })
 

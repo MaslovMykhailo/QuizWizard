@@ -42,6 +42,12 @@ export const createInMemoryGroupsService = (
     return updateGroup(groupId, {...group, id: groupId})
   }
 
+  const deleteGroup = (groupId: GroupId) =>
+    authLayer.withAccessToken(() => {
+      delete inMemoryGroups[groupId]
+      return syncGroupsWithStorage()
+    })
+
   const getGroups = () => syncGroupsWithStorage()
     .then(() => Object.values(inMemoryGroups))
 
@@ -50,6 +56,7 @@ export const createInMemoryGroupsService = (
       getGroup,
       updateGroup,
       createGroup,
+      deleteGroup,
       getGroups
     },
     latency
