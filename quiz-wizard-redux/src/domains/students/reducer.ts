@@ -41,7 +41,7 @@ export const studentsReduces = createReducer(
     .addCase(
       fetchStudentsByGroup.fulfilled,
       (state, action) => {
-        const studentIds = new Set([...getData(state.ids, [])!, ...action.payload.map(getId)])
+        const studentIds = new Set([...(getData(state.ids) ?? []), ...action.payload.map(getId)])
         state.ids = fulfilled(state.ids, Array.from(studentIds))
         state.data = fulfilledResourceMap(state.data, action.payload)
       }

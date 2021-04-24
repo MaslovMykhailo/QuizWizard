@@ -45,26 +45,25 @@ export const rejected = <D, E>(
 })
 
 export const isPending = <D, E>(
-  resource: Resource<D, E>
-) => resource.status === 'pending'
+  resource?: Resource<D, E>
+) => resource?.status === 'pending'
 
 export const isDeleting = <D, E>(
-  resource: Resource<D, E>
-) => resource.status === 'deleting'
+  resource?: Resource<D, E>
+) => resource?.status === 'deleting'
 
 export const isFulfilled = <D, E>(
-  resource: Resource<D, E>
-) => resource.status === 'fulfilled'
+  resource?: Resource<D, E>
+) => resource?.status === 'fulfilled'
 
 export const isRejected = <D, E>(
-  resource: Resource<D, E>
-) => resource.status === 'rejected'
+  resource?: Resource<D, E>
+) => resource?.status === 'rejected'
 
 export const getData = <D>(
-  resource: Resource<D, unknown>,
-  fallback?: D
-) => resource.data ?? fallback
+  resource?: Resource<D, unknown>
+) => resource?.data
 
 export const getError = <E>(
-  resource: Resource<unknown, E>
-) => resource.error
+  resource?: Resource<unknown, E>
+) => resource?.error

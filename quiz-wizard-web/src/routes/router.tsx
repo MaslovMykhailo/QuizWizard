@@ -169,7 +169,16 @@ const useNavigationTargets = () => {
     [pathname]
   )
 
-  return {topNavigationTargets, bottomNavigationTargets}
+  const isTargetSelected = useCallback(
+    (path: string) => Boolean(pathname.match(path)),
+    [pathname]
+  )
+
+  return {
+    topNavigationTargets,
+    bottomNavigationTargets,
+    isTargetSelected
+  }
 }
 
 function StudentRoute() {

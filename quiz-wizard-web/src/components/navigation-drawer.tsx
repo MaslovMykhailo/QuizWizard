@@ -25,6 +25,7 @@ export type NavigationTarget = {
 export type NavigationDrawerProps = PropsWithChildren<{
   topNavigationTargets: NavigationTarget[]
   bottomNavigationTargets?: NavigationTarget[]
+  isTargetSelected?: (path: string) => boolean
   onNavigate: (path: string) => void
   toolbar: ReactNode
 }>
@@ -32,6 +33,7 @@ export type NavigationDrawerProps = PropsWithChildren<{
 export function NavigationDrawer({
   topNavigationTargets,
   bottomNavigationTargets,
+  isTargetSelected,
   onNavigate,
   toolbar,
   children
@@ -95,6 +97,7 @@ export function NavigationDrawer({
               key={path}
               className={classes.listItem}
               onClick={() => onNavigate(path)}
+              selected={isTargetSelected?.(path)}
             >
               <ListItemIcon>
                 <Icon />
