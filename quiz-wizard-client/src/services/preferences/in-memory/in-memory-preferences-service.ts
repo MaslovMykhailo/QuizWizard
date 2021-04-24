@@ -1,3 +1,4 @@
+import merge from 'lodash/merge'
 import {PreferencesSchema} from 'quiz-wizard-schema'
 
 import {AuthLayer} from '../../../layers'
@@ -6,7 +7,7 @@ import {delayMethods, parseToken} from '../../../helpers'
 import {DEFAULT_PREFERENCES} from '../default'
 import {PreferencesService} from '../types'
 
-import {data} from './data'
+import {initialData} from './initial-data'
 
 export const createInMemoryPreferencesService = (
   authLayer: AuthLayer,
@@ -15,7 +16,7 @@ export const createInMemoryPreferencesService = (
   inMemoryPreferencesStorageKey = 'in-memory-preferences',
   latency = 750
 ): PreferencesService => {
-  let inMemoryPreferences = {...data}
+  let inMemoryPreferences = {...initialData}
 
   const getInMemoryPreferences = (email: string) =>
     inMemoryPreferences[email] || DEFAULT_PREFERENCES
@@ -25,7 +26,7 @@ export const createInMemoryPreferencesService = (
     .then(
       (data) => storage.setData(
         inMemoryPreferencesStorageKey,
-        inMemoryPreferences = {...data, ...inMemoryPreferences}
+        inMemoryPreferences = merge(data, inMemoryPreferences)
       )
     )
 
@@ -50,7 +51,7 @@ export const createInMemoryPreferencesService = (
     }
   )
 
-  const patchPreferences = (preferences: Partial<PreferencesSchema>) => authLayer.withAccessToken(
+  const updatePreferences = (preferences: Partial<PreferencesSchema>) => authLayer.withAccessToken(
     (token) => {
       const {email} = parseToken(token)
       inMemoryPreferences[email] = {...getInMemoryPreferences(email), ...preferences}
@@ -63,7 +64,7 @@ export const createInMemoryPreferencesService = (
     ...delayMethods(
       {
         getPreferences,
-        patchPreferences
+        updatePreferences
       },
       latency
     ),

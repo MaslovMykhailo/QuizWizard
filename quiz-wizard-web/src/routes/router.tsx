@@ -1,5 +1,5 @@
 import {useCallback, useMemo} from 'react'
-import {BrowserRouter, Switch, Route, useLocation, useHistory, Redirect} from 'react-router-dom'
+import {BrowserRouter, Switch, Route, Redirect, useLocation, useHistory} from 'react-router-dom'
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary'
 import GroupIcon from '@material-ui/icons/Group'
 import AssignmentIcon from '@material-ui/icons/Assignment'
@@ -16,6 +16,8 @@ import {
   QuizzesPage,
   SignInPage,
   SignUpPage,
+  StudentPage,
+  NewStudentPage,
   StudentsPage
 } from '../pages'
 import {NavigationTarget, PageWithNavigation, Toolbar} from '../components'
@@ -89,7 +91,7 @@ function AppRoute() {
 
           <Route
             path={Path.students()}
-            component={StudentsPage}
+            component={StudentRoute}
           />
 
           <Route
@@ -168,4 +170,25 @@ const useNavigationTargets = () => {
   )
 
   return {topNavigationTargets, bottomNavigationTargets}
+}
+
+function StudentRoute() {
+  return (
+    <Switch>
+      <Route
+        exact
+        path={Path.newStudent()}
+        component={NewStudentPage}
+      />
+      <Route
+        exact
+        path={Path.student()}
+        component={StudentPage}
+      />
+      <Route
+        path={Path.students()}
+        component={StudentsPage}
+      />
+    </Switch>
+  )
 }

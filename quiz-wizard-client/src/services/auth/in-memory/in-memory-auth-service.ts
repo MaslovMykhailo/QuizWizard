@@ -6,16 +6,17 @@ import {createToken, parseToken, delayMethods} from '../../../helpers'
 import {createInvalidCredentialsError, createUserAlreadyExistsError} from '../errors'
 import {AuthService, Tokens} from '../types'
 
-const userDataToAuthData = (userData?: UserSchema) =>
-  userData && ({
-    user: userData,
-    password: userData.email.split('@')[0],
-    tokens: {
-      accessToken: createToken({
-        email: userData.email
-      })
-    }
-  })
+const userDataToAuthData = (
+  userData?: UserSchema & {password?: string}
+) => userData && ({
+  user: userData,
+  password: userData.password ?? userData.email.split('@')[0],
+  tokens: {
+    accessToken: createToken({
+      email: userData.email
+    })
+  }
+})
 
 export const createInMemoryAuthService = (
   authLayer: AuthLayer,
@@ -29,9 +30,16 @@ export const createInMemoryAuthService = (
   const getUserData = (email: string) => getAllUserData()
     .then((userData) => userData?.[email])
 
-  const setUserData = (email: string, user: UserSchema) => getAllUserData()
+  const setUserData = (
+    email: string,
+    password: string,
+    user: UserSchema
+  ) => getAllUserData()
     .then((userData) => persistentStorage
-      .setData(inMemoryUserDataStorageKey, {...userData, [email]: user})
+      .setData(
+        inMemoryUserDataStorageKey,
+        {...userData, [email]: {...user, password}}
+      )
     )
 
   const signUp = async (
@@ -49,7 +57,7 @@ export const createInMemoryAuthService = (
       accessToken: createToken({email})
     }
 
-    await setUserData(email, user)
+    await setUserData(email, password, user)
     await authLayer.setAccessToken(tokens.accessToken)
 
     return {user, tokens}

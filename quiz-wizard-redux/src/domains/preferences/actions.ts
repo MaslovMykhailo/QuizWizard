@@ -30,7 +30,7 @@ export const updatePreferences = createAsyncThunkAction(
     const patchedPreferences = {...selectPreferences(getState()), ...preferences}
     return Promise
       .all([
-        services.preferences.patchPreferences(preferences),
+        services.preferences.updatePreferences(preferences),
         services.preferences.setLocalPreferences(patchedPreferences)
       ])
       .then(([preferences]) => preferences)
@@ -43,7 +43,7 @@ export const syncPreferencesInBackground = createThunkAction(() =>
       const preferences = selectPreferences(getState())
       Promise
         .all([
-          services.preferences.patchPreferences(preferences),
+          services.preferences.updatePreferences(preferences),
           services.preferences.setLocalPreferences(preferences)
         ]).catch(noop)
     })

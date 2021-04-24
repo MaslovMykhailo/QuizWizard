@@ -1,6 +1,6 @@
 import {UserSchema} from 'quiz-wizard-schema'
 
-export const data: Record<string, UserSchema> = {
+export const initialData: Record<string, UserSchema> = {
   'good.boy@gmail.com': {
     email: 'good.boy@gmail.com',
     firstName: 'Good',

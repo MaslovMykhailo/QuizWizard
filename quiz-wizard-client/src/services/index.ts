@@ -1,4 +1,6 @@
 export * from './types'
 export * from './auth'
 export * from './user'
+export * from './groups'
+export * from './students'
 export * from './preferences'

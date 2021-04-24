@@ -1,3 +1,4 @@
+import merge from 'lodash/merge'
 import {UserSchema} from 'quiz-wizard-schema'
 
 import {delayMethods, parseToken} from '../../../helpers'
@@ -5,7 +6,7 @@ import {AuthLayer} from '../../../layers'
 import {PersistentStorage} from '../../../storages'
 import {UserService} from '../types'
 
-import {data} from './data'
+import {initialData} from './initial-data'
 
 export const createInMemoryUserService = (
   authLayer: AuthLayer,
@@ -13,14 +14,14 @@ export const createInMemoryUserService = (
   inMemoryUserDataStorageKey = 'in-memory-user-data',
   latency = 750
 ): UserService => {
-  let inMemoryUserData = {...data}
+  let inMemoryUserData = {...initialData}
 
   const syncUserDataWithStorage = () => storage
     .getData<Record<string, UserSchema>>(inMemoryUserDataStorageKey)
     .then(
       (data) => storage.setData(
         inMemoryUserDataStorageKey,
-        inMemoryUserData = {...data, ...inMemoryUserData}
+        inMemoryUserData = merge(data, inMemoryUserData)
       )
     )
 

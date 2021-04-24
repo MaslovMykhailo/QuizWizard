@@ -11,7 +11,10 @@
     "lint": "eslint ./src"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.168",
+    "@types/uuid": "^8.3.0",
+    "lodash": "^4.17.21",
     "quiz-wizard-schema": "1.0.0",
-    "redux": "^4.0.5"
+    "uuid": "^8.3.2"
   }
 }
