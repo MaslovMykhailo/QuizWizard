@@ -1,9 +1,10 @@
-import Chip from '@material-ui/core/Chip'
+import Chip, {ChipProps} from '@material-ui/core/Chip'
 
-export interface GroupChipProps {
-  groupName: string
-  onClick?: () => void
-  onDelete?: () => void
+export interface GroupChipProps extends Pick<
+  ChipProps,
+  'onClick' | 'onDelete' | 'className'
+> {
+  groupName?: string
 }
 
 export function GroupChip({
@@ -12,9 +13,10 @@ export function GroupChip({
 }: GroupChipProps) {
   return (
     <Chip
-      color="primary"
-      label={groupName}
       {...props}
+      label={groupName || 'Unknown group'}
+      color={groupName ? 'primary' : 'secondary'}
+      variant={groupName ? 'default' : 'outlined'}
     />
   )
 }

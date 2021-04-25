@@ -1,5 +1,7 @@
 import {useEffect, useRef} from 'react'
+import {useHistory} from 'react-router'
 import {useSelector} from 'react-redux'
+import {StudentId} from 'quiz-wizard-schema'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import {
@@ -7,14 +9,17 @@ import {
   fetchStudents,
   useDispatch,
   selectIsStudentsFetching,
-  selectIsGroupsFetching
+  selectIsGroupsFetching,
+  selectSortedStudentsInfo,
+  deleteStudent,
+  selectGroupNameGetter
 } from 'quiz-wizard-redux'
-import {makeStyles} from '@material-ui/core'
 
-import {AddStudentButton, PageLoader} from '../components'
+import {AddStudentButton, PageLoader, StudentsList} from '../components'
+import {Path} from '../routes'
 
 export function StudentsPage() {
-  useStyles()
+  const history = useHistory()
   const dispatch = useDispatch()
 
   const isMountedRef = useRef(false)
@@ -29,6 +34,9 @@ export function StudentsPage() {
     [dispatch]
   )
 
+  const students = useSelector(selectSortedStudentsInfo)
+  const getGroupName = useSelector(selectGroupNameGetter)
+
   const isStudentsFetching = useSelector(selectIsStudentsFetching)
   const isGroupsFetching = useSelector(selectIsGroupsFetching)
 
@@ -41,6 +49,12 @@ export function StudentsPage() {
       <PageLoader />
     )
   }
+
+  const onStudentClick = (studentId: StudentId) =>
+    history.push(Path.student(studentId))
+
+  const onStudentDelete = (studentId: StudentId) =>
+    dispatch(deleteStudent(studentId))
 
   return (
     <Grid
@@ -55,12 +69,16 @@ export function StudentsPage() {
         />
       </Grid>
       <Grid item>
+        <StudentsList
+          students={students}
+          onClick={onStudentClick}
+          onDelete={onStudentDelete}
+          getGroupName={getGroupName}
+        />
+      </Grid>
+      <Grid item>
         <AddStudentButton />
       </Grid>
     </Grid>
   )
 }
-
-const useStyles = makeStyles(() => ({
-
-}))

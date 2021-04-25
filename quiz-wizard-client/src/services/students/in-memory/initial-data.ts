@@ -33,5 +33,18 @@ export const initialData: Record<StudentId, StudentSchema> = {
     groups: [
       'effff966-68d5-4829-b7eb-fc4709cd8621'
     ]
+  },
+  '00010': {
+    id: '00010',
+    firstName: 'Rick',
+    lastName: 'Sanchez',
+    groups: [
+      '70202cf6-0245-4f80-880d-e6111d045ac8'
+    ]
+  },
+  '00100': {
+    id: '00100',
+    firstName: 'Kevin',
+    lastName: 'Spacey'
   }
 }
