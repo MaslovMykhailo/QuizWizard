@@ -136,5 +136,4 @@ export const studentsReduces = createReducer(
         state.data[groupId] = rejected(state.data[groupId], action.error)
       }
     )
-
 )

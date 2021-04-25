@@ -2,7 +2,7 @@ import {useRef} from 'react'
 import {useHistory} from 'react-router'
 import {useSelector} from 'react-redux'
 import {NewStudentSchema} from 'quiz-wizard-schema'
-import {createStudent,selectIsNewStudentCreating,useDispatch} from 'quiz-wizard-redux'
+import {createStudent, selectIsNewStudentCreating, useDispatch} from 'quiz-wizard-redux'
 
 import {PageLoader, StudentForm} from '../components'
 

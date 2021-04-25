@@ -40,10 +40,10 @@ export function GroupForm({
     group?.description !== description ||
     !isEqual(group?.students, students)
 
-  const isValid = name && description
+  const isValid = Boolean(name)
 
   const handleOnSave = () => {
-    if (group && name && description) {
+    if (group && name) {
       onSave?.({
         id: group.id,
         name,
@@ -54,7 +54,7 @@ export function GroupForm({
   }
 
   const handleOnCreate = () => {
-    if (name && description) {
+    if (name) {
       onCreate?.({
         name,
         description,
@@ -122,9 +122,7 @@ export function GroupForm({
             fullWidth
             multiline
             value={description}
-            error={!description}
             onChange={onChangeDescription}
-            required
           />
         </Grid>
         <Grid item>
