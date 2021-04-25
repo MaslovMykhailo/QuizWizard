@@ -3,7 +3,7 @@ import flow from 'lodash/flow'
 import {createSelector} from '@reduxjs/toolkit'
 import {StudentId} from 'quiz-wizard-schema'
 
-import {getData, isDeleting, isPending, isPresent} from '../../helpers'
+import {getData, isDeleting, isPending, isPresent, newResourceId} from '../../helpers'
 import type {State} from '../../store'
 
 export const selectStudentsState = (state: State) => state.students
@@ -83,4 +83,14 @@ export const selectStudentInfoGetter = createSelector(
       isFetching: isFetchingGetter(student.id),
       isDeleting: isDeletingGetter(student.id)
     })
+)
+
+export const selectNewStudentResource = createSelector(
+  selectStudentsData,
+  (data) => data[newResourceId]
+)
+
+export const selectIsNewStudentCreating = createSelector(
+  selectNewStudentResource,
+  isPending
 )

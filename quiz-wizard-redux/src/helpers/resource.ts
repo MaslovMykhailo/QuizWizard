@@ -46,19 +46,19 @@ export const rejected = <D, E>(
 
 export const isPending = <D, E>(
   resource?: Resource<D, E>
-) => resource?.status === 'pending'
+) => Boolean(resource && resource.status === 'pending')
 
 export const isDeleting = <D, E>(
   resource?: Resource<D, E>
-) => resource?.status === 'deleting'
+) => Boolean(resource && resource.status === 'deleting')
 
 export const isFulfilled = <D, E>(
   resource?: Resource<D, E>
-) => resource?.status === 'fulfilled'
+) => Boolean(resource && resource.status === 'fulfilled')
 
 export const isRejected = <D, E>(
   resource?: Resource<D, E>
-) => resource?.status === 'rejected'
+) => Boolean(resource && resource.status === 'rejected')
 
 export const getData = <D>(
   resource?: Resource<D, unknown>

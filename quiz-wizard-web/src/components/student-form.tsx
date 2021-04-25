@@ -31,9 +31,9 @@ export function StudentForm({
 }: StudentFormProps) {
   const classes = useStyles()
 
-  const [firstName, onChangeFirstName] = useInputState(student?.firstName)
-  const [lastName, onChangeLastName] = useInputState(student?.lastName)
-  const [groups, onChangeGroups] = useState(student?.groups)
+  const [firstName, onChangeFirstName] = useInputState(student?.firstName ?? '')
+  const [lastName, onChangeLastName] = useInputState(student?.lastName ?? '')
+  const [groups, onChangeGroups] = useState(student?.groups ?? [])
 
   const hasChanges =
     student?.firstName !== firstName ||
