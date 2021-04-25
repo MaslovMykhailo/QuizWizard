@@ -2,7 +2,7 @@ import flow from 'lodash/flow'
 import {createSelector} from '@reduxjs/toolkit'
 import {GroupId} from 'quiz-wizard-schema'
 
-import {getData, isPending, isPresent} from '../../helpers'
+import {getData, isDeleting, isPending, isPresent} from '../../helpers'
 import type {State} from '../../store'
 
 export const selectGroupsState = (state: State) => state.groups
@@ -30,6 +30,21 @@ export const selectGroupsData = createSelector(
 export const selectGroupResources = createSelector(
   selectGroupsData,
   (data) => Object.values(data).filter(isPresent)
+)
+
+export const selectGroups = createSelector(
+  selectGroupResources,
+  (resources) => resources.map(getData).filter(isPresent)
+)
+
+export const selectGroupsInfo = createSelector(
+  selectGroupResources,
+  (resources) => resources.map((resource) => getData(resource) && ({
+    ...getData(resource)!,
+    isFetching: isPending(resource),
+    isDeleting: isDeleting(resource)
+  }))
+    .filter(isPresent)
 )
 
 export const selectGroupResourceGetter = createSelector(
