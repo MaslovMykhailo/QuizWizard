@@ -52,6 +52,16 @@ export const selectGroupResourceGetter = createSelector(
   (data) => (groupId: GroupId) => data[groupId]
 )
 
+export const selectIsGroupFetchingGetter = createSelector(
+  selectGroupResourceGetter,
+  (resourceGetter) => flow(resourceGetter, isPending)
+)
+
+export const selectIsGroupDeletingGetter = createSelector(
+  selectGroupResourceGetter,
+  (resourceGetter) => flow(resourceGetter, isDeleting)
+)
+
 export const selectGroupGetter = createSelector(
   selectGroupResourceGetter,
   (resourceGetter) => flow(resourceGetter, getData)

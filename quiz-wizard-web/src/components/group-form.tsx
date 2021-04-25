@@ -1,6 +1,6 @@
 import isEqual from 'lodash/isEqual'
 import {useState} from 'react'
-import {NewStudentSchema, StudentSchema} from 'quiz-wizard-schema'
+import {GroupSchema, NewGroupSchema} from 'quiz-wizard-schema'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
@@ -12,53 +12,53 @@ import {useInputState} from '../hooks'
 
 import {BackButton} from './back-button'
 import {FormControls} from './form-controls'
-import {GroupsInput} from './groups-input'
+import {StudentsInput} from './students-input'
 
-export interface StudentFormProps {
-  student?: StudentSchema
-  onSave?: (student: StudentSchema) => void
-  onCreate?: (student: NewStudentSchema) => void
+export interface GroupFormProps {
+  group?: GroupSchema
+  onSave?: (student: GroupSchema) => void
+  onCreate?: (student: NewGroupSchema) => void
   onCancel?: () => void
   onDelete?: () => void
 }
 
-export function StudentForm({
-  student,
+export function GroupForm({
+  group,
   onSave,
   onCreate,
   onCancel,
   onDelete
-}: StudentFormProps) {
+}: GroupFormProps) {
   const classes = useStyles()
 
-  const [firstName, onChangeFirstName] = useInputState(student?.firstName ?? '')
-  const [lastName, onChangeLastName] = useInputState(student?.lastName ?? '')
-  const [groups, onChangeGroups] = useState(student?.groups)
+  const [name, onChangeName] = useInputState(group?.name ?? '')
+  const [description, onChangeDescription] = useInputState(group?.description ?? '')
+  const [students, onChangeStudents] = useState(group?.students)
 
   const hasChanges =
-    student?.firstName !== firstName ||
-    student?.lastName !== lastName ||
-    !isEqual(student?.groups, groups)
+    group?.name !== name ||
+    group?.description !== description ||
+    !isEqual(group?.students, students)
 
-  const isValid = firstName && lastName
+  const isValid = name && description
 
   const handleOnSave = () => {
-    if (student && firstName && lastName) {
+    if (group && name && description) {
       onSave?.({
-        id: student.id,
-        firstName,
-        lastName,
-        groups
+        id: group.id,
+        name,
+        description,
+        students
       })
     }
   }
 
   const handleOnCreate = () => {
-    if (firstName && lastName) {
+    if (name && description) {
       onCreate?.({
-        firstName,
-        lastName,
-        groups
+        name,
+        description,
+        students
       })
     }
   }
@@ -82,10 +82,10 @@ export function StudentForm({
         <Grid item>
           <Typography
             variant="h3"
-            children={student ? 'Student info' : 'New student'}
+            children={group ? 'Group info' : 'New group'}
           />
         </Grid>
-        {student && (
+        {group && (
           <Grid
             item
             className={classes.chipId}
@@ -93,7 +93,7 @@ export function StudentForm({
             <Chip
               color="secondary"
               icon={<InfoIcon />}
-              label={`Student ID: ${student.id}`}
+              label={`ID: ${group.id}`}
             />
           </Grid>
         )}
@@ -107,31 +107,30 @@ export function StudentForm({
         <Grid item>
           <TextField
             variant="outlined"
-            label="First name"
-            autoComplete="fname"
+            label="Group name"
             fullWidth
-            value={firstName}
-            error={!firstName}
-            onChange={onChangeFirstName}
+            value={name}
+            error={!name}
+            onChange={onChangeName}
             required
           />
         </Grid>
         <Grid item>
           <TextField
             variant="outlined"
-            label="Last name"
-            autoComplete="lname"
+            label="Description"
             fullWidth
-            value={lastName}
-            error={!lastName}
-            onChange={onChangeLastName}
+            multiline
+            value={description}
+            error={!description}
+            onChange={onChangeDescription}
             required
           />
         </Grid>
         <Grid item>
-          <GroupsInput
-            groups={groups}
-            onChange={onChangeGroups}
+          <StudentsInput
+            students={students}
+            onChange={onChangeStudents}
           />
         </Grid>
         <FormControls

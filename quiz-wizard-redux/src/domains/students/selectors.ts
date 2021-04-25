@@ -13,6 +13,11 @@ export const selectStudentIdsResource = createSelector(
   (studentsState) => studentsState.ids
 )
 
+export const selectStudentIds = createSelector(
+  selectStudentIdsResource,
+  getData
+)
+
 export const selectStudentsData = createSelector(
   selectStudentsState,
   (studentsState) => studentsState.data

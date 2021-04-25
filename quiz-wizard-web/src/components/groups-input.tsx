@@ -49,15 +49,6 @@ export function GroupsInput({
   const onOpen = (event: MouseEvent<HTMLElement>) => setAnchor(event.currentTarget)
   const onClose = () => setAnchor(null)
 
-  const onAddGroup = (groupId: GroupId) => {
-    onClose()
-    onChange?.([...groups, groupId])
-  }
-
-  const onRemoveGroup = (groupId: GroupId) => {
-    onChange?.(groups.filter((id) => id !== groupId))
-  }
-
   if (isGroupsFetching || !isMountedRef.current) {
     return (
       <Paper
@@ -70,6 +61,15 @@ export function GroupsInput({
         />
       </Paper>
     )
+  }
+
+  const onAddGroup = (groupId: GroupId) => {
+    onClose()
+    onChange?.([...groups, groupId])
+  }
+
+  const onRemoveGroup = (groupId: GroupId) => {
+    onChange?.(groups.filter((id) => id !== groupId))
   }
 
   return (

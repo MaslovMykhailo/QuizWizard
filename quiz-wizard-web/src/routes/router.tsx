@@ -18,7 +18,9 @@ import {
   SignUpPage,
   StudentPage,
   NewStudentPage,
-  StudentsPage
+  StudentsPage,
+  NewGroupPage,
+  GroupPage
 } from '../pages'
 import {NavigationTarget, PageWithNavigation, Toolbar} from '../components'
 
@@ -91,12 +93,12 @@ function AppRoute() {
 
           <Route
             path={Path.students()}
-            component={StudentRoute}
+            component={StudentsRoute}
           />
 
           <Route
             path={Path.groups()}
-            component={GroupsPage}
+            component={GroupsRoute}
           />
 
           <Route
@@ -181,7 +183,7 @@ const useNavigationTargets = () => {
   }
 }
 
-function StudentRoute() {
+function StudentsRoute() {
   return (
     <Switch>
       <Route
@@ -197,6 +199,27 @@ function StudentRoute() {
       <Route
         path={Path.students()}
         component={StudentsPage}
+      />
+    </Switch>
+  )
+}
+
+function GroupsRoute() {
+  return (
+    <Switch>
+      <Route
+        exact
+        path={Path.newGroup()}
+        component={NewGroupPage}
+      />
+      <Route
+        exact
+        path={Path.group()}
+        component={GroupPage}
+      />
+      <Route
+        path={Path.groups()}
+        component={GroupsPage}
       />
     </Switch>
   )

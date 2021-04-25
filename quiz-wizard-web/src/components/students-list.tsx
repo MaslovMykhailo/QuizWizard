@@ -2,16 +2,15 @@ import {GroupId, StudentId, StudentSchema} from 'quiz-wizard-schema'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
-import Avatar from '@material-ui/core/Avatar'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import IconButton from '@material-ui/core/IconButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import DeleteIcon from '@material-ui/icons/Delete'
-import PersonIcon from '@material-ui/icons/Person'
 import {makeStyles} from '@material-ui/core'
 
 import {GroupChip} from './group-chip'
+import {StudentAvatar} from './student-avatar'
 
 export interface StudentInfo extends StudentSchema {
   isFetching: boolean
@@ -69,9 +68,10 @@ export function StudentsListItem({
       onClick={onClick}
     >
       <ListItemAvatar>
-        <Avatar>
-          <PersonIcon />
-        </Avatar>
+        <StudentAvatar
+          firstName={firstName}
+          lastName={lastName}
+        />
       </ListItemAvatar>
       <ListItemText
         primary={`${firstName} ${lastName}`}

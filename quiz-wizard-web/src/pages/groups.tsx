@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
-import IconButton from '@material-ui/core/IconButton'
 import AddIcon from '@material-ui/icons/Add'
 import {
   fetchGroups,
@@ -89,9 +88,7 @@ export function GroupsPage() {
               className={classes.addCard}
               onClick={onAdd}
             >
-              <IconButton>
-                <AddIcon />
-              </IconButton>
+              <AddIcon fontSize="large" />
             </CardActionArea>
           </Card>
         </Grid>
