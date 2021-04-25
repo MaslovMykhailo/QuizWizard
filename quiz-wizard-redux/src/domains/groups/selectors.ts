@@ -12,6 +12,11 @@ export const selectGroupIdsResource = createSelector(
   (groupsState) => groupsState.ids
 )
 
+export const selectGroupIds = createSelector(
+  selectGroupIdsResource,
+  getData
+)
+
 export const selectIsGroupsFetching = createSelector(
   selectGroupIdsResource,
   isPending

@@ -125,6 +125,7 @@ export function AccountPage() {
               label="Email"
               value={user.email}
               className={classes.email}
+              InputProps={{readOnly: true}}
             />
           </Grid>
           <Grid

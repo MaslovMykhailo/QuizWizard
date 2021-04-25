@@ -44,12 +44,12 @@ export const createInMemoryStudentsService = (
 ): StudentsService => {
   let inMemoryStudents = {...initialData}
 
-  const syncStudentsWithStorage = () => storage
+  const syncStudentsWithStorage = (override = false) => storage
     .getData<typeof inMemoryStudents>(inMemoryGroupsStorageKey)
     .then(
       (data) => storage.setData(
         inMemoryGroupsStorageKey,
-        inMemoryStudents = merge(data, inMemoryStudents)
+        inMemoryStudents = override ? inMemoryStudents : merge(data, inMemoryStudents)
       )
     )
 
@@ -73,7 +73,7 @@ export const createInMemoryStudentsService = (
   const deleteStudent = (studentId: GroupId) =>
     authLayer.withAccessToken(() => {
       delete inMemoryStudents[studentId]
-      return syncStudentsWithStorage()
+      return syncStudentsWithStorage(true)
     })
 
   const getStudents = () => syncStudentsWithStorage()

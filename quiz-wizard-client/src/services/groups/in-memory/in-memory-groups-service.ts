@@ -17,12 +17,12 @@ export const createInMemoryGroupsService = (
 ): GroupsService => {
   let inMemoryGroups = {...initialData}
 
-  const syncGroupsWithStorage = () => storage
+  const syncGroupsWithStorage = (override = false) => storage
     .getData<typeof inMemoryGroups>(inMemoryGroupsStorageKey)
     .then(
       (data) => storage.setData(
         inMemoryGroupsStorageKey,
-        inMemoryGroups = merge(data, inMemoryGroups)
+        inMemoryGroups = override ? inMemoryGroups : merge(data, inMemoryGroups)
       )
     )
 
@@ -45,7 +45,7 @@ export const createInMemoryGroupsService = (
   const deleteGroup = (groupId: GroupId) =>
     authLayer.withAccessToken(() => {
       delete inMemoryGroups[groupId]
-      return syncGroupsWithStorage()
+      return syncGroupsWithStorage(true)
     })
 
   const getGroups = () => syncGroupsWithStorage()
