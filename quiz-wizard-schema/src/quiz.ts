@@ -2,8 +2,7 @@ import {AnswerOption} from './answer-option'
 
 export interface QuestionAnswer {
   text: string
-  correct: boolean
-  cost: number
+  correct?: boolean
 }
 
 export type QuestionId = string
@@ -12,8 +11,9 @@ export interface QuestionSchema {
   id: QuestionId
   text: string
   picture?: string
-  answers: Record<AnswerOption, QuestionAnswer>
-  partialAnswer: boolean
+  answers: Partial<Record<AnswerOption, QuestionAnswer>>
+  partialAnswer?: boolean
+  cost: number
 }
 
 export type QuizId = string
@@ -23,6 +23,14 @@ export interface QuizSchema {
   creationDate: Date
   name: string
   description?: string
-  questions?: Record<QuestionId, QuestionSchema>
+  questions: Record<QuestionId, QuestionSchema>
   questionsOrder: QuestionId[]
+}
+
+export interface NewQuestionSchema extends Omit<QuestionSchema, 'picture'> {
+  picture?: Blob
+}
+
+export interface NewQuizSchema extends Omit<QuizSchema, 'creationDate' | 'questions'> {
+  questions: Record<QuestionId, NewQuestionSchema>
 }
