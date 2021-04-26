@@ -1,8 +1,7 @@
 {
-  "name": "quiz-wizard-auth",
+  "name": "quiz-wizard-static",
   "version": "1.0.0",
   "main": "build/index.js",
-  "private": true,
   "author": "Mykhailo Maslov <maslov.mikhail2000@gmail.com>",
   "license": "MIT",
   "scripts": {
@@ -12,6 +11,11 @@
     "lint": "eslint src --ext .ts"
   },
   "dependencies": {
+    "@types/express": "^4.17.11",
+    "@types/express-fileupload": "^1.1.6",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
     "nodemon": "^2.0.3",
     "rimraf": "^3.0.2",
     "ts-node": "^9.1.1"
