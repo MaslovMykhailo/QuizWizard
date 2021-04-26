@@ -1,4 +1,7 @@
 export * from './user'
 export * from './group'
 export * from './student'
+export * from './quiz'
+export * from './answer'
 export * from './preferences'
+export * from './answer-option'
