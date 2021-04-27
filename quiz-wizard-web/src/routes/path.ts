@@ -21,7 +21,7 @@ export const Path = {
 
   quizzes: () => '/quizzes',
   newQuiz: () => '/quizzes/new',
-  quiz: (quizId: string) => quizId ?
+  quiz: (quizId?: string) => quizId ?
     `/quizzes/${quizId}`:
     '/quizzes/:quizId',
 

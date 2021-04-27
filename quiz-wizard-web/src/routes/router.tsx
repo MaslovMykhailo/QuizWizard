@@ -20,7 +20,9 @@ import {
   NewStudentPage,
   StudentsPage,
   NewGroupPage,
-  GroupPage
+  GroupPage,
+  NewQuizPage,
+  QuizPage
 } from '../pages'
 import {NavigationTarget, PageWithNavigation, Toolbar} from '../components'
 
@@ -78,48 +80,39 @@ function AppRoute() {
         toolbar={<Toolbar />}
       >
         <Switch>
-
           <Route
             exact
             path={Path.dashboard()}
             component={DashboardPage}
           />
-
           <Route
             exact
             path={Path.account()}
             component={AccountPage}
           />
-
           <Route
             path={Path.students()}
             component={StudentsRoute}
           />
-
           <Route
             path={Path.groups()}
             component={GroupsRoute}
           />
-
           <Route
             path={Path.quizzes()}
-            component={QuizzesPage}
+            component={QuizzesRoute}
           />
-
           <Route
             path={Path.answers()}
             component={AnswersPage}
           />
-
           <Route
             path={Path.analytics()}
             component={AnalyticsPage}
           />
-
           <Redirect
             to={Path.dashboard()}
           />
-
         </Switch>
       </PageWithNavigation>
     </PrivateRoute>
@@ -220,6 +213,27 @@ function GroupsRoute() {
       <Route
         path={Path.groups()}
         component={GroupsPage}
+      />
+    </Switch>
+  )
+}
+
+function QuizzesRoute() {
+  return (
+    <Switch>
+      <Route
+        exact
+        path={Path.newQuiz()}
+        component={NewQuizPage}
+      />
+      <Route
+        exact
+        path={Path.quiz()}
+        component={QuizPage}
+      />
+      <Route
+        path={Path.quizzes()}
+        component={QuizzesPage}
       />
     </Switch>
   )

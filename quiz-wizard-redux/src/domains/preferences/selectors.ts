@@ -16,19 +16,19 @@ export const selectPreferences = createSelector(
   resource => getData(resource) || DEFAULT_PREFERENCES
 )
 
-export const isPreferencesPending = createSelector(
+export const arePreferencesPending = createSelector(
   selectPreferencesState,
   isPending
 )
 
-export const selectIsPreferencesFulfilled = createSelector(
+export const selectArePreferencesFulfilled = createSelector(
   selectPreferencesState,
   isFulfilled
 )
 
-export const selectIsPreferencesInitializing = createSelector(
+export const selectArePreferencesInitializing = createSelector(
   selectPreferencesData,
-  isPreferencesPending,
+  arePreferencesPending,
   (data, isPending) => !data && isPending
 )
 

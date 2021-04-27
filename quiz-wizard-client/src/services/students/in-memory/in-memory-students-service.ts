@@ -39,16 +39,16 @@ const getStudentId = (ids: string[]) => {
 export const createInMemoryStudentsService = (
   authLayer: AuthLayer,
   storage: PersistentStorage,
-  inMemoryGroupsStorageKey = 'in-memory-students',
+  inMemoryStudentsStorageKey = 'in-memory-students',
   latency = 750
 ): StudentsService => {
   let inMemoryStudents = {...initialData}
 
   const syncStudentsWithStorage = (override = false) => storage
-    .getData<typeof inMemoryStudents>(inMemoryGroupsStorageKey)
+    .getData<typeof inMemoryStudents>(inMemoryStudentsStorageKey)
     .then(
       (data) => storage.setData(
-        inMemoryGroupsStorageKey,
+        inMemoryStudentsStorageKey,
         inMemoryStudents = override ? inMemoryStudents : merge(data, inMemoryStudents)
       )
     )

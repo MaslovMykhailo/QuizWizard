@@ -7,7 +7,7 @@ import {
   fetchStudents,
   selectStudentGetter,
   selectStudentIds,
-  selectIsStudentsFetching,
+  selectAreStudentsFetching,
   useDispatch
 } from 'quiz-wizard-redux'
 import Box from '@material-ui/core/Box'
@@ -40,7 +40,7 @@ export function StudentsInput({
   const dispatch = useDispatch()
 
   const isMountedRef = useRef(false)
-  const isStudentsFetching = useSelector(selectIsStudentsFetching)
+  const areStudentsFetching = useSelector(selectAreStudentsFetching)
 
   useEffect(
     () => {
@@ -53,7 +53,7 @@ export function StudentsInput({
   const studentIds = useSelector(selectStudentIds)
   const getStudent = useSelector(selectStudentGetter)
 
-  if (!isMountedRef.current || isStudentsFetching) {
+  if (!isMountedRef.current || areStudentsFetching) {
     return (
       <CircularProgress />
     )

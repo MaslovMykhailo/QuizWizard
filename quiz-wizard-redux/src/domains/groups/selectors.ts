@@ -17,7 +17,7 @@ export const selectGroupIds = createSelector(
   getData
 )
 
-export const selectIsGroupsFetching = createSelector(
+export const selectAreGroupsFetching = createSelector(
   selectGroupIdsResource,
   isPending
 )

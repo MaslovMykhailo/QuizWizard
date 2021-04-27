@@ -9,6 +9,7 @@ import {UserState, userReducer} from '../domains/user'
 import {GroupsState, groupsReduces} from '../domains/groups'
 import {StudentsState, studentsReduces} from '../domains/students'
 import {QuizzesState, quizzesReducer} from '../domains/quizzes'
+import {AnswersState, answersReducer} from '../domains/answers'
 import {PreferencesState, preferencesReducer} from '../domains/preferences'
 
 export interface State {
@@ -16,6 +17,7 @@ export interface State {
   groups: GroupsState
   students: StudentsState
   quizzes: QuizzesState
+  answers: AnswersState
   preferences: PreferencesState
 }
 
@@ -24,6 +26,7 @@ const reducer = combineReducers<State>({
   groups: groupsReduces,
   students: studentsReduces,
   quizzes: quizzesReducer,
+  answers: answersReducer,
   preferences: preferencesReducer
 })
 

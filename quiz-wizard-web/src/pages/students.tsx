@@ -8,8 +8,8 @@ import {
   fetchGroups,
   fetchStudents,
   useDispatch,
-  selectIsStudentsFetching,
-  selectIsGroupsFetching,
+  selectAreGroupsFetching,
+  selectAreStudentsFetching,
   selectSortedStudentsInfo,
   deleteStudent,
   selectGroupNameGetter
@@ -37,13 +37,13 @@ export function StudentsPage() {
   const students = useSelector(selectSortedStudentsInfo)
   const getGroupName = useSelector(selectGroupNameGetter)
 
-  const isStudentsFetching = useSelector(selectIsStudentsFetching)
-  const isGroupsFetching = useSelector(selectIsGroupsFetching)
+  const areStudentsFetching = useSelector(selectAreStudentsFetching)
+  const areGroupsFetching = useSelector(selectAreGroupsFetching)
 
   if (
     !isMountedRef.current ||
-    isStudentsFetching ||
-    isGroupsFetching
+    areStudentsFetching ||
+    areGroupsFetching
   ) {
     return (
       <PageLoader />

@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux'
 import {
   fetchGroups,
   selectGroupNameGetter,
-  selectIsGroupsFetching,
+  selectAreGroupsFetching,
   selectGroupIds,
   useDispatch
 } from 'quiz-wizard-redux'
@@ -31,7 +31,7 @@ export function GroupsInput({
 
   const dispatch = useDispatch()
 
-  const isGroupsFetching = useSelector(selectIsGroupsFetching)
+  const areGroupsFetching = useSelector(selectAreGroupsFetching)
   const groupIds = useSelector(selectGroupIds)?.filter((id) => !groups.includes(id))
   const getGroupName = useSelector(selectGroupNameGetter)
 
@@ -49,7 +49,7 @@ export function GroupsInput({
   const onOpen = (event: MouseEvent<HTMLElement>) => setAnchor(event.currentTarget)
   const onClose = () => setAnchor(null)
 
-  if (isGroupsFetching || !isMountedRef.current) {
+  if (areGroupsFetching || !isMountedRef.current) {
     return (
       <Paper
         component="ul"

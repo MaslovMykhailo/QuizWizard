@@ -23,7 +23,7 @@ export const selectStudentsData = createSelector(
   (studentsState) => studentsState.data
 )
 
-export const selectIsStudentsFetching = createSelector(
+export const selectAreStudentsFetching = createSelector(
   selectStudentIdsResource,
   isPending
 )

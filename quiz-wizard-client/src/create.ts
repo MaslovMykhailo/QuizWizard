@@ -6,6 +6,7 @@ import {
   createInMemoryUserService,
   createInMemoryGroupsService,
   createInMemoryStudentsService,
+  createInMemoryAnswersService,
   createInMemoryQuizzesService,
   createInMemoryPreferencesService
 } from './services'
@@ -21,5 +22,6 @@ export const createInMemoryServices = (): Services => ({
   groups: createInMemoryGroupsService(persistentAuthLayer, persistentStorage),
   students: createInMemoryStudentsService(persistentAuthLayer, persistentStorage),
   quizzes: createInMemoryQuizzesService(persistentAuthLayer, uploadLayer, persistentStorage),
+  answers: createInMemoryAnswersService(persistentAuthLayer, uploadLayer, persistentStorage),
   preferences: createInMemoryPreferencesService(persistentAuthLayer, persistentStorage)
 })

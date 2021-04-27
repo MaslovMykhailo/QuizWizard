@@ -2,8 +2,8 @@ import {FC, ReactElement, useEffect, useState} from 'react'
 import {
   authorizeUser,
   fetchPreferences,
-  selectIsPreferencesFulfilled,
-  selectIsPreferencesInitializing,
+  selectArePreferencesFulfilled,
+  selectArePreferencesInitializing,
   selectIsUserAuthorizing,
   selectLanguage,
   useDispatch,
@@ -32,7 +32,7 @@ const useAuthorizationInit = () => {
 
 const usePreferencesInit = () => {
   const dispatch = useDispatch()
-  const isInitializing = useSelector(selectIsPreferencesInitializing)
+  const areInitializing = useSelector(selectArePreferencesInitializing)
 
   useEffect(
     () => {
@@ -41,25 +41,25 @@ const usePreferencesInit = () => {
     [dispatch]
   )
 
-  return isInitializing
+  return areInitializing
 }
 
 const useLocalizationInit = () => {
   const language = useSelector(selectLanguage)
 
   const [isInitialized, setIsInitialized] = useState(false)
-  const isPreferencesFulfilled = useSelector(selectIsPreferencesFulfilled)
+  const arePreferencesFulfilled = useSelector(selectArePreferencesFulfilled)
 
   useEffect(
     () => {
-      if (!isPreferencesFulfilled || isInitialized) {
+      if (!arePreferencesFulfilled || isInitialized) {
         return
       }
 
       initLocalization(language)
         .finally(() => setIsInitialized(true))
     },
-    [isPreferencesFulfilled, isInitialized, language]
+    [arePreferencesFulfilled, isInitialized, language]
   )
 
   return !isInitialized
@@ -67,12 +67,12 @@ const useLocalizationInit = () => {
 
 export const InitializationProvider: FC = ({children}) => {
   const isAuthorizing = useAuthorizationInit()
-  const isPreferencesInitializing = usePreferencesInit()
+  const arePreferencesInitializing = usePreferencesInit()
   const isLocalizationInitializing = useLocalizationInit()
 
   if (
     isAuthorizing ||
-    isPreferencesInitializing ||
+    arePreferencesInitializing ||
     isLocalizationInitializing
   ) {
     return (

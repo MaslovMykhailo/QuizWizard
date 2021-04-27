@@ -13,16 +13,16 @@ export const createInMemoryQuizzesService = (
   authLayer: AuthLayer,
   uploadLayer: UploadLayer,
   storage: PersistentStorage,
-  inMemoryGroupsStorageKey = 'in-memory-quizzes',
+  inMemoryQuizzesStorageKey = 'in-memory-quizzes',
   latency = 750
 ): QuizzesService => {
   let inMemoryQuizzes = {...initialData}
 
   const syncQuizzesWithStorage = (override = false) => storage
-    .getData<typeof inMemoryQuizzes>(inMemoryGroupsStorageKey)
+    .getData<typeof inMemoryQuizzes>(inMemoryQuizzesStorageKey)
     .then(
       (data) => storage.setData(
-        inMemoryGroupsStorageKey,
+        inMemoryQuizzesStorageKey,
         inMemoryQuizzes = override ? inMemoryQuizzes : merge(data, inMemoryQuizzes)
       )
     )

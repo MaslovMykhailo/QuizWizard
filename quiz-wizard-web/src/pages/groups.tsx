@@ -10,7 +10,7 @@ import {
   fetchGroups,
   useDispatch,
   selectGroupsInfo,
-  selectIsGroupsFetching,
+  selectAreGroupsFetching,
   deleteGroup
 } from 'quiz-wizard-redux'
 import {makeStyles} from '@material-ui/core'
@@ -35,9 +35,9 @@ export function GroupsPage() {
   )
 
   const groups = useSelector(selectGroupsInfo)
-  const isGroupsFetching = useSelector(selectIsGroupsFetching)
+  const areGroupsFetching = useSelector(selectAreGroupsFetching)
 
-  if (isGroupsFetching || waitForUpdateRef.current) {
+  if (areGroupsFetching || waitForUpdateRef.current) {
     return (
       <PageLoader />
     )
