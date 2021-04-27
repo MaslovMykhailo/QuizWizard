@@ -7,6 +7,7 @@ export type Resource<D, E = SerializedError> = {
   error?: E
   status:
   | 'pending'
+  | 'creating'
   | 'deleting'
   | 'fulfilled'
   | 'rejected'
@@ -17,6 +18,13 @@ export const pending = <D, E>(
 ): Resource<D, E> => ({
   ...resource,
   status: 'pending'
+})
+
+export const creating = <D, E>(
+  resource?: Partial<Resource<D, E>>
+): Resource<D, E> => ({
+  ...resource,
+  status: 'creating'
 })
 
 export const deleting = <D, E>(
@@ -47,6 +55,10 @@ export const rejected = <D, E>(
 export const isPending = <D, E>(
   resource?: Resource<D, E>
 ) => Boolean(resource && resource.status === 'pending')
+
+export const isCreating = <D, E>(
+  resource?: Resource<D, E>
+) => Boolean(resource && resource.status === 'creating')
 
 export const isDeleting = <D, E>(
   resource?: Resource<D, E>
