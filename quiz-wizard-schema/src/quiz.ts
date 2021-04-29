@@ -20,7 +20,7 @@ export type QuizId = string
 
 export interface QuizSchema {
   id: QuizId
-  creationDate: Date
+  creationDate: string
   name: string
   description?: string
   questions: Record<QuestionId, QuestionSchema>

@@ -1,25 +1,31 @@
+import {ReactNode} from 'react'
 import {Link} from 'react-router-dom'
+import Paper from '@material-ui/core/Paper'
 import ListItem from '@material-ui/core/ListItem'
-import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import {makeStyles} from '@material-ui/core/styles'
 
-import {Path} from '../routes'
+export interface AddListItemButtonProps {
+  addItemPath: string
+  icon: ReactNode
+}
 
-export function AddStudentButton() {
+export function AddListItemButton({
+  addItemPath,
+  icon
+}: AddListItemButtonProps) {
   const classes = useStyles()
   return (
     <Link
-      to={Path.newStudent()}
+      to={addItemPath}
       className={classes.link}
     >
-      <ListItem
-        button
-        className={classes.item}
-      >
-        <PersonAddIcon
-          fontSize="large"
+      <Paper>
+        <ListItem
+          button
+          className={classes.item}
+          children={icon}
         />
-      </ListItem>
+      </Paper>
     </Link>
   )
 }

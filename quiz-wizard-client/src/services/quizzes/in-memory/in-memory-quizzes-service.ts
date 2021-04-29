@@ -51,7 +51,7 @@ export const createInMemoryQuizzesService = (
 
     inMemoryQuizzes[quiz.id] = {
       ...cloneDeep(quiz),
-      creationDate: new Date(),
+      creationDate: new Date().toISOString(),
       questions
     }
 

@@ -3,7 +3,7 @@ import {QuizId, QuizSchema} from 'quiz-wizard-schema'
 export const initialData: Record<QuizId, QuizSchema> = {
   '32742e94-1f1e-4301-8482-8835ce7e3696': {
     id: '32742e94-1f1e-4301-8482-8835ce7e3696',
-    creationDate: new Date('01-02-2021'),
+    creationDate: new Date('01-02-2021').toISOString(),
     name: 'First quiz',
     description: 'My first quiz',
     questionsOrder: [
@@ -50,7 +50,7 @@ export const initialData: Record<QuizId, QuizSchema> = {
   },
   '86e77100-3a25-4e3b-a731-b9ce45e8f522': {
     id: '86e77100-3a25-4e3b-a731-b9ce45e8f522',
-    creationDate: new Date('02-03-2021'),
+    creationDate: new Date('02-03-2021').toISOString(),
     name: 'Second quiz',
     questionsOrder: [
       '7c30068c-c21b-4e93-99e3-facb743f16d3'

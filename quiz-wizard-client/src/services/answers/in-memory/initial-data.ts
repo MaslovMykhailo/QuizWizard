@@ -5,7 +5,7 @@ export const initialData: Record<AnswerId, AnswerSchema> = {
     id: 'b6bf0cce-5946-4167-982e-a5f6ff2720ab',
     quiz: '32742e94-1f1e-4301-8482-8835ce7e3696',
     student: '00007',
-    creationDate: new Date('05-05-2015'),
+    creationDate: new Date('05-05-2015').toISOString(),
     sheet: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Google_Sheets_2020_Logo.svg/1200px-Google_Sheets_2020_Logo.svg.png',
     result: 0.75,
     checks: {

@@ -10,7 +10,7 @@ export interface AnswerSchema {
   id: AnswerId
   quiz: QuizId
   student?: StudentId
-  creationDate: Date
+  creationDate: string
   sheet: string
   result: number
   checks: AnswerChecks

@@ -20,7 +20,9 @@ export const Path = {
     '/groups/:groupId',
 
   quizzes: () => '/quizzes',
-  newQuiz: () => '/quizzes/new',
+  newQuiz: (originQuizId?: string) => originQuizId ?
+    `/quizzes/new?origin=${originQuizId}` :
+    '/quizzes/new' ,
   quiz: (quizId?: string) => quizId ?
     `/quizzes/${quizId}`:
     '/quizzes/:quizId',

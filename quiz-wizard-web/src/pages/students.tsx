@@ -3,7 +3,9 @@ import {useHistory} from 'react-router'
 import {useSelector} from 'react-redux'
 import {StudentId} from 'quiz-wizard-schema'
 import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
+import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import {
   fetchGroups,
   fetchStudents,
@@ -15,7 +17,7 @@ import {
   selectGroupNameGetter
 } from 'quiz-wizard-redux'
 
-import {AddStudentButton, PageLoader, StudentsList} from '../components'
+import {AddListItemButton, PageLoader, StudentsList} from '../components'
 import {Path} from '../routes'
 
 export function StudentsPage() {
@@ -59,7 +61,7 @@ export function StudentsPage() {
   return (
     <Grid
       container
-      spacing={2}
+      spacing={3}
       direction="column"
     >
       <Grid item>
@@ -69,15 +71,20 @@ export function StudentsPage() {
         />
       </Grid>
       <Grid item>
-        <StudentsList
-          students={students}
-          onClick={onStudentClick}
-          onDelete={onStudentDelete}
-          getGroupName={getGroupName}
-        />
+        <Paper>
+          <StudentsList
+            students={students}
+            onClick={onStudentClick}
+            onDelete={onStudentDelete}
+            getGroupName={getGroupName}
+          />
+        </Paper>
       </Grid>
       <Grid item>
-        <AddStudentButton />
+        <AddListItemButton
+          addItemPath={Path.newStudent()}
+          icon={<PersonAddIcon fontSize="large" />}
+        />
       </Grid>
     </Grid>
   )

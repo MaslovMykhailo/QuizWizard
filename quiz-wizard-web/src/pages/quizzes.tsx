@@ -1,21 +1,28 @@
 import {useEffect, useRef} from 'react'
 import {useSelector} from 'react-redux'
+import {useHistory} from 'react-router'
 import {
   useDispatch,
   selectAreQuizzesFetching,
   fetchQuizzes,
-  selectAreAnswersFetching,
-  fetchAnswers
+  selectSortedQuizzesInfo,
+  deleteQuiz
 } from 'quiz-wizard-redux'
+import {QuizId} from 'quiz-wizard-schema'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
+import PostAddIcon from '@material-ui/icons/PostAdd'
 
-import {PageLoader} from '../components'
+import {AddListItemButton, PageLoader, QuizList} from '../components'
+import {Path} from '../routes'
 
 export function QuizzesPage() {
+  const history = useHistory()
   const dispatch = useDispatch()
 
   const areQuizzesFetching = useSelector(selectAreQuizzesFetching)
-  const areAnswersFetching = useSelector(selectAreAnswersFetching)
+  const quizzes = useSelector(selectSortedQuizzesInfo)
 
   const isMountedRef = useRef(false)
 
@@ -23,14 +30,12 @@ export function QuizzesPage() {
     () => {
       isMountedRef.current = true
       dispatch(fetchQuizzes())
-      dispatch(fetchAnswers())
     },
     [dispatch]
   )
 
   if (
     areQuizzesFetching ||
-    areAnswersFetching ||
     !isMountedRef.current
   ) {
     return (
@@ -38,7 +43,47 @@ export function QuizzesPage() {
     )
   }
 
+  const onClickQuiz = (quizId: QuizId) =>
+    history.push(Path.quiz(quizId))
+
+  const onCreateFromQuiz = (quizId: QuizId) =>
+    history.push(Path.newQuiz(quizId))
+
+  const onCheckQuiz = (quizId: QuizId) =>
+    history.push(Path.newAnswer(quizId))
+
+  const onDeleteQuiz = (quizId: QuizId) =>
+    dispatch(deleteQuiz(quizId))
+
   return (
-    <Typography children="Quizzes page" />
+    <Grid
+      container
+      spacing={3}
+      direction="column"
+    >
+      <Grid item>
+        <Typography
+          variant="h3"
+          children="Quizzes list"
+        />
+      </Grid>
+      <Grid item>
+        <Paper>
+          <QuizList
+            quizzes={quizzes}
+            onClickQuiz={onClickQuiz}
+            onCreateFromQuiz={onCreateFromQuiz}
+            onCheckQuiz={onCheckQuiz}
+            onDeleteQuiz={onDeleteQuiz}
+          />
+        </Paper>
+      </Grid>
+      <Grid item>
+        <AddListItemButton
+          addItemPath={Path.newQuiz()}
+          icon={<PostAddIcon fontSize="large" />}
+        />
+      </Grid>
+    </Grid>
   )
 }
