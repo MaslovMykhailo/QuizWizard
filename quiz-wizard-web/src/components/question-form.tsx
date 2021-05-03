@@ -5,7 +5,6 @@ import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
-import CardActionArea from '@material-ui/core/CardActionArea'
 import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import TextField from '@material-ui/core/TextField'
@@ -61,6 +60,18 @@ export function QuestionForm({
     onChange?.({
       ...question!,
       answers
+    })
+  }
+  const onChangePicture = (picture: string | Blob) => {
+    onChange?.({
+      ...question!,
+      picture
+    })
+  }
+  const onDeletePicture = () => {
+    onChange?.({
+      ...question!,
+      picture: undefined
     })
   }
 
@@ -125,11 +136,13 @@ export function QuestionForm({
           className={classes.text}
           InputProps={{readOnly}}
         />
-        <CardActionArea className={classes.picture}>
-          <PictureControl
-            picture={question?.picture}
-          />
-        </CardActionArea>
+        <PictureControl
+          readOnly={readOnly}
+          onChange={onChangePicture}
+          onDelete={onDeletePicture}
+          className={classes.picture}
+          picture={question?.picture}
+        />
       </CardContent>
       <CardActions className={classes.actions}>
         <Typography
@@ -165,8 +178,7 @@ const useStyles = makeStyles((theme) => ({
   },
   picture: {
     width: theme.spacing(32),
-    height: theme.spacing(14),
-    borderRadius: theme.shape.borderRadius
+    height: theme.spacing(14)
   },
   headerBox: {
     display: 'flex',
