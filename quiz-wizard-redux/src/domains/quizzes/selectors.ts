@@ -1,7 +1,9 @@
+import flow from 'lodash/flow'
 import sortBy from 'lodash/sortBy'
 import {createSelector} from '@reduxjs/toolkit'
+import {QuizId} from 'quiz-wizard-schema'
 
-import {getData, isDeleting, isPending, isPresent} from '../../helpers'
+import {getData, isCreating, isDeleting, isPending, isPresent} from '../../helpers'
 import type {State} from '../../store'
 
 export const selectQuizzesState = (state: State) => state.quizzes
@@ -40,4 +42,19 @@ export const selectQuizzesInfo = createSelector(
 export const selectSortedQuizzesInfo = createSelector(
   selectQuizzesInfo,
   (quizzes) => sortBy(quizzes, (quiz) => new Date(quiz.creationDate))
+)
+
+export const selectQuizResourceGetter = createSelector(
+  selectQuizzesData,
+  (data) => (quizId: QuizId) => data[quizId]
+)
+
+export const selectQuizGetter = createSelector(
+  selectQuizResourceGetter,
+  (getResource) => flow(getResource, getData)
+)
+
+export const selectIsQuizCreatingGetter = createSelector(
+  selectQuizResourceGetter,
+  (getResource) => flow(getResource, isCreating)
 )

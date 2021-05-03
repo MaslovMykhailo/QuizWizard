@@ -10,7 +10,7 @@ export type QuestionId = string
 export interface QuestionSchema {
   id: QuestionId
   text: string
-  picture?: string
+  picture?: string | Blob
   answers: Partial<Record<AnswerOption, QuestionAnswer>>
   partialAnswer?: boolean
   cost: number
@@ -28,7 +28,7 @@ export interface QuizSchema {
 }
 
 export interface NewQuestionSchema extends Omit<QuestionSchema, 'picture'> {
-  picture?: Blob
+  picture?: string | Blob
 }
 
 export interface NewQuizSchema extends Omit<QuizSchema, 'creationDate' | 'questions'> {

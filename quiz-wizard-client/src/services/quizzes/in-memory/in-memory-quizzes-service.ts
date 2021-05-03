@@ -35,9 +35,9 @@ export const createInMemoryQuizzesService = (
   const createQuiz = async (quiz: NewQuizSchema) => {
     const pictureUrls = await Promise.all(
       Object.values(quiz.questions).map(
-        ({id, picture}) => picture ?
+        ({id, picture}) => picture && picture instanceof Blob ?
           uploadLayer.uploadQuestionPicture(picture).then((url) => [id, url]) :
-          Promise.resolve([id, undefined])
+          Promise.resolve([id, picture])
       )
     )
 
