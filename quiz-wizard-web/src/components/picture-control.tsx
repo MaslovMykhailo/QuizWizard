@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton'
 import AddIcon from '@material-ui/icons/Add'
 import AutorenewIcon from '@material-ui/icons/Autorenew'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
+import ImageIcon from '@material-ui/icons/Image'
 import {makeStyles} from '@material-ui/core/styles'
 
 import {useOpenState} from '../hooks'
@@ -38,7 +39,11 @@ export function PictureControl({
   return (
     <Paper
       variant="outlined"
-      className={clsx(classes.root, className)}
+      className={clsx(
+        classes.root,
+        className,
+        !readOnly ? classes.rootHover : undefined
+      )}
     >
       {picture ? (
         <>
@@ -68,11 +73,20 @@ export function PictureControl({
         </>
       ) : (
         <CardActionArea
-          onClick={open}
+          onClick={!readOnly ? open : undefined}
           className={clsx(classes.noPictureBox)}
         >
-          <AddIcon fontSize="large" />
-          <Typography children="Add picture" />
+          {!readOnly ? (
+            <>
+              <AddIcon fontSize="large" />
+              <Typography children="Add picture" />
+            </>
+          ) : (
+            <>
+              <ImageIcon fontSize="large" />
+              <Typography children="No picture" />
+            </>
+          )}
         </CardActionArea>
       )}
       <PictureModal
@@ -87,7 +101,9 @@ export function PictureControl({
 const useStyles = makeStyles((theme) => ({
   root: {
     cursor: 'pointer',
-    position: 'relative',
+    position: 'relative'
+  },
+  rootHover: {
     '&:hover > img': {
       opacity: 0.2
     },
