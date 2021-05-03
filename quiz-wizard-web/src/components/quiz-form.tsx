@@ -20,6 +20,7 @@ import {FormControls} from './form-controls'
 import {QuestionForm} from './question-form'
 
 export interface QuizFormProps {
+  readOnly?: boolean
   quiz?: QuizSchema
   onSave?: (quiz: QuizSchema) => void
   onCreate?: (quiz: NewQuizSchema) => void
@@ -28,6 +29,7 @@ export interface QuizFormProps {
 }
 
 export function QuizForm({
+  readOnly,
   quiz,
   onSave,
   onCreate,
@@ -123,6 +125,7 @@ export function QuizForm({
             error={!quizName}
             onChange={onChangeQuizName}
             required
+            InputProps={{readOnly}}
           />
         </Grid>
         <Grid item>
@@ -133,10 +136,12 @@ export function QuizForm({
             multiline
             value={quizDescription}
             onChange={onChangeQuizDescription}
+            InputProps={{readOnly}}
           />
         </Grid>
         <Grid item>
           <QuestionList
+            readOnly={readOnly}
             order={questionsOrder}
             onChangeOrder={onChangeQuestionsOrder}
             questions={questions}
@@ -146,9 +151,9 @@ export function QuizForm({
           />
         </Grid>
         <FormControls
-          onSave={onSave && handleOnSave}
+          onSave={!readOnly ? onSave && handleOnSave : undefined}
           saveDisabled={!hasChanges || !isValid}
-          onCreate={onCreate && handleOnCreate}
+          onCreate={!readOnly ? onCreate && handleOnCreate : undefined}
           createDisabled={!hasChanges || !isValid}
           onCancel={onCancel}
           onDelete={onDelete}
@@ -159,6 +164,7 @@ export function QuizForm({
 }
 
 interface QuestionListProps {
+  readOnly?: boolean
   order?: QuestionId[]
   onChangeOrder?: (order: QuestionId[]) => void
   questions: Record<QuestionId, QuestionSchema>
@@ -168,6 +174,7 @@ interface QuestionListProps {
 }
 
 function QuestionList({
+  readOnly,
   order = [],
   onChangeOrder,
   questions,
@@ -229,6 +236,7 @@ function QuestionList({
                       {...draggableProvided.dragHandleProps}
                     >
                       <QuestionForm
+                        readOnly={readOnly}
                         className={classes.question}
                         question={questions[questionId]}
                         onChange={createOnChangeQuestion(questionId)}
@@ -243,7 +251,7 @@ function QuestionList({
             </div>
           )}
         </Droppable>
-        {(order && order?.length < 30) && (
+        {(order && order?.length < 30 && !readOnly) && (
           <Paper>
             <ListItem
               button

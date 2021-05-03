@@ -1,8 +1,15 @@
-import {useRef, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {useHistory} from 'react-router'
 import {useSelector} from 'react-redux'
 import {NewQuizSchema} from 'quiz-wizard-schema'
-import {createQuiz, useDispatch, selectIsQuizCreatingGetter, selectQuizGetter} from 'quiz-wizard-redux'
+import {
+  createQuiz,
+  fetchQuiz,
+  useDispatch,
+  selectIsQuizCreatingGetter,
+  selectIsQuizFetchingGetter,
+  selectQuizGetter
+} from 'quiz-wizard-redux'
 
 import {PageLoader, QuizForm} from '../components'
 import {useQuery} from '../hooks'
@@ -15,16 +22,29 @@ export function NewQuizPage() {
 
   const getQuiz = useSelector(selectQuizGetter)
   const getIsQuizCreating = useSelector(selectIsQuizCreatingGetter)
+  const getIsQuizFetching = useSelector(selectIsQuizFetchingGetter)
 
   const originQuizId = query.get('origin')
   const originQuiz = originQuizId ? getQuiz(originQuizId) : undefined
+  const isOriginFetching = originQuizId ? getIsQuizFetching(originQuizId) : false
 
   const [newQuizId, setNewQuizId] = useState<string | undefined>(undefined)
   const isCreating = newQuizId ? getIsQuizCreating(newQuizId) : false
 
-  const waitForUpdateRef = useRef(false)
+  const waitForUpdateRef = useRef(true)
 
-  if (isCreating || waitForUpdateRef.current) {
+  useEffect(
+    () => {
+      waitForUpdateRef.current = false
+
+      if (originQuizId) {
+        dispatch(fetchQuiz(originQuizId))
+      }
+    },
+    [dispatch, originQuizId]
+  )
+
+  if (isCreating || isOriginFetching || waitForUpdateRef.current) {
     return (
       <PageLoader />
     )

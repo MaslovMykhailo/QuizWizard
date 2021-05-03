@@ -18,11 +18,13 @@ import {answerOptions} from '../helpers'
 export type Answers = Partial<Record<AnswerOption, QuestionAnswer>>
 
 export interface AnswerOptionsFormProps {
+  readOnly?: boolean
   answers: Partial<Record<AnswerOption, QuestionAnswer>>
   onChange?: (answers: Answers) => void
 }
 
 export function AnswerOptionsForm({
+  readOnly,
   answers,
   onChange
 }: AnswerOptionsFormProps) {
@@ -58,42 +60,44 @@ export function AnswerOptionsForm({
             {answers[option]?.correct ? (
               <IconButton
                 color="secondary"
-                onClick={() => onChange?.({
+                onClick={!readOnly ? () => onChange?.({
                   ...answers,
                   [option]: {
                     ...answers[option],
                     correct: false
                   }
-                })}
+                }) : undefined}
               >
                 <CheckCircleOutlineIcon />
               </IconButton>
             ) : (
               <IconButton
                 color="primary"
-                onClick={() => onChange?.({
+                onClick={!readOnly ? () => onChange?.({
                   ...answers,
                   [option]: {
                     ...answers[option],
                     correct: true
                   }
-                })}
+                }) : undefined}
               >
                 <HighlightOffIcon />
               </IconButton>
             )}
-            <IconButton>
-              <DeleteIcon
+            {!readOnly && (
+              <IconButton
                 onClick={() => onChange?.({
                   ...answers,
                   [option]: undefined
                 })}
-              />
-            </IconButton>
+              >
+                <DeleteIcon />
+              </IconButton>
+            )}
           </ListItemSecondaryAction>
         </ListItem>
       ))}
-      {options.length < answerOptions.length && (
+      {(!readOnly && options.length < answerOptions.length) && (
         <ListItem
           button
           onClick={onAddAnswer}

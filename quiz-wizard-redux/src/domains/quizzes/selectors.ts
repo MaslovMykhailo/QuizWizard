@@ -58,3 +58,13 @@ export const selectIsQuizCreatingGetter = createSelector(
   selectQuizResourceGetter,
   (getResource) => flow(getResource, isCreating)
 )
+
+export const selectIsQuizFetchingGetter = createSelector(
+  selectQuizResourceGetter,
+  (getResource) => flow(getResource, isPending)
+)
+
+export const selectIsQuizDeletingGetter = createSelector(
+  selectQuizResourceGetter,
+  (getResource) => flow(getResource, isDeleting)
+)

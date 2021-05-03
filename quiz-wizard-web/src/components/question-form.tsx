@@ -21,6 +21,7 @@ import {PictureControl} from './picture-control'
 import {AnswerOptionsForm} from './answer-options-form'
 
 export interface QuestionFormProps {
+  readOnly?: boolean
   index: number
   question?: QuestionSchema
   onChange?: (question: QuestionSchema) => void
@@ -30,6 +31,7 @@ export interface QuestionFormProps {
 
 export function QuestionForm({
   index,
+  readOnly,
   question,
   onChange,
   onDelete,
@@ -84,6 +86,7 @@ export function QuestionForm({
               color="primary"
               checked={question?.partialAnswer}
               onChange={onTogglePartialAnswer}
+              readOnly={readOnly}
             />
             <Typography
               className={classes.headerControl}
@@ -97,17 +100,18 @@ export function QuestionForm({
               onChange={onChangeCost}
               inputProps={{min: 1}}
               className={classes.costInput}
+              InputProps={{readOnly}}
             />
           </Box>
         )}
-        action={
+        action={!readOnly && (
           <IconButton
             color="secondary"
             onClick={onDelete}
           >
             <DeleteIcon />
           </IconButton>
-        }
+        )}
       />
       <CardContent className={classes.content}>
         <TextField
@@ -119,6 +123,7 @@ export function QuestionForm({
           value={question?.text}
           onChange={onChangeText}
           className={classes.text}
+          InputProps={{readOnly}}
         />
         <CardActionArea className={classes.picture}>
           <PictureControl
@@ -141,6 +146,7 @@ export function QuestionForm({
       >
         <CardContent>
           <AnswerOptionsForm
+            readOnly={readOnly}
             answers={question?.answers ?? {}}
             onChange={onChangeAnswers}
           />
