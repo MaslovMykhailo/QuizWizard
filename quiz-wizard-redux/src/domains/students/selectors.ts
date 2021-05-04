@@ -99,3 +99,8 @@ export const selectIsNewStudentCreating = createSelector(
   selectNewStudentResource,
   isPending
 )
+
+export const selectIsNoGroupStudentGetter = createSelector(
+  selectStudentGetter,
+  (studentGetter) => flow(studentGetter, (student) => !student?.groups?.length)
+)

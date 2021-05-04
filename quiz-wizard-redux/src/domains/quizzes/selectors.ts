@@ -28,6 +28,16 @@ export const selectQuizResources = createSelector(
   (data) => Object.values(data).filter(isPresent)
 )
 
+export const selectQuizzes = createSelector(
+  selectQuizResources,
+  (resources) => resources.map(getData).filter(isPresent)
+)
+
+export const selectSortedQuizzes = createSelector(
+  selectQuizzes,
+  (quizzes) => sortBy(quizzes, (quiz) => new Date(quiz.creationDate)).reverse()
+)
+
 export const selectQuizzesInfo = createSelector(
   selectQuizResources,
   (resources) => resources
@@ -41,7 +51,7 @@ export const selectQuizzesInfo = createSelector(
 
 export const selectSortedQuizzesInfo = createSelector(
   selectQuizzesInfo,
-  (quizzes) => sortBy(quizzes, (quiz) => new Date(quiz.creationDate))
+  (quizzes) => sortBy(quizzes, (quiz) => new Date(quiz.creationDate)).reverse()
 )
 
 export const selectQuizResourceGetter = createSelector(

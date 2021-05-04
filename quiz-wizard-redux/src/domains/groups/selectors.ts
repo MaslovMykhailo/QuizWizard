@@ -1,6 +1,7 @@
 import flow from 'lodash/flow'
+import sortBy from 'lodash/sortBy'
 import {createSelector} from '@reduxjs/toolkit'
-import {GroupId} from 'quiz-wizard-schema'
+import {GroupId, StudentId} from 'quiz-wizard-schema'
 
 import {getData, isDeleting, isPending, isPresent, newResourceId} from '../../helpers'
 import type {State} from '../../store'
@@ -35,6 +36,11 @@ export const selectGroupResources = createSelector(
 export const selectGroups = createSelector(
   selectGroupResources,
   (resources) => resources.map(getData).filter(isPresent)
+)
+
+export const selectSortedGroups = createSelector(
+  selectGroups,
+  (groups) => sortBy(groups, 'name')
 )
 
 export const selectGroupsInfo = createSelector(
@@ -72,6 +78,11 @@ export const selectGroupNameGetter = createSelector(
   (groupGetter) => flow(groupGetter, (group) => group?.name)
 )
 
+export const selectGroupStudentsGetter = createSelector(
+  selectGroupGetter,
+  (groupGetter) => flow(groupGetter, (group) => group?.students)
+)
+
 export const selectNewGroupResource = createSelector(
   selectGroupsData,
   (data) => data[newResourceId]
@@ -80,4 +91,10 @@ export const selectNewGroupResource = createSelector(
 export const selectIsNewGroupCreating = createSelector(
   selectNewGroupResource,
   isPending
+)
+
+export const selectIsStudentInGroupGetter = createSelector(
+  selectGroupStudentsGetter,
+  (getGroupStudents) => (groupId: GroupId, studentId?: StudentId) =>
+    Boolean(studentId && getGroupStudents(groupId)?.includes(studentId))
 )

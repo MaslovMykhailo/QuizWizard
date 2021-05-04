@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
-import AddIcon from '@material-ui/icons/Add'
+import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate'
 import AutorenewIcon from '@material-ui/icons/Autorenew'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
 import ImageIcon from '@material-ui/icons/Image'
@@ -78,7 +78,7 @@ export function PictureControl({
         >
           {!readOnly ? (
             <>
-              <AddIcon fontSize="large" />
+              <AddPhotoAlternateIcon fontSize="large" />
               <Typography children="Add picture" />
             </>
           ) : (
