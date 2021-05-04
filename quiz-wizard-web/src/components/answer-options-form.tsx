@@ -37,10 +37,26 @@ export function AnswerOptionsForm({
       text: ''
     }
   })
+  const onDeleteAnswer = (option: AnswerOption) => {
+    const deleteIndex = answerOptions.indexOf(option)
+    const changedAnswers = answerOptions.reduce<Answers>(
+      (map, option, index) => {
+        if (index < deleteIndex) {
+          map[option] = answers[option]
+        }
+        if (index > deleteIndex) {
+          map[answerOptions[index - 1]] = answers[option]
+        }
+        return map
+      },
+      {}
+    )
+    onChange?.(changedAnswers)
+  }
 
   return (
     <List>
-      {answerOptions.filter((option) => answers[option]).map((option) => (
+      {answerOptions.filter((option) => answers[option]).map((option, _, list) => (
         <ListItem key={option}>
           <ListItemAvatar>
             <Avatar
@@ -87,12 +103,9 @@ export function AnswerOptionsForm({
                 <HighlightOffIcon />
               </IconButton>
             )}
-            {!readOnly && (
+            {(!readOnly && list.length > 1) && (
               <IconButton
-                onClick={() => onChange?.({
-                  ...answers,
-                  [option]: undefined
-                })}
+                onClick={() => onDeleteAnswer(option)}
               >
                 <DeleteIcon />
               </IconButton>

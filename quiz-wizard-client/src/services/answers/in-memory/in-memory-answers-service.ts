@@ -43,7 +43,7 @@ export const createInMemoryAnswersService = (
     }
   )
 
-  const checkQuiz = (quizId: QuizId, sheet: Blob): Promise<AnswerSchema> =>
+  const checkQuiz = (quizId: QuizId, sheet: string | Blob): Promise<AnswerSchema> =>
     Promise.reject('Not implemented')
 
   return delayMethods(
