@@ -148,7 +148,8 @@ class QuizFormatter {
   }
 
   async renderQuestion(question: QuestionSchema, index: number) {
-    const pageToFit = this.pagesCount
+    this.renderText(`${index}. ${question.text}`)
+    this.offsetTop += Math.round(this.doc.getLineHeight() / 2)
 
     let widthToFit: number | undefined = undefined
     let heightToFit: number | undefined = undefined
@@ -159,10 +160,9 @@ class QuizFormatter {
       heightToFit = y + height
     }
 
-    this.renderText(`${index}. ${question.text}`, 'left', 14, 'normal', widthToFit)
-    this.offsetTop += Math.round(this.doc.getLineHeight() / 2)
-
+    const pageToFit = this.pagesCount
     const options = answerOptions.filter((option) => question.answers[option])
+
     options.forEach((option) => {
       const {text} = question.answers[option]!
       if (heightToFit && this.offsetTop < heightToFit && pageToFit === this.pagesCount) {
