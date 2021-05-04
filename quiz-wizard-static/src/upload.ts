@@ -20,7 +20,7 @@ export const handleUpload = (
   const fileName = `${file.md5}.${file.name.split('.').pop()}`
   const filePath = path.resolve(process.cwd(), staticPath, sectionPath, fileName)
 
-  file.mv(filePath, function (err) {
+  file.mv(filePath, (err) => {
     if (err) {
       return res.status(500).send(err)
     }

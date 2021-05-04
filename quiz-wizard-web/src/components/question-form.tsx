@@ -80,7 +80,12 @@ export function QuestionForm({
   return (
     <Card className={className}>
       <CardHeader
-        avatar={<Avatar children={index} />}
+        avatar={
+          <Avatar
+            className={classes.index}
+            children={index}
+          />
+        }
         title={(
           <Box className={classes.headerBox}>
             <Typography
@@ -95,9 +100,10 @@ export function QuestionForm({
             <Checkbox
               className={classes.headerControl}
               color="primary"
-              checked={question?.partialAnswer}
-              onChange={onTogglePartialAnswer}
+              checked={Boolean(question?.partialAnswer)}
+              onChange={!readOnly ? onTogglePartialAnswer : undefined}
               readOnly={readOnly}
+              inputProps={{readOnly}}
             />
             <Typography
               className={classes.headerControl}
@@ -196,5 +202,8 @@ const useStyles = makeStyles((theme) => ({
   },
   actions: {
     paddingLeft: theme.spacing(4)
+  },
+  index: {
+    background: theme.palette.primary.main
   }
 }))

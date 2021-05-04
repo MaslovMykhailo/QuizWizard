@@ -1,4 +1,4 @@
 export interface UploadLayer {
-  uploadQuestionPicture(picture: Blob): Promise<string>
-  uploadAnswerSheet(sheet: Blob): Promise<string>
+  uploadQuestionPicture(picture: string | Blob): Promise<string>
+  uploadAnswerSheet(sheet: string | Blob): Promise<string>
 }

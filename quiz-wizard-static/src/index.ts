@@ -6,6 +6,7 @@ import express from 'express'
 import fileUpload from 'express-fileupload'
 
 import {handleUpload} from './upload'
+import {handleDeliver} from './deliver'
 
 const {parsed: {
   PORT = 3000,
@@ -22,6 +23,9 @@ app.use(fileUpload())
 
 app.post('/upload/answer-sheet', handleUpload(PORT, STATIC_PATH, 'answer-sheet'))
 app.post('/upload/question-picture', handleUpload(PORT, STATIC_PATH, 'question-picture'))
+
+app.post('/deliver/answer-sheet', handleDeliver(PORT, STATIC_PATH, 'answer-sheet'))
+app.post('/deliver/question-picture', handleDeliver(PORT, STATIC_PATH, 'question-picture'))
 
 app.listen(PORT, () => {
   console.log(`Static server is running on port: ${PORT}`)

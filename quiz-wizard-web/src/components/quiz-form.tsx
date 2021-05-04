@@ -18,8 +18,10 @@ import {reorder} from '../helpers'
 import {BackButton} from './back-button'
 import {FormControls} from './form-controls'
 import {QuestionForm} from './question-form'
+import {DownloadQuizSheetButton} from './download-quiz-sheet-button'
 
 export interface QuizFormProps {
+  newQuiz?: boolean
   readOnly?: boolean
   quiz?: QuizSchema
   onSave?: (quiz: QuizSchema) => void
@@ -29,6 +31,7 @@ export interface QuizFormProps {
 }
 
 export function QuizForm({
+  newQuiz,
   readOnly,
   quiz,
   onSave,
@@ -36,8 +39,10 @@ export function QuizForm({
   onCancel,
   onDelete
 }: QuizFormProps) {
-  const [quizName, onChangeQuizName] = useInputState(quiz?.name)
-  const [quizDescription, onChangeQuizDescription] = useInputState(quiz?.description)
+  const classes = useStyles()
+
+  const [quizName, onChangeQuizName] = useInputState(quiz?.name ?? '')
+  const [quizDescription, onChangeQuizDescription] = useInputState(quiz?.description ?? '')
   const [questionsOrder, onChangeQuestionsOrder] = useState(quiz?.questionsOrder)
   const [questions, onChangeQuestions] = useState(quiz?.questions ?? {})
 
@@ -50,7 +55,7 @@ export function QuizForm({
         id: questionId,
         text: '',
         cost: 1,
-        answers: {}
+        answers: {A: {text: ''}}
       }
     })
   }
@@ -106,9 +111,17 @@ export function QuizForm({
         <Grid item>
           <Typography
             variant="h3"
-            children={quiz ? 'Quiz info' : 'New quiz'}
+            children={newQuiz ? 'New quiz' : 'Quiz info'}
           />
         </Grid>
+        {!newQuiz && quiz && (
+          <Grid
+            item
+            className={classes.downloadButton}
+          >
+            <DownloadQuizSheetButton quiz={quiz} />
+          </Grid>
+        )}
       </Grid>
       <Grid
         item
@@ -226,6 +239,7 @@ function QuestionList({
               {order?.map((questionId, index) => (
                 <Draggable
                   key={questionId}
+                  isDragDisabled={readOnly}
                   draggableId={questionId}
                   index={index}
                 >
@@ -274,6 +288,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     display: 'flex',
     justifyContent: 'center'
+  },
+  downloadButton: {
+    marginLeft: 'auto'
   }
 }))
 

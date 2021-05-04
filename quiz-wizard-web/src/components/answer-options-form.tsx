@@ -43,7 +43,10 @@ export function AnswerOptionsForm({
       {answerOptions.filter((option) => answers[option]).map((option) => (
         <ListItem key={option}>
           <ListItemAvatar>
-            <Avatar children={option} />
+            <Avatar
+              className={classes[answers[option]?.correct ? 'correctOption' : 'incorrectOption']}
+              children={option}
+            />
           </ListItemAvatar>
           <TextField
             className={classes.answerInput}
@@ -59,7 +62,7 @@ export function AnswerOptionsForm({
           <ListItemSecondaryAction>
             {answers[option]?.correct ? (
               <IconButton
-                color="secondary"
+                className={classes.correctButton}
                 onClick={!readOnly ? () => onChange?.({
                   ...answers,
                   [option]: {
@@ -72,7 +75,7 @@ export function AnswerOptionsForm({
               </IconButton>
             ) : (
               <IconButton
-                color="primary"
+                className={classes.incorrectButton}
                 onClick={!readOnly ? () => onChange?.({
                   ...answers,
                   [option]: {
@@ -121,5 +124,17 @@ const useStyles = makeStyles((theme) => ({
   },
   answerInput: {
     width: `calc(100% - ${theme.spacing(16)}px)`
+  },
+  correctOption: {
+    background: theme.palette.success.main
+  },
+  incorrectOption: {
+    background: theme.palette.error.main
+  },
+  correctButton: {
+    color: theme.palette.success.main
+  },
+  incorrectButton: {
+    color: theme.palette.error.main
   }
 }))

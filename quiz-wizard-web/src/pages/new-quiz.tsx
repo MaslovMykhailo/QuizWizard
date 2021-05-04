@@ -31,7 +31,7 @@ export function NewQuizPage() {
   const [newQuizId, setNewQuizId] = useState<string | undefined>(undefined)
   const isCreating = newQuizId ? getIsQuizCreating(newQuizId) : false
 
-  const waitForUpdateRef = useRef(true)
+  const waitForUpdateRef = useRef(Boolean(originQuizId))
 
   useEffect(
     () => {
@@ -65,6 +65,7 @@ export function NewQuizPage() {
 
   return (
     <QuizForm
+      newQuiz
       quiz={originQuiz}
       onCreate={onCreate}
       onCancel={onCancel}
