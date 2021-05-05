@@ -1,7 +1,7 @@
 import {UploadLayer} from './types'
 
 export const createUploadLayer = (
-  baseUrl = 'http://localhost:5000'
+  baseUrl = 'http://localhost:4000'
 ): UploadLayer => {
   const baseUpload = (type: string, image: Blob) => {
     const body = new FormData()
