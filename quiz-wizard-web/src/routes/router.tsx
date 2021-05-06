@@ -22,7 +22,9 @@ import {
   NewGroupPage,
   GroupPage,
   NewQuizPage,
-  QuizPage
+  QuizPage,
+  NewAnswerPage,
+  AnswerPage
 } from '../pages'
 import {NavigationTarget, PageWithNavigation, Toolbar} from '../components'
 
@@ -104,7 +106,7 @@ function AppRoute() {
           />
           <Route
             path={Path.answers()}
-            component={AnswersPage}
+            component={AnswersRoute}
           />
           <Route
             path={Path.analytics()}
@@ -234,6 +236,27 @@ function QuizzesRoute() {
       <Route
         path={Path.quizzes()}
         component={QuizzesPage}
+      />
+    </Switch>
+  )
+}
+
+function AnswersRoute() {
+  return (
+    <Switch>
+      <Route
+        exact
+        path={Path.newAnswer()}
+        component={NewAnswerPage}
+      />
+      <Route
+        exact
+        path={Path.answer()}
+        component={AnswerPage}
+      />
+      <Route
+        path={Path.answers()}
+        component={AnswersPage}
       />
     </Switch>
   )

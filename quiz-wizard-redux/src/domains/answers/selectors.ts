@@ -1,8 +1,9 @@
+import flow from 'lodash/flow'
 import sortBy from 'lodash/sortBy'
 import {createSelector} from '@reduxjs/toolkit'
-import {AnswerSchema, GroupSchema, StudentSchema} from 'quiz-wizard-schema'
+import {AnswerId, AnswerSchema, GroupSchema, QuizId, StudentSchema} from 'quiz-wizard-schema'
 
-import {getData, isPending, isPresent} from '../../helpers'
+import {getData, isDeleting, isPending, isPresent} from '../../helpers'
 import {selectIsStudentInGroupGetter, selectSortedGroups} from '../groups'
 import {selectIsNoGroupStudentGetter, selectStudentGetter} from '../students'
 import {selectSortedQuizzes} from '../quizzes'
@@ -18,6 +19,16 @@ export const selectAnswerIdsResource = createSelector(
 export const selectAnswersData = createSelector(
   selectAnswersState,
   (state) => state.data
+)
+
+export const selectCheckingQuizId = createSelector(
+  selectAnswersState,
+  (state) => state.checkingQuizId
+)
+
+export const selectIsQuizCheckingGetter = createSelector(
+  selectCheckingQuizId,
+  (checkingQuizId) => (quizId: QuizId) => checkingQuizId === quizId
 )
 
 export const selectAreAnswersFetching = createSelector(
@@ -71,4 +82,24 @@ export const selectAnswersByQuizzes = createSelector(
         })
         .filter(({answers}) => answers.length)
     }))
+)
+
+export const selectAnswerResourceGetter = createSelector(
+  selectAnswersData,
+  (data) => (answerId: AnswerId) => data[answerId]
+)
+
+export const selectAnswerGetter = createSelector(
+  selectAnswerResourceGetter,
+  (resourceGetter) => flow(resourceGetter, getData)
+)
+
+export const selectIsAnswerFetchingGetter = createSelector(
+  selectAnswerResourceGetter,
+  (resourceGetter) => flow(resourceGetter, isPending)
+)
+
+export const selectIsAnswerDeletingGetter = createSelector(
+  selectAnswerResourceGetter,
+  (resourceGetter) => flow(resourceGetter, isDeleting)
 )

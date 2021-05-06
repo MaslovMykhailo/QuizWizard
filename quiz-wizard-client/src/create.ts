@@ -1,5 +1,9 @@
-import {createPersistentAuthLayer, createUploadLayer} from './layers'
 import {createPersistentStorageFromLocalStorage} from './storages'
+import {
+  createPersistentAuthLayer,
+  createRecognitionLayer,
+  createUploadLayer
+} from './layers'
 import {
   Services,
   createInMemoryAuthService,
@@ -14,6 +18,7 @@ import {
 const persistentStorage = createPersistentStorageFromLocalStorage()
 
 const persistentAuthLayer = createPersistentAuthLayer(persistentStorage)
+const recognitionLayer = createRecognitionLayer()
 const uploadLayer = createUploadLayer()
 
 export const createInMemoryServices = (): Services => ({
@@ -22,6 +27,6 @@ export const createInMemoryServices = (): Services => ({
   groups: createInMemoryGroupsService(persistentAuthLayer, persistentStorage),
   students: createInMemoryStudentsService(persistentAuthLayer, persistentStorage),
   quizzes: createInMemoryQuizzesService(persistentAuthLayer, uploadLayer, persistentStorage),
-  answers: createInMemoryAnswersService(persistentAuthLayer, uploadLayer, persistentStorage),
+  answers: createInMemoryAnswersService(persistentAuthLayer, uploadLayer, recognitionLayer, persistentStorage),
   preferences: createInMemoryPreferencesService(persistentAuthLayer, persistentStorage)
 })

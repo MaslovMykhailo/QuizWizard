@@ -31,7 +31,7 @@ export const Path = {
   newAnswer: (quizId?: string) => quizId ?
     `/answers/new?quiz=${quizId}` :
     '/answers/new',
-  answer: (answerId: string) => answerId ?
+  answer: (answerId?: string) => answerId ?
     `/answers/${answerId}` :
     '/answers/:answerId',
 
