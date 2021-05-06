@@ -1,8 +1,9 @@
 import {useEffect, useRef} from 'react'
-import {useParams} from 'react-router'
+import {useHistory, useParams} from 'react-router'
 import {useSelector} from 'react-redux'
 import {AnswerId} from 'quiz-wizard-schema'
 import {
+  deleteAnswer,
   fetchAnswer,
   fetchQuiz,
   fetchStudent,
@@ -20,6 +21,7 @@ import Typography from '@material-ui/core/Typography'
 import {AnswerView, PageLoader} from '../components'
 
 export function AnswerPage() {
+  const history = useHistory()
   const dispatch = useDispatch()
 
   const {answerId} = useParams<{answerId: AnswerId}>()
@@ -81,11 +83,19 @@ export function AnswerPage() {
     )
   }
 
+  const onDelete = () => {
+    waitForUpdateRef.current = true
+    dispatch(deleteAnswer(answerId))
+      .then(() => history.goBack())
+      .finally(() => waitForUpdateRef.current = false)
+  }
+
   return (
     <AnswerView
       answer={answer}
       quiz={quiz}
       student={student}
+      onDelete={onDelete}
     />
   )
 }
