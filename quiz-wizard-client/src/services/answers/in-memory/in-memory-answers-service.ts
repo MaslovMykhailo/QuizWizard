@@ -67,8 +67,9 @@ export const createInMemoryAnswersService = (
     const checks = checkQuizAnswers(quiz, recognition.answers)
     const result = calcCheckResult(quiz, checks)
 
-    return {
-      id: uuid(),
+    const answerId = uuid()
+    inMemoryAnswers[answerId] = {
+      id: answerId,
       creationDate: new Date().toISOString(),
       quiz: quizId,
       sheet: sheetUrl,
@@ -76,6 +77,9 @@ export const createInMemoryAnswersService = (
       result,
       student
     }
+
+    return syncAnswersWithStorage()
+      .then(() => inMemoryAnswers[answerId])
   }
 
   return delayMethods(

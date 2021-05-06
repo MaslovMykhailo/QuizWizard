@@ -1,10 +1,13 @@
 from flask import Flask, request, abort
+from flask_cors import CORS
 from recognition import recognize
 import numpy as np
 import requests
 import cv2
 
 app = Flask(__name__)
+
+CORS(app)
 
 @app.route('/recognize')
 def recognize_sheet():
