@@ -92,5 +92,12 @@
   "CHECK": "Check",
   "QUIZZES_LIST": "Quizzes list",
   "STUDENT_NOT_FOUND": "The student is not found",
-  "STUDENTS_LIST": "Students list"
+  "STUDENTS_LIST": "Students list",
+  "TYPE": "Type",
+  "GROUP": "Group",
+  "EXPLORE_ANALYTIC_BY": "Explore analytic by",
+  "SELECT_GROUP": "Select group",
+  "AVERAGE_RESULT": "Average result:",
+  "TOTAL_ANSWERS_COUNT": "Total answers count:",
+  "NONE": "None"
 }

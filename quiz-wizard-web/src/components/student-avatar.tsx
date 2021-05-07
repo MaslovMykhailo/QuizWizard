@@ -14,7 +14,7 @@ export function StudentAvatar({
     <Avatar>
       {
         firstName && lastName ?
-          [firstName, lastName].map((name) => name[0]).join('') :
+          [lastName, firstName].map((name) => name[0]).join('') :
           (<PersonIcon />)
       }
     </Avatar>

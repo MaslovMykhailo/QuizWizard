@@ -35,5 +35,8 @@ export const Path = {
     `/answers/${answerId}` :
     '/answers/:answerId',
 
-  analytics: () => '/analytics'
+  analytics: (type?: string, id?: string) => type ?
+    id ? `/analytics?type=${type}&id=${id}` : `/analytics?type=${type}` :
+    '/analytics'
+
 }

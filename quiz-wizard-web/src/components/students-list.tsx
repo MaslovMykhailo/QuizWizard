@@ -76,7 +76,7 @@ export function StudentsListItem({
         />
       </ListItemAvatar>
       <ListItemText
-        primary={`${firstName} ${lastName}`}
+        primary={`${lastName} ${firstName}`}
         secondary={`${t('STUDENT_ID')} ${id}`}
       />
       {groups?.map(getGroupName).map((groupName, index) => (

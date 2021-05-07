@@ -92,5 +92,12 @@
   "CHECK": "Перевірити",
   "QUIZZES_LIST": "Список тестів",
   "STUDENT_NOT_FOUND": "Студента не знайдено",
-  "STUDENTS_LIST": "Список студентів"
+  "STUDENTS_LIST": "Список студентів",
+  "TYPE": "Тип",
+  "GROUP": "Група",
+  "EXPLORE_ANALYTIC_BY": "Переглянути аналітику за",
+  "SELECT_GROUP": "Обрати групу",
+  "AVERAGE_RESULT": "Середній результат:",
+  "TOTAL_ANSWERS_COUNT": "Загальна кількість відповідей:",
+  "NONE": "Нічого"
 }

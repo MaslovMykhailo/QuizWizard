@@ -108,7 +108,7 @@ export function AnswerView({
                       to={Path.student(student.id)}
                       variant="h5"
                     >
-                      {`${student.firstName} ${student.lastName}`}
+                      {`${student.lastName} ${student.firstName}`}
                     </Link>
                   ) : (
                     <Typography variant="h5">

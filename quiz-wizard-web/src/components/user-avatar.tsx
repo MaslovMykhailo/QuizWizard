@@ -24,7 +24,7 @@ export function UserAvatar({
     )
   }
 
-  const letters = [firstName, lastName].
+  const letters = [lastName, firstName].
     map((word) => word[0])
     .join('')
 
