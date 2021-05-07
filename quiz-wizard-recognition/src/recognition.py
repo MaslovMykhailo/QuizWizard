@@ -157,7 +157,7 @@ def detect_answers(image):
 	return detect_bubbled(grades, max_grade)
 
 def recognize(sheet):
-	paperRect = detect_rect(sheet, (5, 5), SHEET_RATIO)
+	paperRect = detect_rect(sheet, (3, 3), SHEET_RATIO)
 	paper = four_point_transform(sheet, paperRect.reshape(4, 2))
 
 	studentRect = detect_rect(paper, (3, 3), STUDENT_SECTION_RATIO)
