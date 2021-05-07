@@ -9,8 +9,8 @@ import cv2
 SHEET_RATIO = 0.7
 ANSWERS_SECTION_RATIO = 1
 STUDENT_SECTION_RATIO = 1.45
-ANSWERS_SIZE_TO_CIRCLE = 21
-STUDENT_SIZE_TO_CIRCLE = 9.25
+ANSWERS_SIZE_TO_CIRCLE = 17.5
+STUDENT_SIZE_TO_CIRCLE = 8.5
 
 # helpers
 def show(image_name, image):
@@ -29,6 +29,17 @@ def split_horizontal(image):
 
 	return pl, pr
 
+def minify(image):
+	height, width = image.shape[:2]	
+
+	x = width * 0.01
+	y = height * 0.01
+	
+	return four_point_transform(
+		image, 
+		np.array([[width - x, y], [x, y], [x, height - y], [width - x, height - y]])
+	)
+
 def detect_rect(image, blur_size, ratio):
 	gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	blurred = cv2.GaussianBlur(gray, blur_size, 0)
@@ -46,7 +57,7 @@ def detect_rect(image, blur_size, ratio):
 			if len(approx) == 4:
 				x, y, w, h = cv2.boundingRect(approx)
 				approxRatio = float(w) / h
-				if isclose(approxRatio, ratio, abs_tol = 0.1):
+				if isclose(approxRatio, ratio, abs_tol = 0.2):
 					return approx
 	
 	return None
@@ -68,7 +79,7 @@ def detect_circles(image, size_rel):
 		is_ratio_close = isclose(ratio, 1, abs_tol = 0.1)
 
 		size = height / float(h)
-		is_size_close = isclose(size, size_rel, abs_tol = 2)
+		is_size_close = isclose(size, size_rel, abs_tol = 3)
 
 		if is_ratio_close and is_size_close: 
 			circles.append(c)
@@ -122,7 +133,18 @@ def detect_answers(image):
 	max_grade = 0
 	grades = []
 
-	al, ar = split_horizontal(image)
+	height, width = image.shape[:2]	
+
+	x = 0
+	y = height * 0.08
+	
+	# cut option letters
+	img = four_point_transform(
+		image, 
+		np.array([[width, y], [x, y], [x, height], [width, height]])
+	)
+
+	al, ar = split_horizontal(img)
 
 	for answer in [al, ar]:
 		circles = detect_circles(answer, ANSWERS_SIZE_TO_CIRCLE)
@@ -139,11 +161,11 @@ def recognize(sheet):
 	paper = four_point_transform(sheet, paperRect.reshape(4, 2))
 
 	studentRect = detect_rect(paper, (3, 3), STUDENT_SECTION_RATIO)
-	student = four_point_transform(paper, studentRect.reshape(4, 2))
+	student = minify(four_point_transform(paper, studentRect.reshape(4, 2)))
 	s_bubbled = detect_student(student)
 
 	answersRect = detect_rect(paper, (3, 3), ANSWERS_SECTION_RATIO)
-	answers = four_point_transform(paper, answersRect.reshape(4, 2))
+	answers = minify(four_point_transform(paper, answersRect.reshape(4, 2)))
 	a_bubbled = detect_answers(answers)
 
 	return s_bubbled, a_bubbled
