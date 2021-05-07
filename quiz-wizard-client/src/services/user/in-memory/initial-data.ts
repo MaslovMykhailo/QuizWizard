@@ -1,10 +1,10 @@
 import {UserSchema} from 'quiz-wizard-schema'
 
 export const initialData: Record<string, UserSchema> = {
-  'good.boy@gmail.com': {
-    email: 'good.boy@gmail.com',
-    firstName: 'Good',
-    lastName: 'Boy',
-    avatar: 'https://i.pinimg.com/564x/17/5e/49/175e4930f8833b76a2a65039c83300f7.jpg'
+  'demo.user@mail.com': {
+    email: 'demo.user@mail.com',
+    firstName: 'Demo',
+    lastName: 'User',
+    avatar: 'https://www.labgene.ch/1539-large_default/demonstration-devices.jpg'
   }
 }

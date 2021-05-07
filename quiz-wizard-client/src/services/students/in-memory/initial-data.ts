@@ -1,50 +1,70 @@
 import {StudentId, StudentSchema} from 'quiz-wizard-schema'
 
 export const initialData: Record<StudentId, StudentSchema> = {
+  '00000': {
+    'firstName': 'Валентин',
+    'lastName': 'Єльченко',
+    'groups': ['26da0c77-1b33-4608-ae08-67d7eefad111'],
+    'id': '00000'
+  },
+  '00001': {
+    'firstName': 'Панас',
+    'lastName': 'Шпак',
+    'groups': ['26da0c77-1b33-4608-ae08-67d7eefad111'],
+    'id': '00001'
+  },
   '00002': {
-    id: '00002',
-    firstName: 'John',
-    lastName: 'Smith',
-    groups: [
-      'effff966-68d5-4829-b7eb-fc4709cd8621'
-    ]
+    'firstName': 'Братислав',
+    'lastName': 'Білодід',
+    'groups': ['7027c332-1ccb-46da-a04a-1307046214c9'],
+    'id': '00002'
+  },
+  '00003': {
+    'firstName': 'Переяслав',
+    'lastName': 'Кухаренко',
+    'groups': ['26da0c77-1b33-4608-ae08-67d7eefad111'],
+    'id': '00003'
   },
   '00004': {
-    id: '00004',
-    firstName: 'Sam',
-    lastName: 'Williams',
-    groups: [
-      'effff966-68d5-4829-b7eb-fc4709cd8621',
-      'e169cfce-d410-43b2-bac6-56099ebd9083'
-    ]
+    'firstName': 'Федір',
+    'lastName': 'Біляченко',
+    'groups': ['26da0c77-1b33-4608-ae08-67d7eefad111'],
+    'id': '00004'
+  },
+  '00005': {
+    'firstName': 'Нонна',
+    'lastName': 'Чемеринська',
+    'groups': ['26da0c77-1b33-4608-ae08-67d7eefad111'],
+    'id': '00005'
   },
   '00006': {
-    id: '00006',
-    firstName: 'Samantha',
-    lastName: 'Fox',
-    groups: [
-      'e169cfce-d410-43b2-bac6-56099ebd9083'
-    ]
+    'firstName': 'Христя',
+    'lastName': 'Бутко',
+    'groups': ['26da0c77-1b33-4608-ae08-67d7eefad111'],
+    'id': '00006'
   },
   '00007': {
-    id: '00007',
-    firstName: 'Danial',
-    lastName: 'Craig',
-    groups: [
-      'effff966-68d5-4829-b7eb-fc4709cd8621'
-    ]
+    'firstName': 'Тамара',
+    'lastName': 'Янушевич',
+    'id': '00007',
+    'groups': ['26da0c77-1b33-4608-ae08-67d7eefad111']
+  },
+  '00008': {
+    'firstName': 'Ждана',
+    'lastName': 'Миколюк',
+    'groups': ['26da0c77-1b33-4608-ae08-67d7eefad111'],
+    'id': '00008'
+  },
+  '00009': {
+    'firstName': 'Юстина',
+    'lastName': 'Райко',
+    'id': '00009',
+    'groups': ['7027c332-1ccb-46da-a04a-1307046214c9']
   },
   '00010': {
-    id: '00010',
-    firstName: 'Rick',
-    lastName: 'Sanchez',
-    groups: [
-      '70202cf6-0245-4f80-880d-e6111d045ac8'
-    ]
-  },
-  '00100': {
-    id: '00100',
-    firstName: 'Kevin',
-    lastName: 'Spacey'
+    'firstName': 'Кароліна',
+    'lastName': 'Чумак',
+    'groups': ['7027c332-1ccb-46da-a04a-1307046214c9'],
+    'id': '00010'
   }
 }

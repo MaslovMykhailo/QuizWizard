@@ -4,6 +4,16 @@ import {QuestionSchema, QuizSchema} from 'quiz-wizard-schema'
 
 import {answerOptions} from './answer-options'
 
+(function() {
+  // Hack to load utf-8 font for jsPDF
+  (window as unknown as {jspdf: {jsPDF: typeof jsPDF}}).jspdf = {jsPDF}
+
+  const script = document.createElement('script')
+  script.src = '/times-new-roman-normal.js'
+
+  document.body.appendChild(script)
+})()
+
 const nonBlocking = <T>(f: () => T, timer?: number): Promise<T> => new Promise(
   (resolve) => timer ?
     setTimeout(() => resolve(f()), timer) :
@@ -70,8 +80,17 @@ class QuizFormatter {
 
   private doc: jsPDF
 
-  constructor(private quiz: QuizSchema) {
-    this.doc = new jsPDF('p', 'pt', 'a4')
+  constructor(
+    private quiz: QuizSchema,
+    private translate: (text: string) => string
+  ) {
+    this.doc = new jsPDF({
+      orientation: 'p',
+      unit: 'pt',
+      format: 'a4',
+      filters: ['ASCIIHexEncode']
+    }).setFont('times-new-roman')
+
     this.pageWidth = this.doc.internal.pageSize.getWidth()
     this.pageHeight = this.doc.internal.pageSize.getHeight()
   }
@@ -86,11 +105,9 @@ class QuizFormatter {
     text: string,
     align: 'left' | 'center' = 'left',
     fontSize = 14,
-    fontStyle: 'normal' | 'italic' | 'bold' = 'normal',
     widthToFit = this.pageWidth - this.pageHorizontalOffset * 2
   ): void {
     this.doc.setFontSize(fontSize)
-    this.doc.setFont(this.doc.getFont().fontName, fontStyle)
 
     const lines = this.doc.splitTextToSize(text, widthToFit)
     const estimatedTextBottom = this.offsetTop + lines.length * this.doc.getLineHeight()
@@ -116,7 +133,6 @@ class QuizFormatter {
         lines.slice(linesCountToFit).join(' '),
         align,
         fontSize,
-        fontStyle,
         widthToFit
       )
     }
@@ -166,11 +182,12 @@ class QuizFormatter {
     options.forEach((option) => {
       const {text} = question.answers[option]!
       if (heightToFit && this.offsetTop < heightToFit && pageToFit === this.pagesCount) {
-        this.renderText(`${option}) ${text}`, 'left', 14, 'normal', widthToFit)
+        this.renderText(`${this.translate(option)}) ${text}`, 'left', 14, widthToFit)
       } else {
-        this.renderText(`${option}) ${text}`)
+        this.renderText(`${this.translate(option)}) ${text}`)
       }
     })
+    this.offsetTop += Math.round(this.doc.getLineHeight())
 
     if (heightToFit && this.offsetTop < heightToFit && pageToFit === this.pagesCount) {
       this.offsetTop = heightToFit + this.offset
@@ -186,7 +203,7 @@ class QuizFormatter {
     await nonBlocking(() => this.renderText(name, 'center', 24))
 
     if (description) {
-      await nonBlocking(() => this.renderText(description, 'center', 16, 'italic'))
+      await nonBlocking(() => this.renderText(description, 'center', 16))
     }
 
     this.offsetTop += Math.round(this.doc.getLineHeight() / 2)
@@ -200,7 +217,10 @@ class QuizFormatter {
 
 }
 
-export const generateQuizSheet = (quiz: QuizSchema) => nonBlocking(
-  () => new QuizFormatter(quiz).generateQuizSheet(),
+export const generateQuizSheet = (
+  quiz: QuizSchema,
+  translate: (text: string) => string
+) => nonBlocking(
+  () => new QuizFormatter(quiz, translate).generateQuizSheet(),
   500
 )

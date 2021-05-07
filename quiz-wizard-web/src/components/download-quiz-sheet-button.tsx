@@ -18,7 +18,7 @@ export function DownloadQuizSheetButton({
   const [isGenerating, setIsGenerating] = useState(false)
   const onClick = () => {
     setIsGenerating(true)
-    generateQuizSheet(quiz)
+    generateQuizSheet(quiz, t)
       .finally(() => setIsGenerating(false))
   }
 

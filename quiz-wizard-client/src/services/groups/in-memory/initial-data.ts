@@ -1,28 +1,16 @@
 import {GroupId, GroupSchema} from 'quiz-wizard-schema'
 
 export const initialData: Record<GroupId, GroupSchema> = {
-  'effff966-68d5-4829-b7eb-fc4709cd8621': {
-    id: 'effff966-68d5-4829-b7eb-fc4709cd8621',
-    name: 'Good group',
-    description: 'Very good group',
-    students: [
-      '00002',
-      '00004',
-      '00007'
-    ]
+  '26da0c77-1b33-4608-ae08-67d7eefad111': {
+    'name': '11 А',
+    'description': 'Група учнів 11-А класу',
+    'id': '26da0c77-1b33-4608-ae08-67d7eefad111',
+    'students': ['00000', '00008', '00005', '00001', '00003', '00007', '00004', '00006']
   },
-  'e169cfce-d410-43b2-bac6-56099ebd9083': {
-    id: 'e169cfce-d410-43b2-bac6-56099ebd9083',
-    name: 'Usual group',
-    description: 'Just a usual group',
-    students: [
-      '00006',
-      '00004'
-    ]
-  },
-  '2328572a-eac5-41d4-a759-b486aa2d498b': {
-    id: '2328572a-eac5-41d4-a759-b486aa2d498b',
-    name: 'Bad group',
-    description: 'Very bad group'
+  '7027c332-1ccb-46da-a04a-1307046214c9': {
+    'name': '11 Б',
+    'description': 'Група учнів 11-Б класу',
+    'id': '7027c332-1ccb-46da-a04a-1307046214c9',
+    'students': ['00010', '00002', '00009']
   }
 }
