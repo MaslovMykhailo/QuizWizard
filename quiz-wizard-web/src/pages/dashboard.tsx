@@ -11,10 +11,13 @@ import EqualizerIcon from '@material-ui/icons/Equalizer'
 import {makeStyles} from '@material-ui/core/styles'
 
 import {ActionCard, ActionCardProps} from '../components'
+import {useDownloadAnswerSheet} from '../hooks'
 import {Path} from '../routes'
 
 export function DashboardPage() {
   const [t] = useTranslation()
+  const onDownloadAnswerSheet = useDownloadAnswerSheet()
+
   return (
     <Grid
       container
@@ -97,6 +100,7 @@ export function DashboardPage() {
         <Grid item>
           <ActionCard
             text={t('DOWNLOAD_ANSWER_SHEET')}
+            onClick={onDownloadAnswerSheet}
             icon={(
               <AssignmentReturnedIcon
                 color="primary"
