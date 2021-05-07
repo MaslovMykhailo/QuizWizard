@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import {useTranslation} from 'react-i18next'
 import Paper from '@material-ui/core/Paper'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import Typography from '@material-ui/core/Typography'
@@ -28,6 +29,7 @@ export function PictureControl({
   onDelete,
   className
 }: PictureControlProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
 
   const {isOpen, open, close} = useOpenState()
@@ -79,12 +81,12 @@ export function PictureControl({
           {!readOnly ? (
             <>
               <AddPhotoAlternateIcon fontSize="large" />
-              <Typography children="Add picture" />
+              <Typography children={t('ADD_PICTURE')} />
             </>
           ) : (
             <>
               <ImageIcon fontSize="large" />
-              <Typography children="No picture" />
+              <Typography children={t('NO_PICTURE')} />
             </>
           )}
         </CardActionArea>

@@ -1,7 +1,8 @@
+import {ChangeEvent} from 'react'
+import {useTranslation} from 'react-i18next'
 import Button from '@material-ui/core/Button'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
 import {makeStyles} from '@material-ui/core/styles'
-import {ChangeEvent} from 'react'
 
 export interface UploadButtonProps {
   onChange: (file: File) => void
@@ -10,7 +11,9 @@ export interface UploadButtonProps {
 export function UploadButton({
   onChange
 }: UploadButtonProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
+
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) {
       return
@@ -35,7 +38,7 @@ export function UploadButton({
           component="span"
           variant="contained"
           startIcon={<PhotoCamera />}
-          children="Upload"
+          children={t('UPLOAD')}
         />
       </label>
     </div>

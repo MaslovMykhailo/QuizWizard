@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next'
 import {GroupId, StudentId, StudentSchema} from 'quiz-wizard-schema'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -61,6 +62,7 @@ export function StudentsListItem({
   isDeleting,
   getGroupName
 }: StudentsListItemProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
   return (
     <ListItem
@@ -75,7 +77,7 @@ export function StudentsListItem({
       </ListItemAvatar>
       <ListItemText
         primary={`${firstName} ${lastName}`}
-        secondary={`Student ID: ${id}`}
+        secondary={`${t('STUDENT_ID')} ${id}`}
       />
       {groups?.map(getGroupName).map((groupName, index) => (
         <GroupChip

@@ -1,5 +1,6 @@
 import {MouseEvent, useEffect, useRef, useState} from 'react'
 import {useSelector} from 'react-redux'
+import {useTranslation} from 'react-i18next'
 import {
   fetchGroups,
   selectGroupNameGetter,
@@ -27,6 +28,7 @@ export function GroupsInput({
   groups = [],
   onChange
 }: GroupsInputProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
 
   const dispatch = useDispatch()
@@ -89,7 +91,7 @@ export function GroupsInput({
       {Boolean(groupIds?.length) && (
         <>
           <Chip
-            label="Add group"
+            label={t('ADD_GROUP')}
             icon={<AddCircleIcon />}
             className={classes.chip}
             color="secondary"
@@ -105,7 +107,7 @@ export function GroupsInput({
               <MenuItem
                 key={id}
                 onClick={() => onAddGroup(id)}
-                children={getGroupName(id) ?? 'Unknown group'}
+                children={getGroupName(id) ?? t('UNKNOWN_GROUP')}
               />
             ))}
           </Menu>

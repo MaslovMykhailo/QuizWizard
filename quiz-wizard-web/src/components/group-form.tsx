@@ -1,5 +1,6 @@
 import isEqual from 'lodash/isEqual'
 import {useState} from 'react'
+import {useTranslation} from 'react-i18next'
 import {GroupSchema, NewGroupSchema} from 'quiz-wizard-schema'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
@@ -29,6 +30,7 @@ export function GroupForm({
   onCancel,
   onDelete
 }: GroupFormProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
 
   const [name, onChangeName] = useInputState(group?.name ?? '')
@@ -82,7 +84,7 @@ export function GroupForm({
         <Grid item>
           <Typography
             variant="h3"
-            children={group ? 'Group info' : 'New group'}
+            children={group ? t('GROUP_INFO') : t('NEW_GROUP')}
           />
         </Grid>
         {group && (
@@ -93,7 +95,7 @@ export function GroupForm({
             <Chip
               color="secondary"
               icon={<InfoIcon />}
-              label={`ID: ${group.id}`}
+              label={`${t('ID')} ${group.id}`}
             />
           </Grid>
         )}
@@ -107,7 +109,7 @@ export function GroupForm({
         <Grid item>
           <TextField
             variant="outlined"
-            label="Group name"
+            label={t('GROUP_NAME')}
             fullWidth
             value={name}
             error={!name}
@@ -118,7 +120,7 @@ export function GroupForm({
         <Grid item>
           <TextField
             variant="outlined"
-            label="Description"
+            label={t('DESCRIPTION')}
             fullWidth
             multiline
             value={description}

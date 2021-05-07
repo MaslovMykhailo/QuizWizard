@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import {useTranslation} from 'react-i18next'
 import {
   AnswerChecks,
   AnswerOption,
@@ -56,6 +57,7 @@ function AnswerCheckView({
   check,
   question
 }: AnswerCheckViewProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
   return (
     <>
@@ -80,8 +82,12 @@ function AnswerCheckView({
           />
         ))}
         <ListItemSecondaryAction>
-          <Typography variant="subtitle2">{`Points: ${calcQuestionCost(question, check)}`}</Typography>
-          <Typography variant="body2">{`Max points: ${question.cost}`}</Typography>
+          <Typography variant="subtitle2">
+            {t('ANSWER_POINTS', {points: calcQuestionCost(question, check)})}
+          </Typography>
+          <Typography variant="body2">
+            {t('MAX_ANSWER_POINTS', {points: question.cost})}
+          </Typography>
         </ListItemSecondaryAction>
       </ListItem>
       <Divider className={classes.divider} />
@@ -98,11 +104,12 @@ function AnswerCircle({
   option,
   status
 }: AnswerCircleProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
   const className = useAnswerCircleClassName(status)
   return (
     <Avatar className={clsx(classes.option, className)}>
-      {option}
+      {t(option)}
     </Avatar>
   )
 }

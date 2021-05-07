@@ -1,6 +1,7 @@
 import {useEffect, useRef} from 'react'
 import {useHistory, useParams} from 'react-router'
 import {useSelector} from 'react-redux'
+import {useTranslation} from 'react-i18next'
 import {StudentId, StudentSchema} from 'quiz-wizard-schema'
 import {
   deleteStudent,
@@ -16,6 +17,8 @@ import Typography from '@material-ui/core/Typography'
 import {PageLoader, StudentForm} from '../components'
 
 export function StudentPage() {
+  const [t] = useTranslation()
+
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -50,7 +53,7 @@ export function StudentPage() {
       <Typography
         variant="h3"
         color="secondary"
-        children="The student is not found"
+        children={t('STUDENT_NOT_FOUND')}
       />
     )
   }

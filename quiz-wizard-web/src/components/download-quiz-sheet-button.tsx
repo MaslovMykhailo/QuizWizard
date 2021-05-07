@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next'
 import {QuizSchema} from 'quiz-wizard-schema'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -13,6 +14,7 @@ export interface DownloadQuizSheetButtonProps {
 export function DownloadQuizSheetButton({
   quiz
 }: DownloadQuizSheetButtonProps) {
+  const [t] = useTranslation()
   const [isGenerating, setIsGenerating] = useState(false)
   const onClick = () => {
     setIsGenerating(true)
@@ -35,7 +37,7 @@ export function DownloadQuizSheetButton({
           <AssignmentReturnedIcon />
       }
     >
-      Download quiz sheet
+      {t('DOWNLOAD_QUIZ')}
     </Button>
   )
 }

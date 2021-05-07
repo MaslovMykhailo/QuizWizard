@@ -1,6 +1,7 @@
 import {useEffect, useRef} from 'react'
 import {useSelector} from 'react-redux'
 import {useHistory} from 'react-router'
+import {useTranslation} from 'react-i18next'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
@@ -22,6 +23,7 @@ import {useInputState} from '../hooks'
 import {Path} from '../routes'
 
 export function AccountPage() {
+  const [t] = useTranslation()
   const classes = useStyles()
 
   const history = useHistory()
@@ -122,7 +124,7 @@ export function AccountPage() {
             <TextField
               aria-readonly="true"
               variant="filled"
-              label="Email"
+              label={t('EMAIL')}
               value={user.email}
               className={classes.email}
               InputProps={{readOnly: true}}
@@ -137,7 +139,7 @@ export function AccountPage() {
               color="secondary"
               variant="contained"
               onClick={onSignOut}
-              children="Sign out"
+              children={t('SIGN_OUT')}
             />
           </Grid>
         </Grid>
@@ -156,7 +158,7 @@ export function AccountPage() {
         >
           <Typography
             variant="h3"
-            children="User info"
+            children={t('USER_INFO')}
           />
         </Grid>
         <Grid
@@ -166,7 +168,7 @@ export function AccountPage() {
         >
           <TextField
             variant="outlined"
-            label="First name"
+            label={t('FIRST_NAME')}
             autoComplete="fname"
             value={userFirstName}
             error={!userFirstName}
@@ -181,7 +183,7 @@ export function AccountPage() {
         >
           <TextField
             variant="outlined"
-            label="Last name"
+            label={t('LAST_NAME')}
             autoComplete="lname"
             value={userLastName}
             error={!userLastName}
@@ -206,13 +208,13 @@ export function AccountPage() {
         >
           <Button
             variant="contained"
-            children="Cancel"
+            children={t('CANCEL')}
             onClick={onCancel}
           />
           <Button
             variant="contained"
             color="primary"
-            children="Save"
+            children={t('SAVE')}
             onClick={onSave}
             disabled={!hasChanges}
           />

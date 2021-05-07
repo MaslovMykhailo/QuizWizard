@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next'
 import {AnswerId, AnswerSchema, StudentSchema} from 'quiz-wizard-schema'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -26,6 +27,7 @@ export function AnswerInfoList({
   listClassName,
   onAnswerClick
 }: AnswerInfoListProps) {
+  const [t] = useTranslation()
   return (
     <List
       component="div"
@@ -46,11 +48,13 @@ export function AnswerInfoList({
             />
           </ListItemIcon>
           <ListItemText
-            primary={student ? `${student.firstName} ${student.lastName}` : 'Anonym'}
-            secondary={`Check date: ${new Date(answer.creationDate).toLocaleDateString()}`}
+            primary={student ? `${student.firstName} ${student.lastName}` : t('ANONYM_STUDENT')}
+            secondary={`${t('CHECK_DATE')} ${new Date(answer.creationDate).toLocaleDateString()}`}
           />
           <ListItemSecondaryAction>
-            <Typography children={`Result: ${Math.round(answer.result * 100)}%`} />
+            <Typography >
+              {`${t('ANSWER_RESULT')} ${Math.round(answer.result * 100)}%`}
+            </Typography>
           </ListItemSecondaryAction>
         </ListItem>
       ))}

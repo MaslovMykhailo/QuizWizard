@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react'
 import {useSelector} from 'react-redux'
 import {useHistory} from 'react-router'
+import {useTranslation} from 'react-i18next'
 import {
   checkQuiz,
   fetchQuizzes,
@@ -41,6 +42,8 @@ export function NewAnswerPage() {
 }
 
 function CheckQuizStepper() {
+  const [t] = useTranslation()
+
   const query = useQuery()
   const history = useHistory()
 
@@ -63,12 +66,12 @@ function CheckQuizStepper() {
           onClick={onSelectQuizStep}
           completed={Boolean(quizId)}
         >
-          Select quiz to check
+          {t('SELECT_QUIZ_TO_CHECK')}
         </StepButton>
       </Step>
       <Step completed={isQuizChecking}>
         <StepLabel>
-          Select answer sheet to check
+          {t('SELECT_ANSWER_SHEET_TO_CHECK')}
         </StepLabel>
       </Step>
     </Stepper>
@@ -76,6 +79,8 @@ function CheckQuizStepper() {
 }
 
 function SelectQuizToCheckPage() {
+  const [t] = useTranslation()
+
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -122,7 +127,7 @@ function SelectQuizToCheckPage() {
         <Grid item>
           <Typography
             variant="h3"
-            children="Select quiz to check"
+            children={t('SELECT_QUIZ_TO_CHECK')}
           />
         </Grid>
       </Grid>
@@ -139,6 +144,7 @@ function SelectQuizToCheckPage() {
 }
 
 function SelectAnswerSheetToCheckPage() {
+  const [t] = useTranslation()
   const classes = useStyles()
 
   const query = useQuery()
@@ -190,7 +196,7 @@ function SelectAnswerSheetToCheckPage() {
         <Grid item>
           <Typography
             variant="h3"
-            children="Select answer sheet to check"
+            children={t('SELECT_ANSWER_SHEET_TO_CHECK')}
           />
         </Grid>
       </Grid>
@@ -213,14 +219,14 @@ function SelectAnswerSheetToCheckPage() {
       >
         <Button
           variant="contained"
-          children="Cancel"
+          children={t('CANCEL')}
           onClick={onCancel}
         />
         <Button
           variant="contained"
           color="primary"
           disabled={!sheet || !quizId}
-          children="Check"
+          children={t('CHECK')}
           onClick={onCheck}
         />
       </Grid>

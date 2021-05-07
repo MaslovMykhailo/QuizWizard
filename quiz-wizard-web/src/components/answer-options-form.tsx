@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next'
 import {AnswerOption, QuestionAnswer} from 'quiz-wizard-schema'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -28,6 +29,7 @@ export function AnswerOptionsForm({
   answers,
   onChange
 }: AnswerOptionsFormProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
 
   const options = Object.keys(answers).filter((option) => answers[option as AnswerOption])
@@ -61,7 +63,7 @@ export function AnswerOptionsForm({
           <ListItemAvatar>
             <Avatar
               className={classes[answers[option]?.correct ? 'correctOption' : 'incorrectOption']}
-              children={option}
+              children={t(option)}
             />
           </ListItemAvatar>
           <TextField
@@ -120,7 +122,9 @@ export function AnswerOptionsForm({
           className={classes.addItem}
         >
           <AddIcon className={classes.addItemIcon} />
-          <Typography children="Add answer" />
+          <Typography>
+            {t('ADD_ANSWER')}
+          </Typography>
         </ListItem>
       )}
     </List>

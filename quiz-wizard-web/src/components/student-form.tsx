@@ -1,5 +1,6 @@
 import isEqual from 'lodash/isEqual'
 import {useState} from 'react'
+import {useTranslation} from 'react-i18next'
 import {NewStudentSchema, StudentSchema} from 'quiz-wizard-schema'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
@@ -29,6 +30,7 @@ export function StudentForm({
   onCancel,
   onDelete
 }: StudentFormProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
 
   const [firstName, onChangeFirstName] = useInputState(student?.firstName ?? '')
@@ -82,7 +84,7 @@ export function StudentForm({
         <Grid item>
           <Typography
             variant="h3"
-            children={student ? 'Student info' : 'New student'}
+            children={student ? t('STUDENT_INFO') : t('NEW_STUDENT')}
           />
         </Grid>
         {student && (
@@ -93,7 +95,7 @@ export function StudentForm({
             <Chip
               color="secondary"
               icon={<InfoIcon />}
-              label={`Student ID: ${student.id}`}
+              label={`${t('STUDENT_ID')} ${student.id}`}
             />
           </Grid>
         )}
@@ -107,7 +109,7 @@ export function StudentForm({
         <Grid item>
           <TextField
             variant="outlined"
-            label="First name"
+            label={t('FIRST_NAME')}
             autoComplete="fname"
             fullWidth
             value={firstName}
@@ -119,7 +121,7 @@ export function StudentForm({
         <Grid item>
           <TextField
             variant="outlined"
-            label="Last name"
+            label={t('LAST_NAME')}
             autoComplete="lname"
             fullWidth
             value={lastName}

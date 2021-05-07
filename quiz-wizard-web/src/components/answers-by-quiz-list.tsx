@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import {useTranslation} from 'react-i18next'
 import {AnswerId, GroupSchema, QuizSchema} from 'quiz-wizard-schema'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import List from '@material-ui/core/List'
@@ -28,6 +29,7 @@ export function AnswersByQuizList({
   answersByQuiz,
   onAnswerClick
 }: AnswersByQuizListProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
   return (
     <List
@@ -37,16 +39,17 @@ export function AnswersByQuizList({
         <ListSubheader className={classes.subheader}>
           {
             answersByQuiz.answersByGroup.length ?
-              `Answers by quiz: ${answersByQuiz.quiz.name}` :
-              'No answers'
+              t('ANSWER_BY_QUIZ', {quiz: answersByQuiz.quiz.name}):
+              t('NO_ANSWERS')
           }
           {
             answersByQuiz.answersByGroup.length > 0 && (
               <Typography
                 variant="subtitle2"
                 className={classes.totalCount}
-                children={`Answers count: ${answersByQuiz.answersByGroup.length}`}
-              />
+              >
+                {t('ANSWERS_COUNT', {count: answersByQuiz.answersByGroup.length})}
+              </Typography>
             )
           }
         </ListSubheader>
@@ -77,6 +80,7 @@ function AnswerByGroupListItem({
   answersByGroup,
   onAnswerClick
 }: AnswerByGroupListItemProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
@@ -89,7 +93,7 @@ function AnswerByGroupListItem({
         <ListItemIcon>
           <GroupIcon />
         </ListItemIcon>
-        <ListItemText primary={answersByGroup.group ? answersByGroup.group.name : 'No group'} />
+        <ListItemText primary={answersByGroup.group ? answersByGroup.group.name : t('NO_GROUP')} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse

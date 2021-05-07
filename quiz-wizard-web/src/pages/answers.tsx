@@ -1,6 +1,7 @@
 import {useEffect, useRef} from 'react'
 import {useHistory} from 'react-router'
 import {useSelector} from 'react-redux'
+import {useTranslation} from 'react-i18next'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import DoneAllIcon from '@material-ui/icons/DoneAll'
@@ -22,6 +23,8 @@ import {AddListItemButton, AnswersList, PageLoader} from '../components'
 import {Path} from '../routes'
 
 export function AnswersPage() {
+  const [t] = useTranslation()
+
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -70,7 +73,7 @@ export function AnswersPage() {
       <Grid item>
         <Typography
           variant="h3"
-          children="Answers list"
+          children={t('ANSWERS_LIST')}
         />
       </Grid>
       <Grid item>

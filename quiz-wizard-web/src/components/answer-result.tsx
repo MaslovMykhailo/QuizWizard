@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next'
 import Typography from '@material-ui/core/Typography'
 import {makeStyles} from '@material-ui/core/styles'
 
@@ -8,6 +9,7 @@ export interface AnswerResultProps {
 export function AnswerResult({
   result
 }: AnswerResultProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
   const className = useResultClassName(result * 100)
   return (
@@ -16,7 +18,7 @@ export function AnswerResult({
         variant="h5"
         className={classes.caption}
       >
-        Result:
+        {t('ANSWER_RESULT')}
       </Typography>
       <Typography
         variant="h4"

@@ -1,6 +1,7 @@
 import {v4 as uuid} from 'uuid'
 import isEqual from 'lodash/isEqual'
 import {useCallback, useState} from 'react'
+import {useTranslation} from 'react-i18next'
 import {DragDropContext, Droppable, Draggable, DropResult} from 'react-beautiful-dnd'
 import {NewQuizSchema, QuestionId, QuestionSchema, QuizSchema} from 'quiz-wizard-schema'
 import Box from '@material-ui/core/Box'
@@ -39,6 +40,7 @@ export function QuizForm({
   onCancel,
   onDelete
 }: QuizFormProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
 
   const [quizName, onChangeQuizName] = useInputState(quiz?.name ?? '')
@@ -111,7 +113,7 @@ export function QuizForm({
         <Grid item>
           <Typography
             variant="h3"
-            children={newQuiz ? 'New quiz' : 'Quiz info'}
+            children={newQuiz ? t('NEW_QUIZ') : t('QUIZ_INFO')}
           />
         </Grid>
         {!newQuiz && quiz && (
@@ -132,7 +134,7 @@ export function QuizForm({
         <Grid item>
           <TextField
             variant="outlined"
-            label="Quiz name"
+            label={t('QUIZ_NAME')}
             fullWidth
             value={quizName}
             error={!quizName}
@@ -144,7 +146,7 @@ export function QuizForm({
         <Grid item>
           <TextField
             variant="outlined"
-            label="Quiz description"
+            label={t('QUIZ_DESCRIPTION')}
             fullWidth
             multiline
             value={quizDescription}
@@ -195,6 +197,7 @@ function QuestionList({
   onAddQuestion,
   onDeleteQuestion
 }: QuestionListProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
 
   const onDragEnd = useCallback(
@@ -228,7 +231,7 @@ function QuestionList({
       <Box>
         <Typography
           variant="h4"
-          children="Quiz questions"
+          children={t('QUIZ_QUESTIONS')}
         />
         <Droppable droppableId="droppable">
           {(droppableProvided) => (

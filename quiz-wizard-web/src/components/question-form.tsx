@@ -1,4 +1,5 @@
 import {ChangeEvent, useState} from 'react'
+import {useTranslation} from 'react-i18next'
 import {QuestionSchema} from 'quiz-wizard-schema'
 import Box from '@material-ui/core/Box'
 import Card from '@material-ui/core/Card'
@@ -36,6 +37,7 @@ export function QuestionForm({
   onDelete,
   className
 }: QuestionFormProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
 
   const onChangeText = (event: ChangeEvent<HTMLInputElement>) => {
@@ -91,11 +93,11 @@ export function QuestionForm({
             <Typography
               variant="h5"
               className={classes.title}
-              children={`Question ${index}`}
+              children={t('QUESTION_INDEX', {index})}
             />
             <Typography
               className={classes.headerControl}
-              children="Partial answer:"
+              children={t('PARTIAL_ANSWER')}
             />
             <Checkbox
               className={classes.headerControl}
@@ -107,7 +109,7 @@ export function QuestionForm({
             />
             <Typography
               className={classes.headerControl}
-              children="Question cost:"
+              children={t('QUESTION_COST')}
             />
             <TextField
               color="primary"
@@ -135,7 +137,7 @@ export function QuestionForm({
           fullWidth
           multiline
           rows={4}
-          label="Question text"
+          label={t('QUESTION_TEXT')}
           variant="outlined"
           value={question?.text}
           onChange={onChangeText}
@@ -153,7 +155,7 @@ export function QuestionForm({
       <CardActions className={classes.actions}>
         <Typography
           variant="h6"
-          children="Answer options"
+          children={t('ANSWER_OPTIONS')}
         />
         <IconButton onClick={() => setAnswersExpanded(!answersExpanded)}>
           {answersExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}

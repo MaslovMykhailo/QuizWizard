@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom'
+import {useTranslation} from 'react-i18next'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary'
@@ -13,6 +14,7 @@ import {ActionCard, ActionCardProps} from '../components'
 import {Path} from '../routes'
 
 export function DashboardPage() {
+  const [t] = useTranslation()
   return (
     <Grid
       container
@@ -22,7 +24,7 @@ export function DashboardPage() {
       <Grid item>
         <Typography
           variant="h2"
-          children="Start using QuizWizard"
+          children={t('START_USING_CAPTION')}
         />
       </Grid>
       <Grid
@@ -34,7 +36,7 @@ export function DashboardPage() {
         <Grid item>
           <CardLink
             link={Path.students()}
-            text="Manage students"
+            text={t('MANAGE_STUDENTS')}
             icon={(
               <LocalLibraryIcon
                 color="primary"
@@ -46,7 +48,7 @@ export function DashboardPage() {
         <Grid item>
           <CardLink
             link={Path.groups()}
-            text="Manage groups"
+            text={t('MANAGE_GROUPS')}
             icon={(
               <GroupIcon
                 color="secondary"
@@ -58,7 +60,7 @@ export function DashboardPage() {
         <Grid item>
           <CardLink
             link={Path.quizzes()}
-            text="Manage quizzes"
+            text={t('MANAGE_QUIZZES')}
             icon={(
               <AssignmentIcon
                 color="primary"
@@ -70,7 +72,7 @@ export function DashboardPage() {
         <Grid item>
           <CardLink
             link={Path.quizzes()}
-            text="Manage answers"
+            text={t('MANAGE_ANSWERS')}
             icon={(
               <AssignmentTurnedInIcon
                 color="secondary"
@@ -83,7 +85,7 @@ export function DashboardPage() {
       <Grid item>
         <Typography
           variant="h2"
-          children="Can be useful"
+          children={t('CAN_BE_USEFUL_CAPTION')}
         />
       </Grid>
       <Grid
@@ -94,7 +96,7 @@ export function DashboardPage() {
       >
         <Grid item>
           <ActionCard
-            text="Download answer sheet"
+            text={t('DOWNLOAD_ANSWER_SHEET')}
             icon={(
               <AssignmentReturnedIcon
                 color="primary"
@@ -106,7 +108,7 @@ export function DashboardPage() {
         <Grid item>
           <CardLink
             link={Path.analytics()}
-            text="Explore analytics"
+            text={t('EXPLORE_ANALYTICS')}
             icon={(
               <EqualizerIcon
                 color="secondary"

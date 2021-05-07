@@ -1,6 +1,7 @@
 import {useEffect, useRef} from 'react'
 import {useHistory} from 'react-router'
 import {useSelector} from 'react-redux'
+import {useTranslation} from 'react-i18next'
 import {StudentId} from 'quiz-wizard-schema'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
@@ -21,6 +22,8 @@ import {AddListItemButton, PageLoader, StudentsList} from '../components'
 import {Path} from '../routes'
 
 export function StudentsPage() {
+  const [t] = useTranslation()
+
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -67,7 +70,7 @@ export function StudentsPage() {
       <Grid item>
         <Typography
           variant="h3"
-          children="Students list"
+          children={t('STUDENTS_LIST')}
         />
       </Grid>
       <Grid item>

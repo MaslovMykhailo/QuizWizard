@@ -1,6 +1,7 @@
 import {useEffect, useRef} from 'react'
 import {useHistory} from 'react-router'
 import {useSelector} from 'react-redux'
+import {useTranslation} from 'react-i18next'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
@@ -20,6 +21,8 @@ import {GroupCard, PageLoader} from '../components'
 import {Path} from '../routes'
 
 export function GroupsPage() {
+  const [t] = useTranslation()
+
   const history = useHistory()
   const dispatch = useDispatch()
   const classes = useStyles()
@@ -61,7 +64,7 @@ export function GroupsPage() {
       <Grid item>
         <Typography
           variant="h3"
-          children="Groups list"
+          children={t('GROUPS_LIST')}
         />
       </Grid>
       <Grid

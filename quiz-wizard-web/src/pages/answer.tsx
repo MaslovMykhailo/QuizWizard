@@ -1,6 +1,7 @@
 import {useEffect, useRef} from 'react'
 import {useHistory, useParams} from 'react-router'
 import {useSelector} from 'react-redux'
+import {useTranslation} from 'react-i18next'
 import {AnswerId} from 'quiz-wizard-schema'
 import {
   deleteAnswer,
@@ -21,6 +22,8 @@ import Typography from '@material-ui/core/Typography'
 import {AnswerView, PageLoader} from '../components'
 
 export function AnswerPage() {
+  const [t] = useTranslation()
+
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -78,7 +81,7 @@ export function AnswerPage() {
       <Typography
         variant="h3"
         color="secondary"
-        children="The answer is not found"
+        children={t('ANSWER_NOT_FOUND')}
       />
     )
   }

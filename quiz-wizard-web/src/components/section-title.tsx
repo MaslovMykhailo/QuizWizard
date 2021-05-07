@@ -1,5 +1,6 @@
 
 import {Route, Switch} from 'react-router'
+import {useTranslation} from 'react-i18next'
 import Typography, {TypographyProps} from '@material-ui/core/Typography'
 
 import {Path} from '../routes'
@@ -7,34 +8,35 @@ import {Path} from '../routes'
 export function SectionTitle(
   props: TypographyProps<'h4'>
 ) {
+  const [t] = useTranslation()
   const titles = [
     {
       path: Path.dashboard(),
-      title: 'Dashboard'
+      title: t('DASHBOARD')
     },
     {
       path: Path.account(),
-      title: 'Manage account'
+      title: t('MANAGE_ACCOUNT')
     },
     {
       path: Path.students(),
-      title: 'Manage students'
+      title: t('MANAGE_STUDENTS')
     },
     {
       path: Path.groups(),
-      title: 'Manage groups'
+      title: t('MANAGE_GROUPS')
     },
     {
       path: Path.quizzes(),
-      title: 'Manage quizzes'
+      title: t('MANAGE_QUIZZES')
     },
     {
       path: Path.answers(),
-      title: 'Manage answers'
+      title: t('MANAGE_ANSWERS')
     },
     {
       path: Path.analytics(),
-      title: 'Analytics'
+      title: t('ANALYTICS')
     }
   ]
 

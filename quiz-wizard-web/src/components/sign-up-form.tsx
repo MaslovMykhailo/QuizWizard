@@ -68,7 +68,7 @@ export function SignUpForm({
               required
               fullWidth
               id="firstName"
-              label="First Name"
+              label={t('FIRST_NAME')}
               error={Boolean(signUpError)}
               autoFocus
             />
@@ -83,7 +83,7 @@ export function SignUpForm({
               required
               fullWidth
               id="lastName"
-              label="Last Name"
+              label={t('LAST_NAME')}
               name="lastName"
               autoComplete="lname"
               error={Boolean(signUpError)}
@@ -98,7 +98,7 @@ export function SignUpForm({
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label={t('EMAIL')}
               name="email"
               autoComplete="email"
               error={Boolean(signUpError)}
@@ -113,7 +113,7 @@ export function SignUpForm({
               required
               fullWidth
               name="password"
-              label="Password"
+              label={t('PASSWORD')}
               type="password"
               id="password"
               autoComplete="current-password"
@@ -139,7 +139,7 @@ export function SignUpForm({
               to={signInLink}
               variant="body2"
             >
-              {'SIGN_UP_FORM_SIGN_IN_HINT'}
+              {t('SIGN_UP_FORM_SIGN_IN_HINT')}
             </Link>
           </Grid>
         </Grid>

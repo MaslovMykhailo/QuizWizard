@@ -1,6 +1,7 @@
 import {useEffect, useRef} from 'react'
 import {useSelector} from 'react-redux'
 import {useHistory} from 'react-router'
+import {useTranslation} from 'react-i18next'
 import {
   useDispatch,
   selectAreQuizzesFetching,
@@ -18,6 +19,8 @@ import {AddListItemButton, PageLoader, QuizList} from '../components'
 import {Path} from '../routes'
 
 export function QuizzesPage() {
+  const [t] = useTranslation()
+
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -64,7 +67,7 @@ export function QuizzesPage() {
       <Grid item>
         <Typography
           variant="h3"
-          children="Quizzes list"
+          children={t('QUIZZES_LIST')}
         />
       </Grid>
       <Grid item>

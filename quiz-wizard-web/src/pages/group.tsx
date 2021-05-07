@@ -1,6 +1,7 @@
 import {useEffect, useRef} from 'react'
 import {useHistory, useParams} from 'react-router'
 import {useSelector} from 'react-redux'
+import {useTranslation} from 'react-i18next'
 import {GroupId, GroupSchema} from 'quiz-wizard-schema'
 import {
   fetchGroup,
@@ -16,6 +17,8 @@ import Typography from '@material-ui/core/Typography'
 import {GroupForm, PageLoader} from '../components'
 
 export function GroupPage() {
+  const [t] = useTranslation()
+
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -50,7 +53,7 @@ export function GroupPage() {
       <Typography
         variant="h3"
         color="secondary"
-        children="The group is not found"
+        children={t('GROUP_NOT_FOUND')}
       />
     )
   }

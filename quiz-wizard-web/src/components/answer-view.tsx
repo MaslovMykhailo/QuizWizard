@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next'
 import {AnswerSchema, QuizSchema, StudentSchema} from 'quiz-wizard-schema'
 import {calcTotalQuestionsCost} from 'quiz-wizard-client'
 import Grid from '@material-ui/core/Grid'
@@ -27,6 +28,7 @@ export function AnswerView({
   student,
   onDelete
 }: AnswerViewProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
   const totalPoints = calcTotalQuestionsCost(quiz)
 
@@ -47,10 +49,9 @@ export function AnswerView({
           <BackButton />
         </Grid>
         <Grid item>
-          <Typography
-            variant="h3"
-            children="Answer info"
-          />
+          <Typography variant="h3">
+            {t('ANSWER_INFO')}
+          </Typography>
         </Grid>
         <Grid
           item
@@ -78,7 +79,7 @@ export function AnswerView({
             spacing={2}
           >
             <Grid item>
-              <Typography variant="h5">Quiz:</Typography>
+              <Typography variant="h5">{t('QUIZ')}</Typography>
             </Grid>
             <Grid item>
               <Link
@@ -97,7 +98,9 @@ export function AnswerView({
             {answer.student ? (
               <>
                 <Grid item>
-                  <Typography variant="h5">Student:</Typography>
+                  <Typography variant="h5">
+                    {t('STUDENT')}
+                  </Typography>
                 </Grid>
                 <Grid item>
                   {student ? (
@@ -108,13 +111,17 @@ export function AnswerView({
                       {`${student.firstName} ${student.lastName}`}
                     </Link>
                   ) : (
-                    <Typography variant="h5">Unknown</Typography>
+                    <Typography variant="h5">
+                      {t('UNKNOWN_STUDENT')}
+                    </Typography>
                   )}
                 </Grid>
               </>
             ) : (
               <Grid item>
-                <Typography variant="h5">Anonym student</Typography>
+                <Typography variant="h5">
+                  {t('ANONYM_STUDENT')}
+                </Typography>
               </Grid>
             )}
           </Grid>
@@ -124,10 +131,14 @@ export function AnswerView({
             spacing={2}
           >
             <Grid item>
-              <Typography variant="h5">Check date:</Typography>
+              <Typography variant="h5">
+                {t('CHECK_DATE')}
+              </Typography>
             </Grid>
             <Grid item>
-              <Typography variant="h5">{new Date(answer.creationDate).toLocaleString()}</Typography>
+              <Typography variant="h5">
+                {new Date(answer.creationDate).toLocaleString()}
+              </Typography>
             </Grid>
           </Grid>
           <Divider className={classes.divider} />
@@ -137,10 +148,14 @@ export function AnswerView({
             spacing={2}
           >
             <Grid item>
-              <Typography variant="h5">Result points:</Typography>
+              <Typography variant="h5">
+                {t('RESULT_POINTS')}
+              </Typography>
             </Grid>
             <Grid item>
-              <Typography variant="h5">{Math.round(totalPoints * answer.result * 100) / 100}</Typography>
+              <Typography variant="h5">
+                {Math.round(totalPoints * answer.result * 100) / 100}
+              </Typography>
             </Grid>
           </Grid>
           <Grid
@@ -149,10 +164,14 @@ export function AnswerView({
             spacing={2}
           >
             <Grid item>
-              <Typography variant="h5">Total points:</Typography>
+              <Typography variant="h5">
+                {t('TOTAL_POINTS')}
+              </Typography>
             </Grid>
             <Grid item>
-              <Typography variant="h5">{totalPoints}</Typography>
+              <Typography variant="h5">
+                {totalPoints}
+              </Typography>
             </Grid>
           </Grid>
           <Divider className={classes.divider} />
@@ -160,7 +179,7 @@ export function AnswerView({
             <Button
               color="secondary"
               variant="contained"
-              children="Delete"
+              children={t('DELETE')}
               onClick={onDelete}
             />
           </Grid>
@@ -168,7 +187,9 @@ export function AnswerView({
             item
             className={classes.details}
           >
-            <Typography variant="h4">Details:</Typography>
+            <Typography variant="h4">
+              {t('DETAILS')}
+            </Typography>
           </Grid>
         </Grid>
         <Grid

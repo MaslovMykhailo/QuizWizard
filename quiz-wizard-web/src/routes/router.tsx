@@ -6,6 +6,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment'
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
 import EqualizerIcon from '@material-ui/icons/Equalizer'
 import DashboardIcon from '@material-ui/icons/Dashboard'
+import {useTranslation} from 'react-i18next'
 
 import {
   AccountPage,
@@ -122,35 +123,36 @@ function AppRoute() {
 }
 
 const useNavigationTargets = () => {
+  const [t] = useTranslation()
   const topNavigationTargets = useMemo<NavigationTarget[]>(
     () => [
       {
         path: Path.students(),
-        caption: 'Students',
+        caption: t('STUDENTS'),
         Icon: LocalLibraryIcon
       },
       {
         path: Path.groups(),
-        caption: 'Groups',
+        caption: t('GROUPS'),
         Icon: GroupIcon
       },
       {
         path: Path.quizzes(),
-        caption: 'Quizzes',
+        caption: t('QUIZZES'),
         Icon: AssignmentIcon
       },
       {
         path: Path.answers(),
-        caption: 'Answers',
+        caption: t('ANSWERS'),
         Icon: AssignmentTurnedInIcon
       },
       {
         path: Path.analytics(),
-        caption: 'Analytics',
+        caption: t('ANALYTICS'),
         Icon: EqualizerIcon
       }
     ],
-    []
+    [t]
   )
 
   const {pathname} = useLocation()
@@ -159,11 +161,11 @@ const useNavigationTargets = () => {
     () => !pathname.match(Path.dashboard()) ? [
       {
         path: Path.dashboard(),
-        caption: 'Dashboard',
+        caption: t('DASHBOARD'),
         Icon: DashboardIcon
       }
     ] : undefined,
-    [pathname]
+    [pathname, t]
   )
 
   const isTargetSelected = useCallback(

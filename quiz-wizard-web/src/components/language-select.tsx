@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next'
 import FormControl, {FormControlProps} from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
@@ -13,6 +14,7 @@ export interface LanguageSelectProps {
 export function LanguageSelect(
   props: FormControlProps
 ) {
+  const [t] = useTranslation()
   const {language, onLanguageChange} = useLanguageChange()
   return (
     <FormControl {...props} >
@@ -22,7 +24,7 @@ export function LanguageSelect(
       <Select
         id="language-select"
         labelId="language-select-label"
-        label="Language"
+        label={t('LANGUAGE')}
         value={language}
         onChange={onLanguageChange}
       >

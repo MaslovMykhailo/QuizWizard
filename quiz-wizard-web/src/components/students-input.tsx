@@ -2,6 +2,7 @@ import sortBy from 'lodash/sortBy'
 import difference from 'lodash/difference'
 import {ReactNode, useEffect, useRef} from 'react'
 import {useSelector} from 'react-redux'
+import {useTranslation} from 'react-i18next'
 import {StudentId, StudentSchema} from 'quiz-wizard-schema'
 import {
   fetchStudents,
@@ -36,6 +37,7 @@ export function StudentsInput({
   students = [],
   onChange
 }: StudentsInputProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
   const dispatch = useDispatch()
 
@@ -80,7 +82,7 @@ export function StudentsInput({
             <Typography
               variant="h5"
               color="secondary"
-              children="Students added to the group"
+              children={t('STUDENTS_IN_GROUP')}
             />
           </Box>
           <StudentList
@@ -96,7 +98,7 @@ export function StudentsInput({
             <Typography
               variant="h5"
               color="primary"
-              children="Students available to be added"
+              children={t('NOT_ADDED_STUDENTS')}
             />
           </Box>
           <StudentList
@@ -121,6 +123,7 @@ function StudentList({
   onAction,
   actionIcon
 }: StudentListProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
   return students.length ? (
     <List>
@@ -138,7 +141,7 @@ function StudentList({
       <Typography
         variant="body1"
         color="textSecondary"
-        children="No students"
+        children={t('NO_STUDENTS')}
       />
     </Box>
   )
@@ -155,6 +158,7 @@ function StudentListItem({
   onAction,
   actionIcon
 }: StudentListItemProps) {
+  const [t] = useTranslation()
   return (
     <ListItem
       button
@@ -164,8 +168,8 @@ function StudentListItem({
         <StudentAvatar {...student} />
       </ListItemAvatar>
       <ListItemText
-        primary={ student ? `${student.firstName} ${student.lastName}` : 'Unknown student'}
-        secondary={`Student ID: ${student?.id}`}
+        primary={ student ? `${student.firstName} ${student.lastName}` : t('UNKNOWN_STUDENT')}
+        secondary={`${t('STUDENT_ID')} ${student?.id}`}
       />
       <ListItemSecondaryAction>
         <IconButton

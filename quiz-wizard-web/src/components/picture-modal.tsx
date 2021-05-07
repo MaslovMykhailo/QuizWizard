@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next'
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import Modal from '@material-ui/core/Modal'
@@ -23,6 +24,7 @@ export function PictureModal({
   onReady,
   onCancel
 }: PictureModalProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
 
   const [pictureUrl, onChangePictureUrl] = useInputState('')
@@ -48,12 +50,12 @@ export function PictureModal({
             <Grid item>
               <Typography
                 variant="h4"
-                children="Select picture"
+                children={t('SELECT_PICTURE')}
               />
             </Grid>
             <Grid item>
               <Typography
-                children="Paste url from the Internet:"
+                children={t('PASTE_URL')}
               />
               <TextField
                 fullWidth
@@ -65,7 +67,7 @@ export function PictureModal({
             </Grid>
             <Grid item>
               <Typography
-                children="Upload picture from your computer:"
+                children={t('UPLOAD_PICTURE')}
               />
               <Grid
                 container

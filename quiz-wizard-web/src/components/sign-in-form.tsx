@@ -50,7 +50,7 @@ export function SignInForm({
           margin="normal"
           required
           fullWidth
-          label="Email Address"
+          label={t('EMAIL')}
           id="email"
           name="email"
           type="email"
@@ -63,7 +63,7 @@ export function SignInForm({
           margin="normal"
           required
           fullWidth
-          label="Password"
+          label={t('PASSWORD')}
           id="password"
           name="password"
           type="password"

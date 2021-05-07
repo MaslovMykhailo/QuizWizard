@@ -1,3 +1,4 @@
+import {useTranslation} from 'react-i18next'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import {makeStyles} from '@material-ui/core/styles'
@@ -19,6 +20,7 @@ export function FormControls({
   onCreate,
   onDelete
 }: FormControlsProps) {
+  const [t] = useTranslation()
   const classes = useStyles()
   return (
     <Grid
@@ -31,7 +33,7 @@ export function FormControls({
           <Button
             color="secondary"
             variant="contained"
-            children="Delete"
+            children={t('DELETE')}
             onClick={onDelete}
           />
         </Grid>
@@ -43,7 +45,7 @@ export function FormControls({
         >
           <Button
             variant="contained"
-            children="Cancel"
+            children={t('CANCEL')}
             onClick={onCancel}
           />
         </Grid>
@@ -53,7 +55,7 @@ export function FormControls({
           <Button
             color="primary"
             variant="contained"
-            children="Create"
+            children={t('CREATE')}
             disabled={createDisabled}
             onClick={onCreate}
           />
@@ -64,7 +66,7 @@ export function FormControls({
           <Button
             color="primary"
             variant="contained"
-            children="Save"
+            children={t('SAVE')}
             disabled={saveDisabled}
             onClick={onSave}
           />
