@@ -74,7 +74,7 @@ export function DashboardPage() {
         </Grid>
         <Grid item>
           <CardLink
-            link={Path.quizzes()}
+            link={Path.answers()}
             text={t('MANAGE_ANSWERS')}
             icon={(
               <AssignmentTurnedInIcon

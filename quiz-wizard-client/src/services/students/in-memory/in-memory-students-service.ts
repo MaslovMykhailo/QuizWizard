@@ -18,7 +18,7 @@ const getStudentId = (ids: string[]) => {
   const numIds = ids
     .map((id) => parseInt(id))
     .filter((num) => Number.isFinite(num) && num >= 0)
-    .sort()
+    .sort((i1, i2) => i1 - i2)
 
   if (!numIds.length || numIds[0] !== 0) {
     return numToStudentId(0)
