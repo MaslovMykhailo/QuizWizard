@@ -1,4 +1,4 @@
-package com.quizwizardserver.quizwizard;
+package com.quizwizard;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

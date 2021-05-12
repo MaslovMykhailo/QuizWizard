@@ -1,4 +1,4 @@
-package com.quizwizardserver.quizwizard;
+package com.quizwizard;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
