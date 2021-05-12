@@ -1,9 +1,11 @@
 package com.quizwizard.repository;
 
-import com.quizwizard.model.UserDao;
+import com.quizwizard.dao.UserDao;
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends CrudRepository<UserDao, Integer> {
+import java.util.UUID;
+
+public interface UserRepository extends CrudRepository<UserDao, UUID> {
 
     UserDao findByUsername(String username);
 

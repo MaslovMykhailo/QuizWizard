@@ -2,7 +2,7 @@ package com.quizwizard.controller;
 
 import com.quizwizard.model.JwtRequest;
 import com.quizwizard.model.JwtResponse;
-import com.quizwizard.model.UserDto;
+import com.quizwizard.dto.UserDto;
 import com.quizwizard.config.JwtTokenUtil;
 import com.quizwizard.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;

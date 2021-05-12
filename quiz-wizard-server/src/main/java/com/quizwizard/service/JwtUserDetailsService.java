@@ -1,7 +1,7 @@
 package com.quizwizard.service;
 
-import com.quizwizard.model.UserDao;
-import com.quizwizard.model.UserDto;
+import com.quizwizard.dao.UserDao;
+import com.quizwizard.dto.UserDto;
 import com.quizwizard.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,14 +16,14 @@ import java.util.ArrayList;
 public class JwtUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userDao;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder bcryptEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDao user = userDao.findByUsername(username);
+        UserDao user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
@@ -38,7 +38,10 @@ public class JwtUserDetailsService implements UserDetailsService {
         UserDao newUser = new UserDao();
         newUser.setUsername(user.getUsername());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-        return userDao.save(newUser);
+        newUser.setFirstName(user.getFirstName());
+        newUser.setLastName(user.getLastName());
+        newUser.setAvatar(user.getAvatar());
+        return userRepository.save(newUser);
     }
 
 }
