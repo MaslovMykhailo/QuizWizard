@@ -2,6 +2,7 @@ package com.quizwizard.dto;
 
 import com.quizwizard.dao.StudentDao;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ public class StudentDto {
 
     private String lastName;
 
-    private Set<GroupDto> groups;
+    private Set<GroupDto> groups = new HashSet<>();
 
     public UUID getId() {
         return id;
