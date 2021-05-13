@@ -44,6 +44,11 @@ public class JwtAuthenticationController {
         return ResponseEntity.ok(userDetailsService.save(user));
     }
 
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public ResponseEntity<?> getUser() throws Exception {
+        return ResponseEntity.ok(userDetailsService.getAuthenticatedUser());
+    }
+
     private void authenticate(String username, String password) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));

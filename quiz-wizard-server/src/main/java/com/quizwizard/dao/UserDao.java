@@ -34,6 +34,10 @@ public class UserDao {
     @Column
     private String avatar;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "preferences_id", referencedColumnName = "id")
+    private PreferencesDao preferences;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
     private List<GroupDao> groups = new ArrayList<>();
@@ -41,6 +45,14 @@ public class UserDao {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
     private List<StudentDao> students = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
+    private List<QuizDao> quizzes = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
+    private List<AnswerDao> answers = new ArrayList<>();
 
     public String getUsername() {
         return username;
@@ -105,6 +117,31 @@ public class UserDao {
     public void setId(UUID id) {
         this.id = id;
     }
+
+    public PreferencesDao getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(PreferencesDao preferences) {
+        this.preferences = preferences;
+    }
+
+    public List<QuizDao> getQuizzes() {
+        return quizzes;
+    }
+
+    public void setQuizzes(List<QuizDao> quizzes) {
+        this.quizzes = quizzes;
+    }
+
+    public List<AnswerDao> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<AnswerDao> answers) {
+        this.answers = answers;
+    }
+
 }
 
 

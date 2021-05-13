@@ -4,6 +4,7 @@ import com.quizwizard.dao.UserDao;
 import com.quizwizard.dto.UserDto;
 import com.quizwizard.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -42,6 +43,19 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setLastName(user.getLastName());
         newUser.setAvatar(user.getAvatar());
         return userRepository.save(newUser);
+    }
+
+    public UserDao getAuthenticatedUser() {
+        Object principal = SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+
+        String username = principal instanceof UserDetails ?
+            ((UserDetails) principal).getUsername() :
+            principal.toString();
+
+        return userRepository.findByUsername(username);
     }
 
 }
