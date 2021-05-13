@@ -16,13 +16,13 @@ public class QuestionOptionDao {
     private UUID id;
 
     @Column(nullable = false)
-    private Character option;
+    private Character questionOption;
 
     @Column
     private String text;
 
     @Column
-    private Boolean correct;
+    private Boolean isCorrect;
 
     public UUID getId() {
         return id;
@@ -32,12 +32,12 @@ public class QuestionOptionDao {
         this.id = id;
     }
 
-    public Character getOption() {
-        return option;
+    public Character getQuestionOption() {
+        return questionOption;
     }
 
-    public void setOption(Character option) {
-        this.option = option;
+    public void setQuestionOption(Character option) {
+        this.questionOption = option;
     }
 
     public String getText() {
@@ -48,12 +48,12 @@ public class QuestionOptionDao {
         this.text = text;
     }
 
-    public Boolean getCorrect() {
-        return correct;
+    public Boolean getIsCorrect() {
+        return isCorrect;
     }
 
-    public void setCorrect(Boolean correct) {
-        this.correct = correct;
+    public void setIsCorrect(Boolean correct) {
+        this.isCorrect = correct;
     }
 
 }

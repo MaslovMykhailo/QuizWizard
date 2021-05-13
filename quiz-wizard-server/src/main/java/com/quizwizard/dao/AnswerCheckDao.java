@@ -3,8 +3,6 @@ package com.quizwizard.dao;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -18,10 +16,10 @@ public class AnswerCheckDao {
     private UUID id;
 
     @Column(nullable = false)
-    private Character option;
+    private Character answerOption;
 
     @Column
-    private Boolean correct;
+    private Boolean isCorrect;
 
     @ManyToOne
     @JoinColumn(name = "question_id")
@@ -35,20 +33,20 @@ public class AnswerCheckDao {
         this.id = id;
     }
 
-    public Character getOption() {
-        return option;
+    public Character getAnswerOption() {
+        return answerOption;
     }
 
-    public void setOption(Character option) {
-        this.option = option;
+    public void setAnswerOption(Character option) {
+        this.answerOption = option;
     }
 
-    public Boolean getCorrect() {
-        return correct;
+    public Boolean getIsCorrect() {
+        return isCorrect;
     }
 
-    public void setCorrect(Boolean correct) {
-        this.correct = correct;
+    public void setIsCorrect(Boolean correct) {
+        this.isCorrect = correct;
     }
 
     public QuestionDao getQuestion() {

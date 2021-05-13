@@ -1,5 +1,6 @@
 package com.quizwizard.service;
 
+import com.quizwizard.dao.PreferencesDao;
 import com.quizwizard.dao.UserDao;
 import com.quizwizard.dto.UserDto;
 import com.quizwizard.repository.UserRepository;
@@ -37,11 +38,21 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     public UserDao save(UserDto user) {
         UserDao newUser = new UserDao();
+
         newUser.setUsername(user.getUsername());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
+
         newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());
         newUser.setAvatar(user.getAvatar());
+
+        // create default preferences
+        PreferencesDao preferences = new PreferencesDao();
+        preferences.setLanguage("en");
+        preferences.setTheme("light");
+
+        newUser.setPreferences(preferences);
+
         return userRepository.save(newUser);
     }
 
