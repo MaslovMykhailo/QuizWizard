@@ -4,11 +4,10 @@ import com.quizwizard.dao.StudentDao;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 public class StudentDto {
 
-    private UUID id;
+    private Long id;
 
     private String firstName;
 
@@ -16,11 +15,11 @@ public class StudentDto {
 
     private Set<GroupDto> groups = new HashSet<>();
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -34,7 +34,7 @@ public class GroupController {
         return groupService.createGroup(dto);
     }
 
-    @GetMapping(path = "/", produces = "application/json")
+    @PutMapping(path = "/", produces = "application/json")
     @ResponseBody
     public GroupDto updateStudent(@RequestBody GroupDto dto) {
         return groupService.updateGroup(dto);

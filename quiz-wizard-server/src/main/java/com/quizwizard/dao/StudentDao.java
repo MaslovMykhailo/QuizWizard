@@ -1,21 +1,17 @@
 package com.quizwizard.dao;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "qw_students")
 public class StudentDao {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", updatable = false, nullable = false)
-    private UUID id;
+    private Long id;
 
     @Column(nullable = false)
     private String firstName;
@@ -26,11 +22,11 @@ public class StudentDao {
     @ManyToMany(mappedBy = "students", cascade = CascadeType.PERSIST)
     private Set<GroupDao> groups = new HashSet<>();
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

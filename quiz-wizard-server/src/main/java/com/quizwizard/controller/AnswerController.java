@@ -1,7 +1,7 @@
 package com.quizwizard.controller;
 
-import com.quizwizard.dto.StudentDto;
-import com.quizwizard.service.StudentService;
+import com.quizwizard.dto.AnswerDto;
+import com.quizwizard.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -10,40 +10,40 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin
-@RequestMapping("students")
-public class StudentController {
+@RequestMapping("answers")
+public class AnswerController {
 
     @Autowired
-    private StudentService studentService;
+    private AnswerService answerService;
 
     @GetMapping(path = "/", produces = "application/json")
     @ResponseBody
-    public List<StudentDto> getStudents() {
-        return studentService.getStudents();
+    public List<AnswerDto> getAnswers() {
+        return answerService.getAnswers();
     }
 
     @GetMapping(path = "/{id}", produces = "application/json")
     @ResponseBody
-    public StudentDto getStudent(@PathVariable UUID id) {
-        return studentService.getStudent(id);
+    public AnswerDto getAnswer(@PathVariable UUID id) {
+        return answerService.getAnswer(id);
     }
 
     @PostMapping(path = "/", produces = "application/json")
     @ResponseBody
-    public StudentDto createStudent(@RequestBody StudentDto dto) {
-        return studentService.createStudent(dto);
+    public AnswerDto createAnswer(@RequestBody AnswerDto dto) {
+        return answerService.createAnswer(dto);
     }
 
     @PutMapping(path = "/", produces = "application/json")
     @ResponseBody
-    public StudentDto updateStudent(@RequestBody StudentDto dto) {
-        return studentService.updateStudent(dto);
+    public AnswerDto updateAnswer(@RequestBody AnswerDto dto) {
+        return answerService.updateAnswer(dto);
     }
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteStudent(@PathVariable UUID id) {
-        studentService.deleteStudent(id);
+        answerService.deleteAnswer(id);
     }
 
 }

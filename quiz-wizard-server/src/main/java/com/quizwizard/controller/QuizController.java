@@ -1,7 +1,7 @@
 package com.quizwizard.controller;
 
-import com.quizwizard.dto.StudentDto;
-import com.quizwizard.service.StudentService;
+import com.quizwizard.dto.QuizDto;
+import com.quizwizard.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -10,40 +10,40 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin
-@RequestMapping("students")
-public class StudentController {
+@RequestMapping("quizzes")
+public class QuizController {
 
     @Autowired
-    private StudentService studentService;
+    private QuizService quizService;
 
     @GetMapping(path = "/", produces = "application/json")
     @ResponseBody
-    public List<StudentDto> getStudents() {
-        return studentService.getStudents();
+    public List<QuizDto> getStudents() {
+        return quizService.getQuizzes();
     }
 
     @GetMapping(path = "/{id}", produces = "application/json")
     @ResponseBody
-    public StudentDto getStudent(@PathVariable UUID id) {
-        return studentService.getStudent(id);
+    public QuizDto getStudent(@PathVariable UUID id) {
+        return quizService.getQuiz(id);
     }
 
     @PostMapping(path = "/", produces = "application/json")
     @ResponseBody
-    public StudentDto createStudent(@RequestBody StudentDto dto) {
-        return studentService.createStudent(dto);
+    public QuizDto createStudent(@RequestBody QuizDto dto) {
+        return quizService.createQuiz(dto);
     }
 
     @PutMapping(path = "/", produces = "application/json")
     @ResponseBody
-    public StudentDto updateStudent(@RequestBody StudentDto dto) {
-        return studentService.updateStudent(dto);
+    public QuizDto updateStudent(@RequestBody QuizDto dto) {
+        return quizService.updateQuiz(dto);
     }
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteStudent(@PathVariable UUID id) {
-        studentService.deleteStudent(id);
+        quizService.deleteQuiz(id);
     }
 
 }
