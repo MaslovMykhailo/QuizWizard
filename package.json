@@ -14,7 +14,6 @@
     "quiz-wizard-redux",
     "quiz-wizard-client",
     "quiz-wizard-localization",
-    "quiz-wizard-auth",
     "quiz-wizard-static"
   ],
   "devDependencies": {
