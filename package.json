@@ -7,30 +7,32 @@
   "author": "Mykhailo Maslov <maslov.mikhail2000@gmail.com>",
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "quiz-wizard-schema",
-    "quiz-wizard-web",
-    "quiz-wizard-mobile",
-    "quiz-wizard-redux",
-    "quiz-wizard-client",
-    "quiz-wizard-localization",
-    "quiz-wizard-static"
-  ],
+  "workspaces": {
+    "packages": [
+      "quiz-wizard-schema",
+      "quiz-wizard-web",
+      "quiz-wizard-mobile",
+      "quiz-wizard-redux",
+      "quiz-wizard-client",
+      "quiz-wizard-localization",
+      "quiz-wizard-static"
+    ]
+  },
   "devDependencies": {
-    "@babel/core": "^7.6.2",
-    "@babel/plugin-proposal-decorators": "^7.8.3",
-    "@babel/runtime": "^7.6.2",
-    "@types/jest": "^26.0.22",
-    "@types/node": "^14.14.37",
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-proposal-decorators": "^7.14.2",
+    "@babel/runtime": "^7.14.0",
+    "@types/jest": "^26.0.23s",
+    "@types/node": "^14.17.0",
+    "@typescript-eslint/eslint-plugin": "^4.24.0",
+    "@typescript-eslint/parser": "^4.24.0",
     "babel-jest": "26.6.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "eslint": "^7.24.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "jest": "26.6.0",
-    "react-test-renderer": "16.9.0",
+    "react-test-renderer": "17.0.2",
     "typescript": "^4.2.4"
   }
 }
