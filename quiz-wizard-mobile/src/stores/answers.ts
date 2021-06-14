@@ -1,4 +1,4 @@
-import {action, observable, computed} from 'mobx'
+import {action, observable, computed, makeObservable, runInAction} from 'mobx'
 import {AnswersApi} from '@api'
 import {
   ResourceStatus,
@@ -25,6 +25,7 @@ export class AnswersStore {
     api: AnswersApi,
     {quizzes, responders}: {quizzes: QuizzesStore; responders: RespondersStore}
   ) {
+    makeObservable(this)
     this.api = api
 
     this.quizzesStore = quizzes
@@ -39,16 +40,20 @@ export class AnswersStore {
     this.api
       .getAnswers()
       .then((answers) => {
-        this.status = ResourceStatus.Success
-        this.answers = answers.map(
-          (answer) => new ObservableResource({data: answer})
-        )
+        runInAction(() => {
+          this.status = ResourceStatus.Success
+          this.answers = answers.map(
+            (answer) => new ObservableResource({data: answer})
+          )
 
-        this.quizzesStore.load()
-        this.respondersStore.load()
+          this.quizzesStore.load()
+          this.respondersStore.load()
+        })
       })
       .catch(() => {
-        this.status = ResourceStatus.Error
+        runInAction(() => {
+          this.status = ResourceStatus.Error
+        })
       })
   }
 
@@ -68,10 +73,14 @@ export class AnswersStore {
     this.api
       .createAnswer(answer)
       .then(() => {
-        answerResource.success(answer)
+        runInAction(() => {
+          answerResource.success(answer)
+        })
       })
       .catch((error) => {
-        answerResource.fail(error)
+        runInAction(() => {
+          answerResource.fail(error)
+        })
       })
   }
 
@@ -86,12 +95,16 @@ export class AnswersStore {
     this.api
       .deleteAnswer(answerId)
       .then(() => {
-        this.pendingAnswers = this.pendingAnswers.filter(
-          (resource) => resource !== answerResource
-        )
+        runInAction(() => {
+          this.pendingAnswers = this.pendingAnswers.filter(
+            (resource) => resource !== answerResource
+          )
+        })
       })
       .catch((error) => {
-        answerResource.fail(error)
+        runInAction(() => {
+          answerResource.fail(error)
+        })
       })
   }
 

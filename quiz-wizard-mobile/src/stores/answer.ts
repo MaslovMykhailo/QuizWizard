@@ -1,5 +1,5 @@
 import UUIDGenerator from 'react-native-uuid-generator'
-import {observable, computed, action} from 'mobx'
+import {observable, computed, action, makeObservable} from 'mobx'
 import {
   ResponderId,
   AnswerOptions,
@@ -14,8 +14,8 @@ import {checkQuiz} from '@utils'
 export class AnswerStore {
   @observable id: UUID = ''
 
+  @observable name = ''
   @observable quizId: UUID = ''
-  @observable name: string = ''
   @observable answers: AnswerOptions[] = []
   @observable correctAnswers: AnswerOptions[] = []
 
@@ -23,6 +23,7 @@ export class AnswerStore {
   @observable responderId: ResponderId | undefined = undefined
 
   constructor(quiz?: Quiz) {
+    makeObservable(this)
     if (quiz) {
       this.quizId = quiz.id
       this.name = `${quiz.name} - ${i18next.t('RESULT_INDICATOR')}`
@@ -43,7 +44,8 @@ export class AnswerStore {
     sheetBase64
   }: DecodedResult) => {
     this.answers = answers as AnswerOptions[]
-    ;(this.responderId = responderId), (this.sheetBase64 = sheetBase64)
+    ;(this.responderId = responderId)
+    ;(this.sheetBase64 = sheetBase64)
   }
 
   @computed get answer(): Answer {

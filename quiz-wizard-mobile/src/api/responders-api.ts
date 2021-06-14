@@ -4,6 +4,7 @@ import {Api} from './api'
 
 export class RespondersApi extends Api {
   public getResponders = () => this.get<Responder[]>('/responders')
+    .then(responders => responders ?? [])
 
   public createResponder = (responder: Responder) =>
     this.post<ResponderId, Responder>('/responders', responder)

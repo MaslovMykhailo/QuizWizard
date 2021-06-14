@@ -1,8 +1,7 @@
+import AsyncStorage from '@react-native-community/async-storage'
 import {ObservableResource} from '@utils'
 
 export class Api {
-  private baseUrl = 'https://quizwizardweb20200524070904.azurewebsites.net/api'
-
   private token: ObservableResource<string>
 
   constructor(token: ObservableResource<string>) {
@@ -23,50 +22,22 @@ export class Api {
     })
   }
 
-  public post<T, D>(url: string, data: D) {
-    return this.withAuth().then((token) =>
-      fetch(this.baseUrl + url, {
-        method: 'POST',
-        headers: {
-          Authorization: token,
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      }).then((response) => this.handleResponse<T>(response))
-    )
+  public post<T extends string, D extends {id: string}>(url: string, data: D) {
+    return this.withAuth()
+      .then(() => AsyncStorage.setItem(`${url}/${data.id}`, JSON.stringify(data)))
+      .then(() => data.id as T)
   }
 
   public get<T>(url: string) {
     return this.withAuth()
-      .then((token) =>
-        fetch(this.baseUrl + url, {
-          method: 'GET',
-          headers: {Authorization: token, 'content-type': 'application/json'}
-        })
-      )
-      .then((response) => this.handleResponse<T>(response))
+      .then(() => AsyncStorage.getItem(url))
+      .then<T>((data) => data ? JSON.parse(data) : data)
   }
 
-  public delete<T>(url: string) {
+  public delete<T extends string>(url: string) {
     return this.withAuth()
-      .then((token) =>
-        fetch(this.baseUrl + url, {
-          method: 'DELETE',
-          headers: {
-            Authorization: token,
-            'content-type': 'application/json'
-          }
-        })
-      )
-      .then((response) => this.handleResponse<T>(response))
-  }
-
-  private handleResponse<T>(response: Response) {
-    if (response.ok) {
-      return response.json() as Promise<T>
-    } else {
-      return Promise.reject(response)
-    }
+      .then(() => AsyncStorage.removeItem(url))
+      .then(() => url.split('/').pop() as T)
   }
 
   protected normalizeDate = <T extends {[key in K]: Date}, K extends keyof T>(

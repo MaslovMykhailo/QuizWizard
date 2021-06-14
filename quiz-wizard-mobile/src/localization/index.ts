@@ -12,8 +12,7 @@ i18n.use(initReactI18next).init({
     escapeValue: false
   },
   react: {
-    wait: true,
-    useSuspense: false
+    useSuspense: true
   }
 })
 

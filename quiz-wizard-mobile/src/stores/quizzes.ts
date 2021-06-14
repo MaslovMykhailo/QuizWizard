@@ -1,4 +1,4 @@
-import {action, computed, observable} from 'mobx'
+import {action, computed, makeObservable, observable, runInAction} from 'mobx'
 import {ObservableResource, sortByDate, ResourceStatus, exist} from '@utils'
 import {Quiz, UUID} from '@types'
 import {QuizzesApi} from '@api'
@@ -7,6 +7,7 @@ export class QuizzesStore {
   private api: QuizzesApi
 
   constructor(api: QuizzesApi) {
+    makeObservable(this)
     this.api = api
   }
 
@@ -24,11 +25,15 @@ export class QuizzesStore {
     this.api
       .getQuizzes()
       .then((quizzes) => {
-        this.status = ResourceStatus.Success
-        this.quizzes = quizzes.map((data) => new ObservableResource({data}))
+        runInAction(() => {
+          this.status = ResourceStatus.Success
+          this.quizzes = quizzes.map((data) => new ObservableResource({data}))
+        })
       })
       .catch(() => {
-        this.status = ResourceStatus.Error
+        runInAction(() => {
+          this.status = ResourceStatus.Error
+        })
       })
   }
 
@@ -40,10 +45,14 @@ export class QuizzesStore {
     this.api
       .createQuiz(quiz)
       .then(() => {
-        quizResource.success(quiz)
+        runInAction(() => {
+          quizResource.success(quiz)
+        })
       })
       .catch((error) => {
-        quizResource.fail(error)
+        runInAction(() => {
+          quizResource.fail(error)
+        })
       })
   }
 
@@ -58,12 +67,16 @@ export class QuizzesStore {
     this.api
       .deleteQuiz(quizId)
       .then(() => {
-        this.pendingQuizzes = this.pendingQuizzes.filter(
-          (resource) => resource !== quizResource
-        )
+        runInAction(() => {
+          this.pendingQuizzes = this.pendingQuizzes.filter(
+            (resource) => resource !== quizResource
+          )
+        })
       })
       .catch((error) => {
-        quizResource.fail(error)
+        runInAction(() => {
+          quizResource.fail(error)
+        })
       })
   }
 

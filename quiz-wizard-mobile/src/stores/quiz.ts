@@ -1,20 +1,21 @@
 import UUIDGenerator from 'react-native-uuid-generator'
-import {observable, computed, action} from 'mobx'
+import {observable, computed, action, makeObservable} from 'mobx'
 import {AnswerOption, Quiz} from '@types'
 import i18next from 'i18next'
 
 export class QuizStore {
-  private id: string = ''
+  private id = ''
 
   private refreshId = () => {
     UUIDGenerator.getRandomUUID().then((uuid) => (this.id = uuid))
   }
 
-  @observable name: string = ''
+  @observable name = ''
 
   @observable answers: Set<AnswerOption>[] = [this.defaultAnswer]
 
   constructor(quiz?: Quiz | null, copy = false) {
+    makeObservable(this)
     this.refreshId()
     if (quiz) {
       this.name = copy

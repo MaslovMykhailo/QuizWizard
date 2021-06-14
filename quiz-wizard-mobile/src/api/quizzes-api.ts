@@ -5,7 +5,7 @@ import {Api} from './api'
 export class QuizzesApi extends Api {
   public getQuizzes = () =>
     this.get<Quiz[]>('/quizzes').then((quizzes) =>
-      quizzes.map(this.normalizeQuizDate)
+      quizzes ? quizzes.map(this.normalizeQuizDate) : []
     )
 
   public createQuiz = (quiz: Quiz) => this.post<UUID, Quiz>('/quizzes', quiz)

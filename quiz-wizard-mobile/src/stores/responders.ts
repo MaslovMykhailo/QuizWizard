@@ -1,4 +1,4 @@
-import {observable, computed, action} from 'mobx'
+import {observable, computed, action, makeObservable, runInAction} from 'mobx'
 import {RespondersApi} from '@api'
 import {ResourceStatus, ObservableResource, exist} from '@utils'
 import {Responder, ResponderId} from '@types'
@@ -7,6 +7,7 @@ export class RespondersStore {
   private api: RespondersApi
 
   constructor(api: RespondersApi) {
+    makeObservable(this)
     this.api = api
   }
 
@@ -19,13 +20,17 @@ export class RespondersStore {
     this.api
       .getResponders()
       .then((responders) => {
-        this.status = ResourceStatus.Success
-        this.responders = responders.map(
-          (data) => new ObservableResource({data})
-        )
+        runInAction(() => {
+          this.status = ResourceStatus.Success
+          this.responders = responders.map(
+            (data) => new ObservableResource({data})
+          )
+        })
       })
       .catch(() => {
-        this.status = ResourceStatus.Error
+        runInAction(() => {
+          this.status = ResourceStatus.Error
+        })
       })
   }
 
@@ -48,10 +53,14 @@ export class RespondersStore {
     this.api
       .createResponder(responder)
       .then(() => {
-        responderResource.success(responder)
+        runInAction(() => {
+          responderResource.success(responder)
+        })
       })
       .catch((error) => {
-        responderResource.fail(error)
+        runInAction(() => {
+          responderResource.fail(error)
+        })
       })
   }
 
@@ -95,8 +104,12 @@ const getNextId = (ids: Set<number>, min = 0): ResponderId => {
 const numberToResponderId = (numId: number): ResponderId => {
   const strId = String(numId)
   if (strId.length === 1) {
-    return `00${strId}`
+    return `0000${strId}`
   } else if (strId.length === 2) {
+    return `000${strId}`
+  } else if (strId.length === 3) {
+    return `00${strId}`
+  } else if (strId.length === 4) {
     return `0${strId}`
   } else {
     return strId

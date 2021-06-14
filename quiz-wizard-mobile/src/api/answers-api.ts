@@ -5,7 +5,7 @@ import {Api} from './api'
 export class AnswersApi extends Api {
   public getAnswers = () =>
     this.get<Answer[]>('/answers').then((answers) =>
-      answers.map(this.normalizeAnswerDate)
+      answers ? answers.map(this.normalizeAnswerDate) : []
     )
 
   public createAnswer = (answer: Answer) =>

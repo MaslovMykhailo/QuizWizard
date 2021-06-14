@@ -1,4 +1,4 @@
-import {observable, action} from 'mobx'
+import {observable, action, runInAction, makeObservable} from 'mobx'
 import {persist} from 'mobx-persist'
 import {I18n, Language, getDeviceLanguage} from '@localization'
 import {Theme} from '@types'
@@ -11,6 +11,7 @@ export class UserPreferencesStore implements PersistedStore {
   @observable initializing: boolean
 
   constructor(i18next: I18n) {
+    makeObservable(this)
     this.i18next = i18next
     this.initializing = true
   }
@@ -22,14 +23,16 @@ export class UserPreferencesStore implements PersistedStore {
 
   @persist @observable language: Language = getDeviceLanguage()
   @action setLanguage = (lng: Language) => {
-    this.i18next.changeLanguage(lng).then(() => (this.language = lng))
+    this.i18next.changeLanguage(lng).then(() => runInAction(() => (this.language = lng)))
   }
 
   onHydrate = () => {
     const lng = this.language || getDeviceLanguage()
     this.i18next.changeLanguage(lng).then(() => {
-      this.language = lng
-      this.initializing = false
+      runInAction(() => {
+        this.language = lng
+        this.initializing = false
+      })
     })
   }
 }

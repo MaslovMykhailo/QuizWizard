@@ -9,7 +9,8 @@ export const NavigationBar: FC<BottomTabBarProps> = ({
 }) => (
   <BottomNavigation
     selectedIndex={index}
-    onSelect={(indexToNavigate) => navigate(routeNames[indexToNavigate])}>
+    onSelect={(indexToNavigate) => navigate(routeNames[indexToNavigate])}
+  >
     <BottomNavigationTab icon={HomeIcon} />
     <BottomNavigationTab icon={FileIcon} />
     <BottomNavigationTab icon={CheckmarkSquareIcon} />
