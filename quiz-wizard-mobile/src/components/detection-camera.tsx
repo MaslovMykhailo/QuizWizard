@@ -122,7 +122,7 @@ const themedStyles = StyleService.create({
     borderRadius: 3
   },
   tips: {
-    top: '12%',
+    top: '8%',
     width: '84%',
     aspectRatio: 0.7,
     padding: '3%',

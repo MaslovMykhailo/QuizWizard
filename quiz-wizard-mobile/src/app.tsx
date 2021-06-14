@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler'
+import {enableScreens} from 'react-native-screens'
 import React, {FC} from 'react'
 import {I18nextProvider} from 'react-i18next'
 import {observer} from 'mobx-react-lite'
@@ -22,6 +23,8 @@ import {
 import {NavigationBar, SafeArea} from '@components'
 import {AppRoute} from '@constants'
 
+enableScreens()
+
 const Tab = createBottomTabNavigator()
 
 export const App: FC = observer(() => {
@@ -40,7 +43,6 @@ export const App: FC = observer(() => {
               {isPreferencesInitializing || isAuthProcessing ? (
                 <Tab.Screen
                   name={AppRoute.Initialization}
-                  options={{tabBarVisible: false}}
                   component={InitializationScreen}
                 />
               ) : isAuth ? (
@@ -63,19 +65,16 @@ export const App: FC = observer(() => {
                   />
                   <Tab.Screen
                     name={AppRoute.QuizSelection}
-                    options={{tabBarVisible: false}}
                     component={QuizSelectionScreen}
                   />
                   <Tab.Screen
                     name={AppRoute.AnswersDetection}
-                    options={{tabBarVisible: false}}
                     component={AnswersDetectionScreen}
                   />
                 </>
               ) : (
                 <Tab.Screen
                   name={AppRoute.Login}
-                  options={{tabBarVisible: false}}
                   component={LoginScreen}
                 />
               )}
