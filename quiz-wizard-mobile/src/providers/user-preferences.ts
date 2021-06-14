@@ -1,5 +1,5 @@
 import {createContext, useContext} from 'react'
-import {light, dark} from '@eva-design/eva'
+import {light, dark} from '@eva-design/material'
 import {UserPreferencesStore, userPreferencesStore} from '@stores'
 import {Language, languages} from '@localization'
 import {Theme} from '@types'

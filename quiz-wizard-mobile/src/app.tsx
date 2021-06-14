@@ -8,7 +8,7 @@ import {NavigationContainer} from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {IconRegistry, ApplicationProvider} from '@ui-kitten/components'
 import {EvaIconsPack} from '@ui-kitten/eva-icons'
-import {mapping} from '@eva-design/eva'
+import {mapping} from '@eva-design/material'
 import {useAuth, useAppTheme, useUserPreferencesStatus} from '@providers'
 import {i18next} from '@localization'
 import {

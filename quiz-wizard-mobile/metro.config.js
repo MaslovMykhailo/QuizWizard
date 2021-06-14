@@ -1,5 +1,5 @@
 const MetroConfig = require('@ui-kitten/metro-config')
-const evaConfig = {evaPackage: '@eva-design/eva'}
+const evaConfig = {evaPackage: '@eva-design/material'}
 module.exports = MetroConfig.create(evaConfig, {
   transformer: {
     getTransformOptions: async () => ({
