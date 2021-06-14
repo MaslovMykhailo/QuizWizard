@@ -1,16 +1,19 @@
 import React, {FC, useCallback} from 'react'
+import {observer} from 'mobx-react-lite'
 import {Platform} from 'react-native'
 import RNFetchBlob from 'rn-fetch-blob'
 import {useTranslation} from 'react-i18next'
 import {Button, ButtonProps, Text} from '@ui-kitten/components'
 import {DownloadIcon} from '@icons'
+import {useLanguage} from '@providers'
 
-const SHEET_FILE_NAME = 'QuizWizardAnswerSheet.pdf'
-const SHEET_PATH =
-  'https://quizwizardweb20200524070904.azurewebsites.net/api/images/QuizWizardBlankV2.pdf'
+const SHEET_FILE_NAME = 'quiz-wizard-form.pdf'
+const createAnswerSheetUrl = (lng: string) =>
+  `http://localhost:4000/static/answers-form/${lng}.pdf`
 
-export const DownloadSheetButton: FC<ButtonProps> = (props) => {
+export const DownloadSheetButton: FC<ButtonProps> = observer((props) => {
   const [t] = useTranslation()
+  const [language] = useLanguage()
 
   const onPress = useCallback(() => {
     if (Platform.OS === 'android') {
@@ -22,9 +25,9 @@ export const DownloadSheetButton: FC<ButtonProps> = (props) => {
           title: SHEET_FILE_NAME,
           path: RNFetchBlob.fs.dirs.DownloadDir ?? '' + '/' + SHEET_FILE_NAME
         }
-      }).fetch('GET', SHEET_PATH)
+      }).fetch('GET', createAnswerSheetUrl(language))
     }
-  }, [])
+  }, [language])
 
   return (
     <Button {...props} onPress={onPress} accessoryLeft={DownloadIcon}>
@@ -33,4 +36,4 @@ export const DownloadSheetButton: FC<ButtonProps> = (props) => {
       )}
     </Button>
   )
-}
+})

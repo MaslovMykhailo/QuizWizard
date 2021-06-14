@@ -30,6 +30,7 @@
     "@types/react-native-fbsdk": "^3.0.0",
     "@types/react-native-uuid-generator": "^4.0.0",
     "@types/react-test-renderer": "17.0.1",
+    "@types/rn-fetch-blob": "^1.2.1",
     "@typescript-eslint/parser": "^4.24.0",
     "@ui-kitten/components": "^5.1.0",
     "@ui-kitten/eva-icons": "^5.1.0",

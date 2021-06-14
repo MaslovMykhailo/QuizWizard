@@ -2678,6 +2678,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/rn-fetch-blob@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/@types/rn-fetch-blob/-/rn-fetch-blob-1.2.1.tgz#c20e9d66e8a0e600508682f58160ecaeb8586142"
+  integrity sha512-Fv/0HFckui0cDayYcno+0IT98t7pmtVesjqUh5p1EuOPMn13uhYoJZDCdhN4iHuVqcnCLXZkmwd+T82DN7ASJw==
+
 "@types/scheduler@*":
   version "0.16.1"
   resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.1.tgz#18845205e86ff0038517aab7a18a62a6b9f71275"
