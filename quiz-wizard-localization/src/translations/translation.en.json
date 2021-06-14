@@ -99,5 +99,6 @@
   "SELECT_GROUP": "Select group",
   "AVERAGE_RESULT": "Average result:",
   "TOTAL_ANSWERS_COUNT": "Total answers count:",
-  "NONE": "None"
+  "NONE": "None",
+  "DOWNLOAD_REPORT": "Download report"
 }

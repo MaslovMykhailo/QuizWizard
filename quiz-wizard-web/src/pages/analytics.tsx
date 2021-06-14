@@ -8,7 +8,9 @@ import {
   useSelector,
   selectIsAnyResourceFetching,
   selectGroupIds,
-  selectGroupNameGetter
+  selectGroupNameGetter,
+  selectGroupsAnalyticsReportGetter,
+  selectGroupAnalyticsReportGetter
 } from 'quiz-wizard-redux'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -19,6 +21,7 @@ import Typography from '@material-ui/core/Typography'
 
 import {Path} from '../routes'
 import {
+  DownloadReportButton,
   GroupAnalytic,
   GroupsAnalytic,
   GroupSelect,
@@ -78,6 +81,7 @@ export function AnalyticsPage() {
           </Grid>
         </Grid>
         <AnalyticTargetIdSelect />
+        <DownloadAnalyticButton />
       </Grid>
       <Grid item>
         <Analytic />
@@ -144,7 +148,7 @@ function GroupAnalyticTargetSelect() {
       item
       container
       spacing={2}
-      xs={6}
+      xs={4}
       alignItems="flex-end"
       wrap="nowrap"
     >
@@ -196,4 +200,54 @@ const useAnalyticType = () => {
 const useAnalyticTargetId = () => {
   const query = useQuery()
   return query.get('id')
+}
+
+function DownloadAnalyticButton() {
+  const [t] = useTranslation()
+
+  const getGroupName = useSelector(selectGroupNameGetter)
+  const getGroupAnalyticReport = useSelector(selectGroupAnalyticsReportGetter)
+  const getGroupsAnalyticReport = useSelector(selectGroupsAnalyticsReportGetter)
+
+  let report: {data: unknown[], columns: Record<string, string>}
+  let filename: string | undefined
+
+  const analyticType = useAnalyticType()
+  const analyticTargetId = useAnalyticTargetId()
+
+  switch (analyticType) {
+    case 'group': {
+      if (analyticTargetId) {
+        filename = getGroupName(analyticTargetId)
+        report = getGroupAnalyticReport(analyticTargetId, t)
+      } else {
+        filename = 'analytic'
+        report = getGroupsAnalyticReport(t)
+      }
+
+      break
+    }
+  }
+
+  if (!filename) {
+    return null
+  }
+
+  return (
+    <Grid
+      item
+      container
+      alignItems="flex-end"
+      wrap="nowrap"
+      xs={3}
+    >
+      <Grid item>
+        <DownloadReportButton
+          filename={filename}
+          data={report!.data}
+          columns={report!.columns}
+        />
+      </Grid>
+    </Grid>
+  )
 }

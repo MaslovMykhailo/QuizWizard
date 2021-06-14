@@ -2,7 +2,7 @@ import {createSelector} from '@reduxjs/toolkit'
 import {GroupId, QuizId} from 'quiz-wizard-schema'
 
 import {selectAnswers, selectAreAnswersFetching} from '../answers'
-import {selectAreGroupsFetching, selectGroupGetter, selectIsStudentInGroupGetter, selectSortedGroups} from '../groups'
+import {selectAreGroupsFetching, selectIsStudentInGroupGetter, selectSortedGroups} from '../groups'
 import {selectAreQuizzesFetching, selectQuizzes} from '../quizzes'
 import {selectAreStudentsFetching, selectSortedStudentsByGroupGetter} from '../students'
 
@@ -65,6 +65,38 @@ export const selectGroupsAnalyticByQuizzes = createSelector(
     })
 )
 
+export const selectGroupsAnalyticsReportGetter = createSelector(
+  selectQuizzes,
+  selectGroupsAnalyticByQuizzes,
+  (quizzes, groupsAnalytics) => (
+    translate: (key: string) => string
+  ) => ({
+    data: groupsAnalytics.map((analytics) => ({
+      group: analytics.group.name,
+      totalCount: analytics.totalAnswersCount,
+      average: analytics.averageResult,
+      ...quizzes.reduce<Record<string, number>>(
+        (records, {id}) => {
+          records[id] = analytics.quizzesAnalytics[id]?.answersCount
+          return records
+        },
+        {}
+      )
+    })),
+    columns: quizzes.reduce<Record<string, string>>(
+      (records, quiz) => {
+        records[quiz.id] = quiz.name
+        return records
+      },
+      {
+        group: translate('GROUP'),
+        totalCount: translate('TOTAL_ANSWERS_COUNT'),
+        average: translate('AVERAGE_RESULT')
+      }
+    )
+  })
+)
+
 export const selectGroupAnalyticsGetter = createSelector(
   selectQuizzes,
   selectAnswers,
@@ -104,4 +136,31 @@ export const selectGroupAnalyticsGetter = createSelector(
         averageResult
       }
     })
+)
+
+export const selectGroupAnalyticsReportGetter = createSelector(
+  selectQuizzes,
+  selectGroupAnalyticsGetter,
+  (quizzes, analyticsGetter) => (
+    groupId: GroupId,
+    translate: (key: string) => string
+  ) => ({
+    data: analyticsGetter(groupId).map((analytics) => ({
+      student: `${analytics.student.lastName} ${analytics.student.firstName}`,
+      id: analytics.student.id,
+      average: analytics.averageResult,
+      ...analytics.studentResults
+    })),
+    columns: quizzes.reduce<Record<string, string>>(
+      (records, quiz) => {
+        records[quiz.id] = quiz.name
+        return records
+      },
+      {
+        student: translate('STUDENT'),
+        id: translate('STUDENT_ID'),
+        average: translate('AVERAGE_RESULT')
+      }
+    )
+  })
 )

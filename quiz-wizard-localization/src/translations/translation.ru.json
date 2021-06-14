@@ -99,5 +99,6 @@
   "SELECT_GROUP": "Выбрать группу",
   "AVERAGE_RESULT": "Середній результат:",
   "TOTAL_ANSWERS_COUNT": "Общее количество ответов:",
-  "NONE": "Ничего"
+  "NONE": "Ничего",
+  "DOWNLOAD_REPORT": "Загрузить отчет"
 }
