@@ -21,7 +21,7 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
     "md5": "^2.3.0",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "nodemon": "^2.0.3",
     "rimraf": "^3.0.2",
     "ts-node": "^9.1.1"
